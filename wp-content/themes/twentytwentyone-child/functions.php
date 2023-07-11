@@ -925,5 +925,4 @@ function hfm_register_custom_post_type() {
 
 }
 add_action( 'init', 'hfm_register_custom_post_type' );
-
 /**Creating custom posty type without plugin END */
