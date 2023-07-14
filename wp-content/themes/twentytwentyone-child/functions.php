@@ -1,13 +1,14 @@
-<?php 
+<?php
 /* Child theme generated with WPS Child Theme Generator */
-            
-if ( ! function_exists( 'b7ectg_theme_enqueue_styles' ) ) {            
-    add_action( 'wp_enqueue_scripts', 'b7ectg_theme_enqueue_styles' );
-    
-    function b7ectg_theme_enqueue_styles() {
-        wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
-        wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( 'parent-style' ) );
-    }
+
+if (!function_exists('b7ectg_theme_enqueue_styles')) {
+	add_action('wp_enqueue_scripts', 'b7ectg_theme_enqueue_styles');
+
+	function b7ectg_theme_enqueue_styles()
+	{
+		wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+		wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'));
+	}
 }
 
 
@@ -90,7 +91,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 		//acf group start
 
 		//acf group end
-	?>
+?>
 		<div class="varation_table_main" style="overflow-x:auto;">
 			<table class="varation_table" style="width:100%;white-space: nowrap;">
 				<tbody>
@@ -375,7 +376,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 				e.preventDefault();
 			});
 		</script>
-<?php
+	<?php
 	}
 }
 
@@ -418,7 +419,7 @@ function woocommerce_ajax_add_to_cart()
 
 
 //Add panel in product details page admin
-add_filter('woocommerce_product_data_tabs', function($tabs) {
+add_filter('woocommerce_product_data_tabs', function ($tabs) {
 	$tabs['additional_info'] = [
 		'label' => __('Custom plugin fields', 'txtdomain'),
 		'target' => 'additional_product_data',
@@ -428,226 +429,228 @@ add_filter('woocommerce_product_data_tabs', function($tabs) {
 	return $tabs;
 });
 
-add_action('woocommerce_product_data_panels', function() {
+add_action('woocommerce_product_data_panels', function () {
 	?><div id="additional_product_data" class="panel woocommerce_options_panel hidden"><?php
- 
-	woocommerce_wp_text_input([
-		'id' => '_dummy_text_input',
-		'label' => __('Dummy text input', 'txtdomain'),
-		'wrapper_class' => 'show_if_simple',
-	]);
-	woocommerce_wp_checkbox([
-		'id' => '_dummy_checkbox',
-		'label' => __('Dummy checkbox', 'txtdomain'),
-		'wrapper_class' => 'hide_if_grouped',
-	]);
-	woocommerce_wp_text_input([
-		'id' => '_dummy_text_input',
-		'label' => __('Dummy text input', 'txtdomain'),
-		'type' => 'text',
-	]);
- 
-	?></div><?php
-});
 
-add_action('woocommerce_process_product_meta', function($post_id) {
-	$product = wc_get_product($post_id);
-	
-	$product->update_meta_data('_dummy_text_input', sanitize_text_field($_POST['_dummy_text_input']));
- 
-	$dummy_checkbox = isset($_POST['_dummy_checkbox']) ? 'yes' : '';
-	$product->update_meta_data('_dummy_checkbox', $dummy_checkbox);
- 
-	$product->update_meta_data('_dummy_number_input', sanitize_text_field($_POST['_dummy_number_input']));
-	
-	$product->save();
-});
+																						woocommerce_wp_text_input([
+																							'id' => '_dummy_text_input',
+																							'label' => __('Dummy text input', 'txtdomain'),
+																							'wrapper_class' => 'show_if_simple',
+																						]);
+																						woocommerce_wp_checkbox([
+																							'id' => '_dummy_checkbox',
+																							'label' => __('Dummy checkbox', 'txtdomain'),
+																							'wrapper_class' => 'hide_if_grouped',
+																						]);
+																						woocommerce_wp_text_input([
+																							'id' => '_dummy_text_input',
+																							'label' => __('Dummy text input', 'txtdomain'),
+																							'type' => 'text',
+																						]);
 
-/**Get Breadcrumb in single.php START */
-function get_breadcrumb()
-{
-	echo '<a href="' . home_url() . '" rel="nofollow">Home</a>';
-	if (is_category() || is_single()) {
-		echo "&nbsp;&#187;&nbsp;";
-		the_category(' &bull; ');
-		if (is_single()) {
-			echo " &nbsp;&#187;&nbsp;";
-			the_title();
+																						?></div><?php
+		});
+
+		add_action('woocommerce_process_product_meta', function ($post_id) {
+			$product = wc_get_product($post_id);
+
+			$product->update_meta_data('_dummy_text_input', sanitize_text_field($_POST['_dummy_text_input']));
+
+			$dummy_checkbox = isset($_POST['_dummy_checkbox']) ? 'yes' : '';
+			$product->update_meta_data('_dummy_checkbox', $dummy_checkbox);
+
+			$product->update_meta_data('_dummy_number_input', sanitize_text_field($_POST['_dummy_number_input']));
+
+			$product->save();
+		});
+
+		/**Get Breadcrumb in single.php START */
+		function get_breadcrumb()
+		{
+			echo '<a href="' . home_url() . '" rel="nofollow">Home</a>';
+			if (is_category() || is_single()) {
+				echo "&nbsp;&#187;&nbsp;";
+				the_category(' &bull; ');
+				if (is_single()) {
+					echo " &nbsp;&#187;&nbsp;";
+					the_title();
+				}
+			} elseif (is_page()) {
+				echo "&nbsp;&#187;&nbsp;";
+				echo the_title();
+			} elseif (is_search()) {
+				echo "&nbsp;&#187;&nbsp;Search Results for... ";
+				echo '"<em>';
+				echo the_search_query();
+				echo '</em>"';
+			}
 		}
-	} elseif (is_page()) {
-		echo "&nbsp;&#187;&nbsp;";
-		echo the_title();
-	} elseif (is_search()) {
-		echo "&nbsp;&#187;&nbsp;Search Results for... ";
-		echo '"<em>';
-		echo the_search_query();
-		echo '</em>"';
-	}
-}
-/**Get Breadcrumb in single.php END */
+		/**Get Breadcrumb in single.php END */
 
 
-function filterexpost()
-{
-  $val = $_POST['val'];
-  $string = implode(', ', $val);
-  ?>
-  <div class="container-custom mb-60">
-    <div class="today-highlights">
-      <div class="row flex-wrap-wrap">
-        <?php
-        $args = array(
-          'post_type' => 'post',
-          'posts_per_page' => 3,
-          'cat' => array($string),
-          //'paged' => 1,
-        );
-        $loop = new WP_Query($args);
-        while ($loop->have_posts()) : $loop->the_post();
-        ?>
-          <div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
-            <div class="highlights-grid-post">
-              <div class="highlights-post-image-wrapper">
-                <a href="">
-                  <?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
-                  <div class="highlights-post-image" style="background-image: url('<?php echo $url; ?>');"></div>
-                </a>
-              </div>
-              <div class="latestblog-post-details">
-                <h3 class="latestblog-post-title">
-                  <a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a>
-                </h3>
-                <div class="latestblog-post-author">
-                  <div class="latestblog-post-author-section">
-                    <div class="latestblog-post-author-image">
-                      <a href="">
-                        <img src="https://transdirect.plutustec.in/wp-content/uploads/2022/08/Screen-Shot-2022-08-15-at-10.22.26-am-modified.png" alt="" />
-                      </a>
-                      <p class="latestblog-post-autho-name">
-                      <?php $categories = get_the_category(); ?>
-                        By<a href=""><?php echo $categories[0]->name; //get_field('author'); ?></a>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="latestblog-post-date">
-                    <?php echo get_field('date'); ?>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <?php endwhile;
-        ?>
-      </div>
-    </div>
-  </div>
-  <?php wp_reset_postdata(); ?>
-  <?php die;
-}
-add_action('wp_ajax_expost', 'filterexpost');
-add_action('wp_ajax_nopriv_expost', 'filterexpost');
+		function filterexpost()
+		{
+			$val = $_POST['val'];
+			$string = implode(', ', $val);
+			?>
+	<div class="container-custom mb-60">
+		<div class="today-highlights">
+			<div class="row flex-wrap-wrap">
+				<?php
+				$args = array(
+					'post_type' => 'post',
+					'posts_per_page' => 3,
+					'cat' => array($string),
+					//'paged' => 1,
+				);
+				$loop = new WP_Query($args);
+				while ($loop->have_posts()) : $loop->the_post();
+				?>
+					<div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
+						<div class="highlights-grid-post">
+							<div class="highlights-post-image-wrapper">
+								<a href="">
+									<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
+									<div class="highlights-post-image" style="background-image: url('<?php echo $url; ?>');"></div>
+								</a>
+							</div>
+							<div class="latestblog-post-details">
+								<h3 class="latestblog-post-title">
+									<a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a>
+								</h3>
+								<div class="latestblog-post-author">
+									<div class="latestblog-post-author-section">
+										<div class="latestblog-post-author-image">
+											<a href="">
+												<img src="https://transdirect.plutustec.in/wp-content/uploads/2022/08/Screen-Shot-2022-08-15-at-10.22.26-am-modified.png" alt="" />
+											</a>
+											<p class="latestblog-post-autho-name">
+												<?php $categories = get_the_category(); ?>
+												By<a href=""><?php echo $categories[0]->name; //get_field('author'); 
+																?></a>
+											</p>
+										</div>
+									</div>
+									<div class="latestblog-post-date">
+										<?php echo get_field('date'); ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php endwhile;
+				?>
+			</div>
+		</div>
+	</div>
+	<?php wp_reset_postdata(); ?>
+	<?php die;
+		}
+		add_action('wp_ajax_expost', 'filterexpost');
+		add_action('wp_ajax_nopriv_expost', 'filterexpost');
 
 
-//Load more expost
-function load_more_exposts()
-{
-  $val = $_POST['catid'];
-  $string = implode(', ', $val);
-  $args = array(
-    'post_type' => 'post',
-    'posts_per_page' => 3,
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'cat' => array($string),
-    'paged' => $_POST['page'],
-  );
-  $loop = new WP_Query($args);
-  while ($loop->have_posts()) : $loop->the_post();
-  ?>
-    <div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
-      <div class="highlights-grid-post">
-        <div class="highlights-post-image-wrapper">
-          <a href="">
-            <?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
-            <div class="highlights-post-image" style="background-image: url('<?php echo $url; ?>');"></div>
-          </a>
-        </div>
-        <div class="latestblog-post-details">
-          <h3 class="latestblog-post-title">
-            <a href=""><?php echo the_title(); ?></a>
-          </h3>
-          <div class="latestblog-post-author">
-            <div class="latestblog-post-author-section">
-              <div class="latestblog-post-author-image">
-                <a href="">
-                  <img src="https://transdirect.plutustec.in/wp-content/uploads/2022/08/Screen-Shot-2022-08-15-at-10.22.26-am-modified.png" alt="" />
-                </a>
-                <p class="latestblog-post-autho-name">
-                <?php $categories = get_the_category(); ?>
-                  By<a href=""><?php echo $categories[0]->name; //get_field('author'); ?></a>
-                </p>
-              </div>
-            </div>
-            <div class="latestblog-post-date">
-              <?php echo get_field('date'); ?>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <?php endwhile;
-  ?>
-<?php wp_reset_postdata();
-  exit;
-}
-add_action('wp_ajax_load_expost', 'load_more_exposts');
-add_action('wp_ajax_nopriv_load_expost', 'load_more_exposts');
-
-/**Get current tag val START */
-add_action('wp_ajax_get_tag_val', 'get_tag_callback');
-add_action('wp_ajax_nopriv_get_tag_val', 'get_tag_callback');
-function get_tag_callback()
-{
-	$tag = $_POST['param'];
-	$lower_tag = strtolower($tag);
-	$tag_slug = str_replace(' ', '-', $lower_tag);
-	//echo $tag;
-	//;
-	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
-	if (!$tag) {
-		$args = array(
-			'post_type' => 'post',
-			'orderby' => 'date',
-			'order' => 'DESC',
-		);
-		$loop = new WP_Query($args);
-		$total_pg =  $loop->max_num_pages;
-		//echo $total_pg;
-	} else {
-		$args = array(
-			'post_type' => 'post',
-			'orderby' => 'date',
-			'order' => 'DESC',
-			'tag' => $tag_slug,
-		);
-		$loop = new WP_Query($args);
-		$total_pg = $loop->max_num_pages;
-	}
-
-	$url = $_POST['base'];
-	//$newbase = $url . '/'.$tag;
-	
-	//$per_page = 6;
-	//$default_offset = 7;
-	if ($tag) {
-		$newbase = 'https://transdirect.plutustec.in/tag/' .$tag_slug;
-	} else {
-		$newbase = 'https://transdirect.plutustec.in/latest-blog/';
-	}
+		//Load more expost
+		function load_more_exposts()
+		{
+			$val = $_POST['catid'];
+			$string = implode(', ', $val);
+			$args = array(
+				'post_type' => 'post',
+				'posts_per_page' => 3,
+				'orderby' => 'date',
+				'order' => 'DESC',
+				'cat' => array($string),
+				'paged' => $_POST['page'],
+			);
+			$loop = new WP_Query($args);
+			while ($loop->have_posts()) : $loop->the_post();
 	?>
-		<div class="row mt-5">
-			<?php
+		<div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
+			<div class="highlights-grid-post">
+				<div class="highlights-post-image-wrapper">
+					<a href="">
+						<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
+						<div class="highlights-post-image" style="background-image: url('<?php echo $url; ?>');"></div>
+					</a>
+				</div>
+				<div class="latestblog-post-details">
+					<h3 class="latestblog-post-title">
+						<a href=""><?php echo the_title(); ?></a>
+					</h3>
+					<div class="latestblog-post-author">
+						<div class="latestblog-post-author-section">
+							<div class="latestblog-post-author-image">
+								<a href="">
+									<img src="https://transdirect.plutustec.in/wp-content/uploads/2022/08/Screen-Shot-2022-08-15-at-10.22.26-am-modified.png" alt="" />
+								</a>
+								<p class="latestblog-post-autho-name">
+									<?php $categories = get_the_category(); ?>
+									By<a href=""><?php echo $categories[0]->name; //get_field('author'); 
+													?></a>
+								</p>
+							</div>
+						</div>
+						<div class="latestblog-post-date">
+							<?php echo get_field('date'); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php endwhile;
+	?>
+<?php wp_reset_postdata();
+			exit;
+		}
+		add_action('wp_ajax_load_expost', 'load_more_exposts');
+		add_action('wp_ajax_nopriv_load_expost', 'load_more_exposts');
+
+		/**Get current tag val START */
+		add_action('wp_ajax_get_tag_val', 'get_tag_callback');
+		add_action('wp_ajax_nopriv_get_tag_val', 'get_tag_callback');
+		function get_tag_callback()
+		{
+			$tag = $_POST['param'];
+			$lower_tag = strtolower($tag);
+			$tag_slug = str_replace(' ', '-', $lower_tag);
+			//echo $tag;
+			//;
+			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+			if (!$tag) {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+				);
+				$loop = new WP_Query($args);
+				$total_pg =  $loop->max_num_pages;
+				//echo $total_pg;
+			} else {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'tag' => $tag_slug,
+				);
+				$loop = new WP_Query($args);
+				$total_pg = $loop->max_num_pages;
+			}
+
+			$url = $_POST['base'];
+			//$newbase = $url . '/'.$tag;
+
+			//$per_page = 6;
+			//$default_offset = 7;
+			if ($tag) {
+				$newbase = 'https://transdirect.plutustec.in/tag/' . $tag_slug;
+			} else {
+				$newbase = 'https://transdirect.plutustec.in/latest-blog/';
+			}
+?>
+	<div class="row mt-5">
+		<?php
 			if ($tag) {
 				$args = array(
 					'post_type' => 'post',
@@ -668,48 +671,47 @@ function get_tag_callback()
 			}
 			$firstPosts = array();
 			$loop = new WP_Query($args);
-			?>
-			<?php
+		?>
+		<?php
 			while ($loop->have_posts()) : $loop->the_post();
 				$post_id = get_the_ID();
 				$firstPosts[] = $post_id;
-			?>
-				<div class="col-12 wow fadeInUp mb-3 " data-wow-duration="2s">
-					<div class="card item fitness">
-						<div class="row no-gutters raw">
-							<div class="col-md-8">
-								<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
-								<a href="<?php the_permalink(); ?>"><img class="img-fluid" src="<?php echo $url; ?>" alt="..."></a>
-							</div>
-							<div class="col-md-4">
-								<div class="card-body d-flex flex-wrap h-100 flex-column">
-									<div>
-										<?php $posttags = get_the_tags();
-										if ($posttags) {
-											foreach ($posttags as $tag) { ?>
-												<span class="badge badge-secondary"><span class="badge badge-secondary"><?php echo $tag->name; ?></span></span>
-										<?php }
-										} ?>
+		?>
+			<div class="col-12 wow fadeInUp mb-3 " data-wow-duration="2s">
+				<div class="card item fitness">
+					<div class="row no-gutters raw">
+						<div class="col-md-8">
+							<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
+							<a href="<?php the_permalink(); ?>"><img class="img-fluid" src="<?php echo $url; ?>" alt="..."></a>
+						</div>
+						<div class="col-md-4">
+							<div class="card-body d-flex flex-wrap h-100 flex-column">
+								<div>
+									<?php $posttags = get_the_tags();
+									if ($posttags) {
+										foreach ($posttags as $tag) { ?>
+											<span class="badge badge-secondary"><span class="badge badge-secondary"><?php echo $tag->name; ?></span></span>
+									<?php }
+									} ?>
+								</div>
+								<h3 class="card-text"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a></h3>
+								<div class="star-bottom d-flex flex-column justify-content-between">
+									<div class="star-group">
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
 									</div>
-									<h3 class="card-text"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a></h3>
-									<div class="star-bottom d-flex flex-column justify-content-between">
-										<div class="star-group">
-											<i class="fa-solid fa-star main-color"></i>
-											<i class="fa-solid fa-star main-color"></i>
-											<i class="fa-solid fa-star main-color"></i>
-											<i class="fa-solid fa-star main-color"></i>
-											<i class="fa-solid fa-star main-color"></i>
+									<div class="drop-box">
+										<div class="drop-img mr-2">
+											<img class="img-fluid" src="https://transdirect.plutustec.in/wp-content/uploads/2022/06/spheres.svg" />
 										</div>
-										<div class="drop-box">
-											<div class="drop-img mr-2">
-												<img class="img-fluid" src="https://transdirect.plutustec.in/wp-content/uploads/2022/06/spheres.svg" />
-											</div>
-											<div class="">
-												<span><strong><?php echo get_the_author(); ?></strong></span>
-												<span>-</span>
-												<span class="text-muted">recovr.com</span>
-												<p class="mb-0 text-muted"><strong><?php echo get_the_date('F jS, Y'); ?></strong></p>
-											</div>
+										<div class="">
+											<span><strong><?php echo get_the_author(); ?></strong></span>
+											<span>-</span>
+											<span class="text-muted">recovr.com</span>
+											<p class="mb-0 text-muted"><strong><?php echo get_the_date('F jS, Y'); ?></strong></p>
 										</div>
 									</div>
 								</div>
@@ -717,9 +719,10 @@ function get_tag_callback()
 						</div>
 					</div>
 				</div>
-			<?php endwhile; ?>
-			<?php wp_reset_postdata(); ?>
-			<?php
+			</div>
+		<?php endwhile; ?>
+		<?php wp_reset_postdata(); ?>
+		<?php
 			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 			if ($tag) {
 				$args = array(
@@ -743,133 +746,134 @@ function get_tag_callback()
 			}
 			$loop = new WP_Query($args);
 			while ($loop->have_posts()) : $loop->the_post();
-			?>
-				<div class="col-md-6 wow fadeInUp mb-3" data-wow-duration="2s">
-					<div class="card item life h-100">
+		?>
+			<div class="col-md-6 wow fadeInUp mb-3" data-wow-duration="2s">
+				<div class="card item life h-100">
+					<div>
+						<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
+						<a href="<?php the_permalink(); ?>"><img src="<?php echo $url; ?>" class="card-img-top" alt="..."></a>
+					</div>
+					<div class="card-body d-flex flex-wrap h-100 flex-column">
 						<div>
-							<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
-							<a href="<?php the_permalink(); ?>"><img src="<?php echo $url; ?>" class="card-img-top" alt="..."></a>
+							<?php $posttags = get_the_tags();
+							if ($posttags) {
+								foreach ($posttags as $tag) { ?>
+									<span class="badge badge-secondary"><span class="badge badge-secondary"><?php echo $tag->name; ?></span></span>
+							<?php }
+							} ?>
 						</div>
-						<div class="card-body d-flex flex-wrap h-100 flex-column">
-							<div>
-								<?php $posttags = get_the_tags();
-								if ($posttags) {
-									foreach ($posttags as $tag) { ?>
-										<span class="badge badge-secondary"><span class="badge badge-secondary"><?php echo $tag->name; ?></span></span>
-								<?php }
-								} ?>
+						<h3 class="card-text"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a></h3>
+						<div class="star-bottom d-flex flex-column justify-content-between">
+							<div class="star-group">
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
 							</div>
-							<h3 class="card-text"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a></h3>
-							<div class="star-bottom d-flex flex-column justify-content-between">
-								<div class="star-group">
-									<i class="fa-solid fa-star main-color"></i>
-									<i class="fa-solid fa-star main-color"></i>
-									<i class="fa-solid fa-star main-color"></i>
-									<i class="fa-solid fa-star main-color"></i>
-									<i class="fa-solid fa-star main-color"></i>
+							<div class="drop-box">
+								<div class="drop-img mr-2">
+									<img class="img-fluid" src="https://transdirect.plutustec.in/wp-content/uploads/2022/06/spheres.svg" />
 								</div>
-								<div class="drop-box">
-									<div class="drop-img mr-2">
-										<img class="img-fluid" src="https://transdirect.plutustec.in/wp-content/uploads/2022/06/spheres.svg" />
-									</div>
-									<div class="">
-										<span><strong><?php echo get_the_author(); ?></strong></span>
-										<span>-</span>
-										<span class="text-muted">recovr.com</span>
-										<p class="mb-0 text-muted"><strong><?php echo get_the_date('F jS, Y'); ?></strong></p>
-									</div>
+								<div class="">
+									<span><strong><?php echo get_the_author(); ?></strong></span>
+									<span>-</span>
+									<span class="text-muted">recovr.com</span>
+									<p class="mb-0 text-muted"><strong><?php echo get_the_date('F jS, Y'); ?></strong></p>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php
-			endwhile;
-			?>
-			<?php wp_reset_postdata(); ?>
-		</div>
-
-		<!-- Start Pagination - WP-PageNavi -->
-		<?php
-		 
-		$big = 999999999;
-		// Fallback if there is not base set.
-		$fallback_base = str_replace($big, '%#%', esc_url(get_pagenum_link($big)));
-
-		if($tag){
-			$args = array(
-				'post_type' => 'post',
-				'orderby' => 'date',
-				'order' => 'DESC',
-				'post_status' => 'publish',
-				'tag' => $tag_slug
-			);
-			//echo '<pre>';
-			//print_r($args);
-		}
-		else{
-			$args = array(
-				'post_type' => 'post',
-				'orderby' => 'date',
-				'order' => 'DESC',
-				'post_status' => 'publish'
-			);
-		}
-		 
-        
-
-		// Set the base.
-		$base = isset($newbase) ? trailingslashit($newbase) . '%_%' : $fallback_base;
-		$tag =  '<div class="append_page"><div class="pagination-box wow fadeInUp mb-3 filter-pagination pagination">';
-		$tag .=  paginate_links(array(
-			'base' => $base,
-			'format' => 'page/%#%',
-			'current' => max(1, get_query_var('paged')),
-			'total' => $total_pg,
-			'show_all' => true,
-			'prev_text' => '<<',
-			'next_text' => '>>'
-		));
-		$tag .=  '</div></div>'; 
-		
-		//echo $loop->max_num_pages;
-		?>
-		<?php
-		//if ($loop->max_num_pages > 1) : ?>
-			<ul class="pagination">
-				<li class="tags"><?php echo $tag; ?></li>
-			</ul>
-		<?php //endif;
-		?>
-		<!-- End Pagination -->
-
-		<div class="my-4 wow fadeInUp mb-3">
-			<div class="news-later">
-				<div class="row align-items-center">
-					<div class="col-md-6 wow fadeInUp mb-3 mb-md-0 line-text">
-						<h5 class="footer-top-subtitile"> Subscribe to our Newsletter </h5>
-						<h3 class="footer-title"> <span class="news-letter-text">For the latest in fitness,<br>wellbeing and trainer tips</span> </h3>
-					</div>
-					<div class="col-md-6 wow fadeInUp mb-3">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Email">
-							<div class="input-group-append">
-								<button class="btn btn-outline-secondary" type="button" id="button-addon2">Sign Me Up</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>	
+		<?php
+			endwhile;
+		?>
+		<?php wp_reset_postdata(); ?>
+	</div>
+
+	<!-- Start Pagination - WP-PageNavi -->
 	<?php
-	die;
-}
 
-/**Get current tag val END */
+			$big = 999999999;
+			// Fallback if there is not base set.
+			$fallback_base = str_replace($big, '%#%', esc_url(get_pagenum_link($big)));
 
-/**Creating cutom post type withput plugin Start */
-// Register Custom Post Type
-/**function hfm_register_custom_post_type() { 
+			if ($tag) {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post_status' => 'publish',
+					'tag' => $tag_slug
+				);
+				//echo '<pre>';
+				//print_r($args);
+			} else {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post_status' => 'publish'
+				);
+			}
+
+
+
+			// Set the base.
+			$base = isset($newbase) ? trailingslashit($newbase) . '%_%' : $fallback_base;
+			$tag =  '<div class="append_page"><div class="pagination-box wow fadeInUp mb-3 filter-pagination pagination">';
+			$tag .=  paginate_links(array(
+				'base' => $base,
+				'format' => 'page/%#%',
+				'current' => max(1, get_query_var('paged')),
+				'total' => $total_pg,
+				'show_all' => true,
+				'prev_text' => '<<',
+				'next_text' => '>>'
+			));
+			$tag .=  '</div></div>';
+
+			//echo $loop->max_num_pages;
+	?>
+	<?php
+			//if ($loop->max_num_pages > 1) : 
+	?>
+	<ul class="pagination">
+		<li class="tags"><?php echo $tag; ?></li>
+	</ul>
+	<?php //endif;
+	?>
+	<!-- End Pagination -->
+
+	<div class="my-4 wow fadeInUp mb-3">
+		<div class="news-later">
+			<div class="row align-items-center">
+				<div class="col-md-6 wow fadeInUp mb-3 mb-md-0 line-text">
+					<h5 class="footer-top-subtitile"> Subscribe to our Newsletter </h5>
+					<h3 class="footer-title"> <span class="news-letter-text">For the latest in fitness,<br>wellbeing and trainer tips</span> </h3>
+				</div>
+				<div class="col-md-6 wow fadeInUp mb-3">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Email">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button" id="button-addon2">Sign Me Up</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+			die;
+		}
+
+		/**Get current tag val END */
+
+		
+		/**Creating cutom post type withput plugin Start */
+		// Register Custom Post Type
+		/**function hfm_register_custom_post_type() { 
 
     $labels = array(
         'name'                  => _x( 'Custom Post Types', 'Post Type General Name', 'text_domain' ),
@@ -923,45 +927,154 @@ function get_tag_callback()
 
 }
 add_action( 'init', 'hfm_register_custom_post_type' );*/
-/**Creating custom posty type without plugin END */
+		/**Creating custom posty type without plugin END */
 
-/* custom post type [START] */
-function cptui_register_my_cpts_gym_member()
-{
-	$labels = [
-		"name" => esc_html__("Gym Member", "custom-post-type-ui"),
-		"singular_name" => esc_html__("Gym Member", "custom-post-type-ui"),
-		"menu_name" => esc_html__("Gym Member", "custom-post-type-ui"),
-	];
+		/* custom post type [START] */
+		function cptui_register_my_cpts_gym_member()
+		{
+			$labels = [
+				"name" => esc_html__("Gym Member", "custom-post-type-ui"),
+				"singular_name" => esc_html__("Gym Member", "custom-post-type-ui"),
+				"menu_name" => esc_html__("Gym Member", "custom-post-type-ui"),
+			];
 
-	$args = [
-		"label" => esc_html__("Gym Member", "custom-post-type-ui"),
-		"labels" => $labels,
-		"description" => "",
-		"public" => true,
-		"publicly_queryable" => true,
-		"show_ui" => true,
-		"show_in_rest" => true,
-		"rest_base" => "",
-		"rest_controller_class" => "WP_REST_Posts_Controller",
-		"rest_namespace" => "wp/v2",
-		"has_archive" => false,
-		"show_in_menu" => true,
-		"show_in_nav_menus" => true,
-		"delete_with_user" => false,
-		"exclude_from_search" => false,
-		"capability_type" => "post",
-		"map_meta_cap" => true,
-		"hierarchical" => false,
-		"can_export" => false,
-		"rewrite" => ["slug" => "gym-member", "with_front" => true],
-		"query_var" => true,
-		"supports" => ["title", "editor", "thumbnail", "excerpt", "custom-fields"],
-		"taxonomies" => ["category"],
-		"show_in_graphql" => false,
-	];
+			$args = [
+				"label" => esc_html__("Gym Member", "custom-post-type-ui"),
+				"labels" => $labels,
+				"description" => "",
+				"public" => true,
+				"publicly_queryable" => true,
+				"show_ui" => true,
+				"show_in_rest" => true,
+				"rest_base" => "",
+				"rest_controller_class" => "WP_REST_Posts_Controller",
+				"rest_namespace" => "wp/v2",
+				"has_archive" => false,
+				"show_in_menu" => true,
+				"show_in_nav_menus" => true,
+				"delete_with_user" => false,
+				"exclude_from_search" => false,
+				"capability_type" => "post",
+				"map_meta_cap" => true,
+				"hierarchical" => false,
+				"can_export" => false,
+				"rewrite" => ["slug" => "gym-member", "with_front" => true],
+				"query_var" => true,
+				"supports" => ["title", "editor", "thumbnail", "excerpt", "custom-fields"],
+				"taxonomies" => ["category"],
+				"show_in_graphql" => false,
+			];
 
-	register_post_type("gym-member", $args);
+			register_post_type("gym-member", $args);
+		}
+		add_action('init', 'cptui_register_my_cpts_gym_member');
+		/* custom post type [END] */
+
+		//Custom settings API START
+		function theme_settings_pages()
+		{
+			if (function_exists('wp_enqueue_media')) {
+				wp_enqueue_media();
+			} else {
+				wp_enqueue_style('thickbox');
+				wp_enqueue_script('media-upload');
+				wp_enqueue_script('thickbox');
+			}
+?>
+	<div class="wrap">
+		<h1>Theme Panel</h1>
+		<form method="post" action="" enctype="multipart/form-data">
+			
+			<input class="image_one_url" type="text" name="image_one" size="60" value="<?php echo get_option('image_one'); ?>">
+			<a href="#" class="image_one_upload">Upload</a>
+			<br>
+			<br>
+			
+			<input class="image_two_url" type="text" name="image_two" size="60" value="<?php echo get_option('image_two'); ?>">
+			<a href="#" class="image_two_upload">Upload</a>
+			<?php
+			submit_button();
+			?>
+		</form>
+	</div>
+	<?php
+	if(isset($_POST['submit'])){
+				$image_one = $_POST['image_one'];		
+    				if (get_option('image_one') == $image_one ){
+						echo "Image 1 not changed";
+        			//return;
+    				}else{
+						echo "Image 1 changed";
+        			update_option('image_one',$image_one );
+    				}
+				$image_two = $_POST['image_two'];
+    				if (get_option('image_two') == $image_two ){
+						echo "Image 2 not changed";
+        			//return;
+    				}else{
+						echo "Image 2 changed";
+        			update_option('image_two',$image_two);
+    				}
+				 }
+			?>
+					<script>
+						var image_one = '<?php echo get_option('image_one'); ?>';
+						var image_two = '<?php echo get_option('image_two'); ?>';
+						jQuery('.image_one_url').val(image_one).trigger('change');
+						jQuery('.image_two_url').val(image_two).trigger('change');
+					</script>
+<?php
+		}
+
+		function add_theme_menu_items()
+		{
+			add_menu_page("Theme Panel", "Theme Panel", "manage_options", "theme-panel", "theme_settings_pages", null, 99);	
+		}
+		add_action("admin_menu", "add_theme_menu_items");
+//Custom settings API END
+
+//Admin panel script START
+function footer_script(){
+?>
+<script>
+	//Custom settings API theme option script START
+        jQuery(document).ready(function($) {
+            $('.image_one_upload').click(function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: 'Custom Image',
+                        button: {
+                            text: 'Upload Image'
+                        },
+                        multiple: false // Set this to true to allow multiple files to be selected
+                    })
+                    .on('select', function() {
+                        var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        $('.image_one').attr('src', attachment.url);
+                        $('.image_one_url').val(attachment.url);
+                    })
+                    .open();
+            });
+			$('.image_two_upload').click(function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: 'Custom Image',
+                        button: {
+                            text: 'Upload Image'
+                        },
+                        multiple: false // Set this to true to allow multiple files to be selected
+                    })
+                    .on('select', function() {
+                        var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        $('.image_two').attr('src', attachment.url);
+                        $('.image_two_url').val(attachment.url);
+                    })
+                    .open();
+            });
+        });
+		//Custom settings API theme option script END
+    </script>
+<?php
 }
-add_action('init', 'cptui_register_my_cpts_gym_member');
-/* custom post type [END] */
+add_action("admin_footer", "footer_script");
+//Admin panel script END
