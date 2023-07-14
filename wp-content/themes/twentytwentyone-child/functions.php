@@ -870,7 +870,7 @@ add_action('woocommerce_product_data_panels', function () {
 
 		/**Get current tag val END */
 
-		
+
 		/**Creating cutom post type withput plugin Start */
 		// Register Custom Post Type
 		/**function hfm_register_custom_post_type() { 
@@ -984,12 +984,15 @@ add_action( 'init', 'hfm_register_custom_post_type' );*/
 	<div class="wrap">
 		<h1>Theme Panel</h1>
 		<form method="post" action="" enctype="multipart/form-data">
-			
+		<img src="<?php echo get_option('image_one'); ?>" class="image_one" alt="image one" width="100" height="100">
+		<br>
 			<input class="image_one_url" type="text" name="image_one" size="60" value="<?php echo get_option('image_one'); ?>">
 			<a href="#" class="image_one_upload">Upload</a>
 			<br>
 			<br>
 			
+			<img src="<?php echo get_option('image_two'); ?>" class="image_two" alt="image two" width="100" height="100">
+			<br>
 			<input class="image_two_url" type="text" name="image_two" size="60" value="<?php echo get_option('image_two'); ?>">
 			<a href="#" class="image_two_upload">Upload</a>
 			<?php
@@ -1022,6 +1025,8 @@ add_action( 'init', 'hfm_register_custom_post_type' );*/
 						var image_two = '<?php echo get_option('image_two'); ?>';
 						jQuery('.image_one_url').val(image_one).trigger('change');
 						jQuery('.image_two_url').val(image_two).trigger('change');
+						jQuery('.image_one').attr('src', ''+image_one+'').trigger('change');
+						jQuery('.image_two').attr('src', ''+image_two+'').trigger('change');
 					</script>
 <?php
 		}
