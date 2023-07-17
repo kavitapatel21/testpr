@@ -1031,9 +1031,92 @@ add_action( 'init', 'hfm_register_custom_post_type' );*/
 <?php
 		}
 
+
+		//Custom settings API for multiple image uploading & fetching START
+		//HTML for multiple image fetch & upload START
+		function theme_settings_pages_multiple_img()
+		{
+			if (function_exists('wp_enqueue_media')) {
+				wp_enqueue_media();
+			} else {
+				wp_enqueue_style('thickbox');
+				wp_enqueue_script('media-upload');
+				wp_enqueue_script('thickbox');
+			}
+?>
+	<div class="wrap">
+		<h1>Theme Panel</h1>
+		<div class="mutiple_img_one_listing"></div>
+		<form action="" method="post" enctype="multipart/form-data">  
+			<br>
+			<!--<input class="multiple_img_one_url" type="text" name="multiple_img_one" size="60" value="<?php //echo get_option('multiple_img_one'); ?>">
+			<a href="#" class="multiple_img_one_upload">Upload</a>-->
+			<input type="file" id="uploadFile" name="uploadFile[]" multiple class="multiple_img_one_upload"/>  
+			<br>
+			<br>
+			
+			<div class="mutiple_img_two_listing"></div>
+			<br>
+			<input class="multiple_img_two_url" type="text" name="multiple_img_two" size="60" value="<?php echo get_option('multiple_img_two'); ?>">
+			<a href="#" class="multiple_img_two_upload">Upload</a>
+			<input type="text" value="" name="kavita"/>
+			<br><br>
+			<input type="submit" class="btn btn-success" name='submitImage' value="Submit"/>  
+			<?php
+			//submit_button();
+			?>
+		</form>
+	</div>
+	<?php
+	if(isset($_POST['submitImage']))  
+	{  
+		echo '<pre>';
+		print_r($_FILES);
+	}  
+
+	if(isset($_POST['btnsubmit'])){
+				echo '<pre>';
+				print_r($_FILES);
+				die();
+		
+				$multiple_img_one = $_POST['multiple_img_one'];	
+					
+    				if (get_option('multiple_img_one') == $multiple_img_one ){
+						echo "multiple_img 1 not changed";
+        			//return;
+    				}else{
+						echo "multiple_img 1 changed";
+        			update_option('multiple_img_one',$multiple_img_one );
+    				}
+				$multiple_img_two = $_POST['multiple_img_two'];
+    				if (get_option('multiple_img_two') == $multiple_img_two ){
+						echo "multiple_img 2 not changed";
+        			//return;
+    				}else{
+						echo "multiple_img 2 changed";
+        			update_option('multiple_img_two',$multiple_img_two);
+    				}
+				 }
+			?>
+					<script>
+						var multiple_img_one = '<?php echo get_option('multiple_img_one'); ?>';
+						var multiple_img_two = '<?php echo get_option('multiple_img_two'); ?>';
+						jQuery('.multiple_img_one_url').val(multiple_img_one).trigger('change');
+						jQuery('.multiple_img_two_url').val(multiple_img_two).trigger('change');
+						jQuery('.multiple_img_one').attr('src', ''+multiple_img_one+'').trigger('change');
+						jQuery('.multiple_img_two').attr('src', ''+multiple_img_two+'').trigger('change');
+					</script>
+<?php
+		}
+		//HTML for multiple image fetch & upload END
+
 		function add_theme_menu_items()
 		{
 			add_menu_page("Theme Panel", "Theme Panel", "manage_options", "theme-panel", "theme_settings_pages", null, 99);	
+
+			//Add menu page for multiple image upload in theme options START
+			add_menu_page("Multiple Image Theme Panel", "Multiple Image Upload Theme Panel", "manage_options", "multiple-img-theme-panel", "theme_settings_pages_multiple_img", null, 99);
+			//Add menu page for multiple image upload in theme options END
 		}
 		add_action("admin_menu", "add_theme_menu_items");
 //Custom settings API END
@@ -1076,6 +1159,59 @@ function footer_script(){
                     })
                     .open();
             });
+
+			//Custom settings API theme option script for multiple image upload START
+		jQuery(document).ready(function($) {
+            $('.multiple_img_one_upload').click(function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: 'Custom Image',
+                        button: {
+                            text: 'Upload Image'
+                        },
+                        multiple: true // Set this to true to allow multiple files to be selected
+                    })
+                    .on('select', function() {
+                        	var attachment = custom_uploader.state().get('selection').map( 
+							function( attachment ) {
+								attachment.toJSON();
+								return attachment;
+							});
+							var i;
+           					for (i = 0; i < attachment.length; ++i) {
+                			//sample function 1: add image preview
+							//console.log(attachment[i].attributes.url);
+                			$('.mutiple_img_one_listing').append('<img src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
+							$('.mutiple_img_one_listing').after('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array[]"  value="' + attachment[i].id + '">'
+                    );
+						}
+                    }).open();
+            });
+			$('.multiple_img_two_upload').click(function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: 'Custom Image',
+                        button: {
+                            text: 'Upload Image'
+                        },
+                        multiple: true // Set this to true to allow multiple files to be selected
+                    })
+                    .on('select', function() {
+                        var attachment = custom_uploader.state().get('selection').map( 
+							function( attachment ) {
+								attachment.toJSON();
+								return attachment;
+							});
+							var i;
+           					for (i = 0; i < attachment.length; ++i) {
+                			//sample function 1: add image preview
+							//console.log(attachment[i].attributes.url);
+                			$('.mutiple_img_two_listing').after('<img src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
+            				}
+                    }).open();
+            });
+        });
+		//Custom settings API theme option script for multiple image upload END
         });
 		//Custom settings API theme option script END
     </script>
