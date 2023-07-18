@@ -1046,12 +1046,14 @@ add_action( 'init', 'hfm_register_custom_post_type' );*/
 ?>
 	<div class="wrap">
 		<h1>Theme Panel</h1>
-		<div class="mutiple_img_one_listing"></div>
+		
 		<form action="" method="post" enctype="multipart/form-data">  
 			<br>
-			<!--<input class="multiple_img_one_url" type="text" name="multiple_img_one" size="60" value="<?php //echo get_option('multiple_img_one'); ?>">
-			<a href="#" class="multiple_img_one_upload">Upload</a>-->
-			<input type="file" id="uploadFile" name="uploadFile[]" multiple class="multiple_img_one_upload"/>  
+			<div class="mutiple_img_one_listing"></div>
+			<input type="hidden" name="selected_image_id" id="selected_image_id" value="">
+			<input class="multiple_img_one_url" type="text" name="multiple_img_one" size="60" value="<?php //echo get_option('multiple_img_one'); ?>">
+			<a href="#" class="multiple_img_one_upload">Upload</a>
+			<!--<input type="file" id="uploadFile" name="uploadFile[]" multiple class="multiple_img_one_upload"/>-->
 			<br>
 			<br>
 			
@@ -1070,43 +1072,15 @@ add_action( 'init', 'hfm_register_custom_post_type' );*/
 	<?php
 	if(isset($_POST['submitImage']))  
 	{  
+		$selected_image_url = $_POST['myplugin_attachment_id_array'];
+		$url_arr = array();
+		for($i = 0; $i < count($_POST['myplugin_attachment_id_array']); ++$i) {
+			$url =  $_POST['myplugin_attachment_id_array'][$i] . "<br>";
+			array_push($url_arr, $url);
+		 }
+		}
 		echo '<pre>';
-		print_r($_FILES);
-	}  
-
-	if(isset($_POST['btnsubmit'])){
-				echo '<pre>';
-				print_r($_FILES);
-				die();
-		
-				$multiple_img_one = $_POST['multiple_img_one'];	
-					
-    				if (get_option('multiple_img_one') == $multiple_img_one ){
-						echo "multiple_img 1 not changed";
-        			//return;
-    				}else{
-						echo "multiple_img 1 changed";
-        			update_option('multiple_img_one',$multiple_img_one );
-    				}
-				$multiple_img_two = $_POST['multiple_img_two'];
-    				if (get_option('multiple_img_two') == $multiple_img_two ){
-						echo "multiple_img 2 not changed";
-        			//return;
-    				}else{
-						echo "multiple_img 2 changed";
-        			update_option('multiple_img_two',$multiple_img_two);
-    				}
-				 }
-			?>
-					<script>
-						var multiple_img_one = '<?php echo get_option('multiple_img_one'); ?>';
-						var multiple_img_two = '<?php echo get_option('multiple_img_two'); ?>';
-						jQuery('.multiple_img_one_url').val(multiple_img_one).trigger('change');
-						jQuery('.multiple_img_two_url').val(multiple_img_two).trigger('change');
-						jQuery('.multiple_img_one').attr('src', ''+multiple_img_one+'').trigger('change');
-						jQuery('.multiple_img_two').attr('src', ''+multiple_img_two+'').trigger('change');
-					</script>
-<?php
+		print_r($url_arr);
 		}
 		//HTML for multiple image fetch & upload END
 
@@ -1181,8 +1155,8 @@ function footer_script(){
            					for (i = 0; i < attachment.length; ++i) {
                 			//sample function 1: add image preview
 							//console.log(attachment[i].attributes.url);
-                			$('.mutiple_img_one_listing').append('<img src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
-							$('.mutiple_img_one_listing').after('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array[]"  value="' + attachment[i].id + '">'
+                			$('.mutiple_img_one_listing').after('<img class="new_images" src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
+							$('.mutiple_img_one_listing').after('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array[]"  value="' + attachment[i].attributes.url + '">'
                     );
 						}
                     }).open();
@@ -1206,7 +1180,7 @@ function footer_script(){
            					for (i = 0; i < attachment.length; ++i) {
                 			//sample function 1: add image preview
 							//console.log(attachment[i].attributes.url);
-                			$('.mutiple_img_two_listing').after('<img src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
+                			$('.mutiple_img_two_listing').after('<img class="new_images" src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
             				}
                     }).open();
             });
