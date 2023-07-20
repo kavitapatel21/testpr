@@ -34,20 +34,39 @@ function theme_settings_pages_multiple_img()
 		<form action="" method="post" enctype="multipart/form-data">  
 			<br>
 			<div class="mutiple_img_one_listing">
-			
+			<?php
+			if($url = get_option('multi_img_one')){
+				foreach($url as $img){
+					$img_url = str_replace('<br>', '', $img);
+				?>
+			<img class="new_images" src="<?php echo $img_url?>"; width="100" height="100" style="margin-left:5px;">	
+			<?php } }
+			else{
+			}
+			?>
 			</div>
 			<input type="hidden" name="selected_image_id" id="selected_image_id" value="">
 			<input class="multiple_img_one_url" type="text" name="multiple_img_one" size="60" value="">
-			<a href="#" class="multiple_img_one_upload">Upload</a>
+			<a href="#" class="multiple_img_one_upload">Upload Images</a>
+			<!--<a href="#" class="multiple_img_one_remove">Remove Images</a>-->
 			<!--<input type="file" id="uploadFile" name="uploadFile[]" multiple class="multiple_img_one_upload"/>-->
 			<br>
 			<br>
-			
 			<div class="mutiple_img_two_listing">
-			
+			<?php
+			if($url = get_option('multi_img_two')){
+				foreach($url as $img){
+					$img_url = str_replace('<br>', '', $img);
+				?>
+			<img class="new_images" src="<?php echo $img_url?>"; width="100" height="100" style="margin-left:5px;">	
+			<?php } }
+			else{
+			}
+			?>
 			</div>
 			<input class="multiple_img_two_url" type="text" name="multiple_img_two" size="60" value="">
-			<a href="#" class="multiple_img_two_upload">Upload</a>
+			<a href="#" class="multiple_img_two_upload">Upload Images</a>
+			<!--<a href="#" class="multiple_img_two_remove">Remove Images</a>-->
 			<br><br>
 			<input type="submit" class="btn btn-success" name='submitImage' value="Submit"/>  
 			<?php
@@ -58,105 +77,83 @@ function theme_settings_pages_multiple_img()
 
 
 	<?php
+	//On form submit START
 	if(isset($_POST['submitImage']))  
-	{  
+	{  ?>
+		<script>
+		jQuery('.mutiple_img_one_listing').empty();
+		jQuery('.mutiple_img_two_listing').empty();
+		</script>
+		<?php
 		//For image one START
-		if($add_url = get_option('multi_img_one')){
 		$url_arr = array();
-		$new_url = array();
 		$add_url = array();	
-			for($i = 0; $i < count($_POST['myplugin_attachment_id_array_two']); ++$i){
-			$url =  $_POST['myplugin_attachment_id_array_two'][$i] . "<br>";
+		for($i = 0; $i < count($_POST['myplugin_attachment_id_array_one']); ++$i){
+			$url =  $_POST['myplugin_attachment_id_array_one'][$i] . "<br>";
 			array_push($url_arr, $url);
-		 	}
-			foreach ($url_arr as $value) {
+		}
+		foreach ($url_arr as $value) {
+			if($add_url = get_option('multi_img_one')){
 				if ( in_array($value, $add_url)){
 				   echo "not added";
 				}else{
 					echo "added";	
 					array_push($add_url, $value);	
 					update_option('multi_img_one',$add_url);
-				}	
-		  	}
-		}else{}
-		$add_url = get_option('multi_img_one');
-		foreach ($add_url as $src) {
-			?>
-			<script>
-			var src = '<?php echo $src ?>'; 
-			var newsrc = src.replace('<br>', '');
-			jQuery('.mutiple_img_one_listing').empty().append('<img class="new_images" src="' + newsrc + '" width="100" height="100" style="margin-left:5px;">');
-			</script>
-			<?php
+				}
+		  	}else{
+				update_option('multi_img_one',$url_arr);
+			}
 		}
-	}
-	}	
+			if($add_url = get_option('multi_img_one')){
+				foreach ($add_url as $src) 
+				{
+			  		?>
+			  		<script>
+			  		var src = '<?php echo $src ?>'; 
+			 		 var newsrc = src.replace('<br>', '');
+			 	 	jQuery('.mutiple_img_one_listing').append('<img class="new_images" src="' + newsrc + '" width="100" height="100" style="margin-left:5px;">');
+			 	 	</script>
+			 	 	<?php
+		 		}
+			}else{}
+		  //For image one END
 
-		//if(count($_POST['myplugin_attachment_id_array_two']) > 0){
-		/**$url_arr = array();
-			for($i = 0; $i < count($_POST['myplugin_attachment_id_array_two']); ++$i){
+		  //For image two START
+		$url_arr = array();
+		$add_url = array();	
+		for($i = 0; $i < count($_POST['myplugin_attachment_id_array_two']); ++$i){
 			$url =  $_POST['myplugin_attachment_id_array_two'][$i] . "<br>";
 			array_push($url_arr, $url);
-		 	}
-			$add_url = array();	
-			foreach ($url_arr as $value) {
-				//echo "Image 1 changed";
-				$get_url = get_option('multi_img_one');	
-				$list = implode(',', $add_url);
-				print_r($list);
-				if ( in_array($value, $get_url)){
-				   echo "not added";
+		}
+		foreach ($url_arr as $value) {
+			if($add_url = get_option('multi_img_two')){
+				if(in_array($value, $add_url)){
+					echo "not added";
 				}else{
-					echo "added";
+					echo "added";	
 					array_push($add_url, $value);	
-					
-					update_option('multi_img_one',$add_url);
-				}	
-		  	}
-    		$get_url = get_option('multi_img_one');		
-			foreach ($get_url as $src) {
-				?>
-				<script>
-				var src = '<?php echo $src ?>'; 
-				var newsrc = src.replace('<br>', '');
-				jQuery('.mutiple_img_one_listing').append('<img class="new_images" src="' + newsrc + '" width="100" height="100" style="margin-left:5px;">');
-				</script>
-				<?php
-			}**/
-		//}
-		//For image one END
-
-		//For image two START
-		/**$url_arr = array();
-		if(count($_POST['myplugin_attachment_id_array']) > 0){
-			for($i = 0; $i < count($_POST['myplugin_attachment_id_array']); ++$i) {
-			$url =  $_POST['myplugin_attachment_id_array'][$i] . "<br>";
-			array_push($url_arr, $url);
- 			}
-			$add_url = array();	
-			foreach ($url_arr as $value) {
-				//echo "Image 1 changed";
-				array_push($add_url, $value);	
-		
-				$get_url = get_option('multi_img_two');	
-				if ( in_array($value, $get_url)){
-				echo "Image 2 not changed";
-				//return;
-				}else{
-					foreach ($get_url as $src) {
-					?>
+					update_option('multi_img_two',$add_url);
+				}
+			}else{
+				update_option('multi_img_two',$url_arr);
+			}
+		}
+			if($add_url = get_option('multi_img_two')){
+				foreach ($add_url as $src) 
+				{ ?>
 					<script>
 					var src = '<?php echo $src ?>'; 
 					var newsrc = src.replace('<br>', '');
 					jQuery('.mutiple_img_two_listing').append('<img class="new_images" src="' + newsrc + '" width="100" height="100" style="margin-left:5px;">');
 					</script>
 					<?php
-					}
-				}	
-			}
-		}**/
-	//For image two END
-
+				}
+			}else{}
+		  //For image two END
+    }
+	//On form submit END
+}	
 //HTML for multiple image fetch & upload END
 
 //Admin panel script START
@@ -165,6 +162,7 @@ function plugin_footer_script(){
     <script>
 			//Custom settings API theme option script for multiple image upload START
 		jQuery(document).ready(function($) {
+			//onclick uplaod selected images on div START
             $('.multiple_img_one_upload').click(function(e) {
 				$('.mutiple_img_one_listing').empty();
                 e.preventDefault();
@@ -185,10 +183,11 @@ function plugin_footer_script(){
            					for (i = 0; i < attachment.length; ++i) {
                 			//sample function 1: add image preview
                 			$('.mutiple_img_one_listing').append('<img class="new_images" src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
-							$('.mutiple_img_one_listing').append('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array_two[]"  value="' + attachment[i].attributes.url + '">');
+							$('.mutiple_img_one_listing').append('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array_one[]"  value="' + attachment[i].attributes.url + '">');
 						}
                     }).open();
             });
+			
 			$('.multiple_img_two_upload').click(function(e) {
 				$('.mutiple_img_two_listing').empty();
                 e.preventDefault();
@@ -209,10 +208,11 @@ function plugin_footer_script(){
            					for (i = 0; i < attachment.length; ++i) {
                 			//sample function 1: add image preview
                 			$('.mutiple_img_two_listing').append('<img class="new_images" src="' + attachment[i].attributes.url + '" width="100" height="100" style="margin-left:5px;">');
-            			    $('.mutiple_img_two_listing').append('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array[]"  value="' + attachment[i].attributes.url + '">');	
+            			    $('.mutiple_img_two_listing').append('<input id="myplugin-image-input' +attachment[i].id+'" type="hidden" name="myplugin_attachment_id_array_two[]"  value="' + attachment[i].attributes.url + '">');	
 						}
                     }).open();
             });
+			//onclick uplaod selected images on div END
         });
 		//Custom settings API theme option script for multiple image upload END
     </script>
