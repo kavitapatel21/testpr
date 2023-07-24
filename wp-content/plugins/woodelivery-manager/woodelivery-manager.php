@@ -88,6 +88,7 @@ if (get_option('checkbox')) {
     add_filter('woocommerce_checkout_fields', 'reigel_woocommerce_checkout_fields');
 }
 
+//Update value in database
 add_action('woocommerce_checkout_update_order_meta', 'save_custom_checkout_hidden_field');
 function save_custom_checkout_hidden_field($order_id)
 {
@@ -99,8 +100,50 @@ function save_custom_checkout_hidden_field($order_id)
     }
 }
 
-add_action('woocommerce_thankyou', 'show_data_on_thankyou_page', 20);
+//Add checkout cutsom field values to admin oreder details page
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'aba_checkout_field_display_admin_order_meta', 10, 1 );
+function aba_checkout_field_display_admin_order_meta( $order ){
+    $value = $order->get_meta( 'date_picker' );
 
+    if ( ! empty($value) ) {
+        echo '<p><strong>'.__('Custom Date Picker value').':</strong> ' . $value . '</p>';
+    }
+}
+
+//Add custom checkout field value on order preview popup
+add_filter( 'woocommerce_admin_order_preview_get_order_details', 'admin_order_preview_add_custom_billing_data', 10, 2 );
+function admin_order_preview_add_custom_billing_data( $data, $order ) {
+    $custom_billing_data = []; // initializing
+
+    // Custom field 1: Replace '_custom_meta_key1' by the correct custom field metakey
+    if( $custom_value1 = $order->get_meta('date_picker') ) {
+        $custom_billing_data[] = 'Custom date picker date:s'.$custom_value1;
+    }
+
+    // Custom field 2: Replace '_custom_meta_key1' by the correct custom field metakey
+    /**if( $custom_value2 = $order->get_meta('_custom_meta_key1') ) {
+        $custom_billing_data[] = $custom_value2;
+    }*/
+
+    ## ……… And so on (for each additional custom field).
+
+    // Check that our custom fields array is not empty
+    if( count($custom_billing_data) > 0 ) {
+        // Converting the array in a formatted string
+        $formatted_custom_billing_data = implode( '<br>', $custom_billing_data );
+
+        if( $data['formatted_billing_address'] === __( 'N/A', 'woocommerce' ) ) {
+            $data['formatted_billing_address'] = $formatted_custom_billing_data;
+        } else {
+            $data['formatted_billing_address'] .= '<br>' . $formatted_custom_billing_data;
+        }
+    }
+
+    return $data;
+}
+
+//Fetch checkout custom field value to checkout page
+add_action('woocommerce_thankyou', 'show_data_on_thankyou_page', 20);
 //Display data on thankyou page
 function show_data_on_thankyou_page($order_id)
 {
