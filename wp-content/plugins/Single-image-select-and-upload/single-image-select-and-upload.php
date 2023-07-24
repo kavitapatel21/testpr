@@ -201,7 +201,7 @@ function footer_script()
 add_action("admin_footer", "footer_script");
 //Admin panel script END
 
-//remove selected image from the database START(ajax action)
+//Remove selected image from the database START(ajax action)
 add_action('wp_ajax_your_delete_action', 'clear_log_ajax');
 function clear_log_ajax()
 {
@@ -213,4 +213,4 @@ function clear_log_ajax()
 	}
 	die();
 }
-	//remove selected image from the database END(ajax action)
+//Remove selected image from the database END(ajax action)
