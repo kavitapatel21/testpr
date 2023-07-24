@@ -1,1 +1,0 @@
-<h1 style="font-family: 'Open Sans', sans-serif;"><?php echo '〒 194-0013';?></h1>

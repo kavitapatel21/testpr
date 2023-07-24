@@ -26,31 +26,33 @@ function theme_settings_pages()
 		wp_enqueue_script('thickbox');
 	}
 ?><style>
-	#close{
-    	position: absolute;
-    	z-index: 1;
-    	background-color: white;
-    	left: 90px;
-    	font-weight: 500;
-		color: black;
-    	font-size: 18px;
-    	border-radius: 5px;
-		text-decoration: none;
-	}
-	.image_one,.image_two{
-		position: relative;
-	}
-   </style>
+		#close {
+			position: absolute;
+			z-index: 1;
+			background-color: white;
+			left: 90px;
+			font-weight: 500;
+			color: black;
+			font-size: 18px;
+			border-radius: 5px;
+			text-decoration: none;
+		}
+
+		.image_one,
+		.image_two {
+			position: relative;
+		}
+	</style>
 	<div class="wrap">
 		<h1>Theme Panel</h1>
 		<form method="post" action="" enctype="multipart/form-data">
 			<div id="upload_img" class="upload_img_one">
-			<?php if(get_option('image_one')){
-			?>
-			<a id="close" href=""> X </a>
-			<?php }
-			?>
-			<img src="<?php echo get_option('image_one'); ?>" class="image_one" alt="image one" width="100" height="100" data-option="image_one">
+				<?php if (get_option('image_one')) {
+				?>
+					<a id="close" href=""> X </a>
+				<?php }
+				?>
+				<img src="<?php echo get_option('image_one'); ?>" class="image_one" alt="image one" width="100" height="100" data-option="image_one">
 			</div>
 			<br>
 			<input class="image_one_url" type="text" name="image_one" size="60" value="<?php echo get_option('image_one'); ?>">
@@ -59,17 +61,17 @@ function theme_settings_pages()
 			<br>
 
 			<div id="upload_img" class="upload_img_two">
-			<?php if(get_option('image_two')){
-			?>
-			<a id="close" href=""> X </a>
-			<?php }
-			?>
-			<img src="<?php echo get_option('image_two'); ?>" class="image_two" alt="image two" width="100" height="100" data-option="image_two">
+				<?php if (get_option('image_two')) {
+				?>
+					<a id="close" href=""> X </a>
+				<?php }
+				?>
+				<img src="<?php echo get_option('image_two'); ?>" class="image_two" alt="image two" width="100" height="100" data-option="image_two">
 			</div>
 			<br>
 			<input class="image_two_url" type="text" name="image_two" size="60" value="<?php echo get_option('image_two'); ?>">
 			<a href="#" class="image_two_upload">Upload</a>
-			
+
 			<?php
 			submit_button();
 			?>
@@ -102,10 +104,10 @@ function theme_settings_pages()
 		jQuery('.image_two_url').val(image_two).trigger('change');
 		jQuery('.image_one').attr('src', '' + image_one + '').trigger('change');
 		jQuery('.image_two').attr('src', '' + image_two + '').trigger('change');
-		if(image_one){
+		if (image_one) {
 			jQuery('.upload_img_one').append('<a id="close" href="" style="position: absolute;z-index: 1;background-color: white;left: 90px;font-weight: 500;color: black;font-size: 18px;border-radius: 5px;text-decoration: none;"> X </a>');
 		}
-		if(image_two){
+		if (image_two) {
 			jQuery('.upload_img_two').append('<a id="close" href="" style="position: absolute;z-index: 1;background-color: white;left: 90px;font-weight: 500;color: black;font-size: 18px;border-radius: 5px;text-decoration: none;"> X </a>');
 		}
 	</script>
@@ -162,7 +164,8 @@ function footer_script()
 			
     		jQuery.ajax({
         		type: 'POST',
-        		url: '<?php //echo admin_url('admin-ajax.php'); ?>',
+        		url: '<?php //echo admin_url('admin-ajax.php'); 
+						?>',
         		data: {"action": "your_delete_action"},
         		success: function (data) {
             	alert('delete'); 
@@ -171,40 +174,43 @@ function footer_script()
         		}
     		});
 		});*/
-	//remove image one on cross click END
+		//remove image one on cross click END
 
-	//remove selected img on cross click START
-		jQuery(document).on('click', '#close', function () {
+		//remove selected img on cross click START
+		jQuery(document).on('click', '#close', function() {
 			var imageContainer = jQuery(this).parent('#upload_img');
-  			var slected_img = imageContainer.find('img').data("option");
+			var slected_img = imageContainer.find('img').data("option");
 			//alert(slected_img);
-    		jQuery.ajax({
-        		type: 'POST',
-        		url: '<?php echo admin_url('admin-ajax.php'); ?>',
-        		data: {"action": "your_delete_action","slected-img": slected_img},
-        		success: function (data) {
-            	alert('image deleted'); 
-				window.location.reload();
-        		}
-    		});
+			jQuery.ajax({
+				type: 'POST',
+				url: '<?php echo admin_url('admin-ajax.php'); ?>',
+				data: {
+					"action": "your_delete_action",
+					"slected-img": slected_img
+				},
+				success: function(data) {
+					alert('image deleted');
+					window.location.reload();
+				}
+			});
 		});
-	//remove selected img on cross click END
-
+		//remove selected img on cross click END
 	</script>
 <?php
 }
 add_action("admin_footer", "footer_script");
-	//Admin panel script END
+//Admin panel script END
 
-	//remove selected image from the database START(ajax action)
-	add_action('wp_ajax_your_delete_action','clear_log_ajax');
-	function clear_log_ajax() {
-		if($_POST['slected-img'] == 'image_one'){
-			update_option('image_one','');
-		}
-		if($_POST['slected-img'] == 'image_two'){
-			update_option('image_two','');
-		}
-		die();
+//remove selected image from the database START(ajax action)
+add_action('wp_ajax_your_delete_action', 'clear_log_ajax');
+function clear_log_ajax()
+{
+	if ($_POST['slected-img'] == 'image_one') {
+		update_option('image_one', '');
 	}
+	if ($_POST['slected-img'] == 'image_two') {
+		update_option('image_two', '');
+	}
+	die();
+}
 	//remove selected image from the database END(ajax action)
