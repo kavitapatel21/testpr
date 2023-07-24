@@ -196,6 +196,7 @@ function footer_script()
 add_action("admin_footer", "footer_script");
 	//Admin panel script END
 
+	//remove selected image from the database 
 	add_action('wp_ajax_your_delete_action','clear_log_ajax');
 	function clear_log_ajax() {
 		if($_POST['slected-img'] == 'image_one'){
