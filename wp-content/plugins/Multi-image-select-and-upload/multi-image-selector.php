@@ -75,7 +75,6 @@ function theme_settings_pages_multiple_img()
 		</form>
 	</div>
 
-
 	<?php
 	//On form submit START
 	if(isset($_POST['submitImage']))  
