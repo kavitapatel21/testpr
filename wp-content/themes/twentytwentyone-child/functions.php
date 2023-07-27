@@ -509,6 +509,16 @@ add_action('woocommerce_product_data_panels', function () {
 				while ($loop->have_posts()) : $loop->the_post();
 				?>
 					<div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
+					<!--Star rating START-->
+                    <h6>Star Rating</h6>
+                    <div class="star-rating">
+                    <span class="fa fa-star" data-val="1" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="2" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="3" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="4" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="5" data-post-id=<?php echo get_the_ID();?>></span>
+                    </div>
+                    <!--Star rating END-->
 						<div class="highlights-grid-post">
 							<div class="highlights-post-image-wrapper">
 								<a href="">
@@ -569,6 +579,16 @@ add_action('woocommerce_product_data_panels', function () {
 			while ($loop->have_posts()) : $loop->the_post();
 	?>
 		<div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
+					<!--Star rating START-->
+					<h6>Star Rating</h6>
+                    <div class="star-rating">
+                    <span class="fa fa-star" data-val="1" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="2" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="3" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="4" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="5" data-post-id=<?php echo get_the_ID();?>></span>
+                    </div>
+                    <!--Star rating END-->
 			<div class="highlights-grid-post">
 				<div class="highlights-post-image-wrapper">
 					<a href="">
@@ -973,4 +993,53 @@ add_action( 'init', 'hfm_register_custom_post_type' );*/
 		/* custom post type [END] */
 
 
+// Add the custom columns to the post(ex:book) post type:
+add_filter( 'manage_post_posts_columns', 'set_custom_edit_book_columns' );
+function set_custom_edit_book_columns($columns) {
+    unset( $columns['author'] );
+    $columns['star-ratings'] = __( 'Star Ratings', 'your_star_ratings' );
+    return $columns;
+}
 
+// Add the data to the custom columns for the post(ex:book) post type:
+add_action( 'manage_post_posts_custom_column' , 'custom_book_column', 10, 2 );
+function custom_book_column( $columns, $post_id ) {
+	if($columns){
+		echo $starrating = get_post_meta($post_id,'starrating',true);
+	}
+	$i = 0;
+	?>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+		.checked {
+        	color:  #586d39 !important;
+    	}
+    	.fa{
+        	color: #a9a9a9;
+    	}
+		</style>
+	<div class="star-rating">
+	<?php
+	for ($i = 0; $i < $starrating; $i++) {
+		?>
+            <span class="fa fa-star checked" data-val="1" data-post-id=<?php echo $post_id;?>></span>
+		<?php
+	}?>
+	</div>
+	<?php
+}
+
+//Star rating value ajax START
+add_action('wp_ajax_star_rating_val', 'star_rating_val_callback');
+add_action('wp_ajax_nopriv_star_rating_val', 'star_rating_val_callback');
+function star_rating_val_callback(){
+	$ratingval = $_POST['ratingval'];
+	$current_post_id = $_POST['cur_post_id'];
+	$user_id = get_current_user_id();
+	update_user_meta($user_id, 'user_rating_val', $ratingval);
+	update_post_meta($current_post_id,'starrating',$ratingval);  
+	die();
+}
+//Star rating value ajax END

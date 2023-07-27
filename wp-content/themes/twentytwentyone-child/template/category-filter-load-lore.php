@@ -614,6 +614,15 @@
             width: 750px !important;
         }
     }
+
+    /**Star rating css START */
+    .checked {
+        color:  #586d39 !important;
+    }
+    .fa{
+        color: #a9a9a9;
+    }
+    /**Star rating css END */
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
@@ -669,7 +678,20 @@
                 $loop = new WP_Query($args); ?>
                 <?php while ($loop->have_posts()) : $loop->the_post();
                 ?>
+                
                     <div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
+
+                    <!--Star rating START-->
+                    <h6>Star Rating</h6>
+                    <div class="star-rating">
+                    <span class="fa fa-star" data-val="1" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="2" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="3" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="4" data-post-id=<?php echo get_the_ID();?>></span>
+                    <span class="fa fa-star" data-val="5" data-post-id=<?php echo get_the_ID();?>></span>
+                    </div>
+                    <!--Star rating END-->
+
                         <div class="highlights-grid-post">
                             <div class="highlights-post-image-wrapper">
                                 <a href="">
@@ -814,4 +836,32 @@
                 }
             });
         });
+
+        //Star rating START
+        $('.fa').on('click', function() {
+            //alert('here');
+            var currernt_post_id = $(this).data('post-id');
+            var stars = $(this).parent().children('span.fa');
+            for (i = 0; i < stars.length; i++) {
+                $(stars[i]).removeClass('checked');
+            }
+            var onStar = $(this).data("val");
+            for (i = 0; i < onStar; i++) {
+                $(stars[i]).addClass('checked');
+            }
+            var ratingValue = parseInt($('span.fa.checked').last().data('val'));
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                data: {
+                    action: 'star_rating_val',
+                    ratingval: ratingValue,
+                    cur_post_id: currernt_post_id
+                },
+                success: function(res) {
+                    console.log('success');
+                }
+            });
+        });
+        //Star rating END 
     </script>
