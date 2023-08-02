@@ -372,7 +372,8 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 					//contentType: "application/json",
 					complete: function(data) {
 						alert('success');
-						window.location.href = "http://localhost/testpr/cart/";
+						window.location.reload();
+						//window.location.href = "http://localhost/testpr/cart/";
 					}
 				});
 				e.preventDefault();
@@ -381,7 +382,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 	<?php
 	}
 }
-
 add_action('wp_ajax_woocommerce_ajax_add_to_cart', 'woocommerce_ajax_add_to_cart');
 add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'woocommerce_ajax_add_to_cart');
 
@@ -396,14 +396,11 @@ function woocommerce_ajax_add_to_cart()
 
 		if (WC()->cart->add_to_cart($product_id, $quantity, $variation_id)) {
 
-			do_action('woocommerce_ajax_added_to_cart', $product_id);
-			echo "ADDEDDDDDDDDDDDDDDDDDD";
-
-			if ('yes' === get_option('woocommerce_cart_redirect_after_add')) {
-				wc_add_to_cart_message(array($product_id => $quantity), true);
-			}
-
-			WC_AJAX::get_refreshed_fragments();
+			$cart_contents_count = WC()->cart->get_cart_contents_count();
+			$cart_url = wc_get_cart_url();
+			$notice_message = sprintf( __( 'Product added to cart. Cart now contains %d item(s).  <a href="%s" class="button wc-forward">View Cart</a>', 'your-text-domain' ), $cart_contents_count ,esc_url($cart_url));
+			// Display the WooCommerce notice
+			wc_add_notice( $notice_message, 'success' );
 			die;
 		} else {
 
@@ -418,9 +415,7 @@ function woocommerce_ajax_add_to_cart()
 	wp_die();
 }
 
-
-
-//Add panel in product details page admin
+/**Add custom tab panel in product details page admin START**/
 add_filter('woocommerce_product_data_tabs', function ($tabs) {
 	$tabs['additional_info'] = [
 		'label' => __('Custom plugin fields', 'txtdomain'),
@@ -430,71 +425,70 @@ add_filter('woocommerce_product_data_tabs', function ($tabs) {
 	];
 	return $tabs;
 });
+/**Add custom tab panel in product details page admin END**/
 
+/**Add fields to cutom tab on product details page START*/
 add_action('woocommerce_product_data_panels', function () {
-	?><div id="additional_product_data" class="panel woocommerce_options_panel hidden"><?php
+	?><div id="additional_product_data" class="panel woocommerce_options_panel hidden">
+	<?php
+	woocommerce_wp_text_input([
+		'id' => '_dummy_text_input',
+		'label' => __('Dummy text input', 'txtdomain'),
+		'wrapper_class' => 'show_if_simple',
+	]);
+	woocommerce_wp_checkbox([
+		'id' => '_dummy_checkbox',
+		'label' => __('Dummy checkbox', 'txtdomain'),
+		'wrapper_class' => 'hide_if_grouped',
+	]);
+	woocommerce_wp_text_input([
+		'id' => '_dummy_text_input',
+		'label' => __('Dummy text input', 'txtdomain'),
+		'type' => 'text',
+	]);
+	?></div>
+	<?php
+});
+/**Add fields to cutom tab on product details page END*/
 
-																						woocommerce_wp_text_input([
-																							'id' => '_dummy_text_input',
-																							'label' => __('Dummy text input', 'txtdomain'),
-																							'wrapper_class' => 'show_if_simple',
-																						]);
-																						woocommerce_wp_checkbox([
-																							'id' => '_dummy_checkbox',
-																							'label' => __('Dummy checkbox', 'txtdomain'),
-																							'wrapper_class' => 'hide_if_grouped',
-																						]);
-																						woocommerce_wp_text_input([
-																							'id' => '_dummy_text_input',
-																							'label' => __('Dummy text input', 'txtdomain'),
-																							'type' => 'text',
-																						]);
-
-																						?></div><?php
-		});
-
-		add_action('woocommerce_process_product_meta', function ($post_id) {
-			$product = wc_get_product($post_id);
-
-			$product->update_meta_data('_dummy_text_input', sanitize_text_field($_POST['_dummy_text_input']));
-
-			$dummy_checkbox = isset($_POST['_dummy_checkbox']) ? 'yes' : '';
-			$product->update_meta_data('_dummy_checkbox', $dummy_checkbox);
-
-			$product->update_meta_data('_dummy_number_input', sanitize_text_field($_POST['_dummy_number_input']));
-
-			$product->save();
-		});
-
-		/**Get Breadcrumb in single.php START */
-		function get_breadcrumb()
-		{
-			echo '<a href="' . home_url() . '" rel="nofollow">Home</a>';
-			if (is_category() || is_single()) {
-				echo "&nbsp;&#187;&nbsp;";
-				the_category(' &bull; ');
-				if (is_single()) {
-					echo " &nbsp;&#187;&nbsp;";
-					the_title();
-				}
-			} elseif (is_page()) {
-				echo "&nbsp;&#187;&nbsp;";
-				echo the_title();
-			} elseif (is_search()) {
-				echo "&nbsp;&#187;&nbsp;Search Results for... ";
-				echo '"<em>';
-				echo the_search_query();
-				echo '</em>"';
-			}
-		}
-		/**Get Breadcrumb in single.php END */
+add_action('woocommerce_process_product_meta', function ($post_id) {
+	$product = wc_get_product($post_id);
+	$product->update_meta_data('_dummy_text_input', sanitize_text_field($_POST['_dummy_text_input']));
+	$dummy_checkbox = isset($_POST['_dummy_checkbox']) ? 'yes' : '';
+	$product->update_meta_data('_dummy_checkbox', $dummy_checkbox);
+	$product->update_meta_data('_dummy_number_input', sanitize_text_field($_POST['_dummy_number_input']));
+	$product->save();
+});
 
 
-		function filterexpost()
-		{
-			$val = $_POST['val'];
-			$string = implode(', ', $val);
-			?>
+/**Get Breadcrumb in single.php START */
+function get_breadcrumb()
+{
+		echo '<a href="' . home_url() . '" rel="nofollow">Home</a>';
+	if (is_category() || is_single()) {
+		echo "&nbsp;&#187;&nbsp;";
+		the_category(' &bull; ');
+	if (is_single()) {
+		echo " &nbsp;&#187;&nbsp;";
+		the_title();
+	}
+	} elseif (is_page()) {
+		echo "&nbsp;&#187;&nbsp;";
+		echo the_title();
+	} elseif (is_search()) {
+		echo "&nbsp;&#187;&nbsp;Search Results for... ";
+		echo '"<em>';
+		echo the_search_query();
+		echo '</em>"';
+	}
+}
+/**Get Breadcrumb in single.php END */
+
+
+function filterexpost(){
+	$val = $_POST['val'];
+	$string = implode(', ', $val);
+	?>
 	<div class="container-custom mb-60">
 		<div class="today-highlights">
 			<div class="row flex-wrap-wrap">
@@ -556,27 +550,27 @@ add_action('woocommerce_product_data_panels', function () {
 		</div>
 	</div>
 	<?php wp_reset_postdata(); ?>
-	<?php die;
-		}
-		add_action('wp_ajax_expost', 'filterexpost');
-		add_action('wp_ajax_nopriv_expost', 'filterexpost');
+	<?php 
+	die;
+	}
+add_action('wp_ajax_expost', 'filterexpost');
+add_action('wp_ajax_nopriv_expost', 'filterexpost');
 
 
-		//Load more expost
-		function load_more_exposts()
-		{
-			$val = $_POST['catid'];
-			$string = implode(', ', $val);
-			$args = array(
-				'post_type' => 'post',
-				'posts_per_page' => 3,
-				'orderby' => 'date',
-				'order' => 'DESC',
-				'cat' => array($string),
-				'paged' => $_POST['page'],
-			);
-			$loop = new WP_Query($args);
-			while ($loop->have_posts()) : $loop->the_post();
+//Load more expost
+function load_more_exposts(){
+	$val = $_POST['catid'];
+	$string = implode(', ', $val);
+	$args = array(
+		'post_type' => 'post',
+		'posts_per_page' => 3,
+		'orderby' => 'date',
+		'order' => 'DESC',
+		'cat' => array($string),
+		'paged' => $_POST['page'],
+	);
+	$loop = new WP_Query($args);
+	while ($loop->have_posts()) : $loop->the_post();
 	?>
 		<div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
 					<!--Star rating START-->
@@ -625,51 +619,41 @@ add_action('woocommerce_product_data_panels', function () {
 <?php wp_reset_postdata();
 			exit;
 		}
-		add_action('wp_ajax_load_expost', 'load_more_exposts');
-		add_action('wp_ajax_nopriv_load_expost', 'load_more_exposts');
+add_action('wp_ajax_load_expost', 'load_more_exposts');
+add_action('wp_ajax_nopriv_load_expost', 'load_more_exposts');
 
-		/**Get current tag val START */
-		add_action('wp_ajax_get_tag_val', 'get_tag_callback');
-		add_action('wp_ajax_nopriv_get_tag_val', 'get_tag_callback');
-		function get_tag_callback()
-		{
-			$tag = $_POST['param'];
-			$lower_tag = strtolower($tag);
-			$tag_slug = str_replace(' ', '-', $lower_tag);
-			//echo $tag;
-			//;
-			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
-			if (!$tag) {
-				$args = array(
-					'post_type' => 'post',
-					'orderby' => 'date',
-					'order' => 'DESC',
-				);
-				$loop = new WP_Query($args);
-				$total_pg =  $loop->max_num_pages;
-				//echo $total_pg;
-			} else {
-				$args = array(
-					'post_type' => 'post',
-					'orderby' => 'date',
-					'order' => 'DESC',
-					'tag' => $tag_slug,
-				);
-				$loop = new WP_Query($args);
-				$total_pg = $loop->max_num_pages;
-			}
-
-			$url = $_POST['base'];
-			//$newbase = $url . '/'.$tag;
-
-			//$per_page = 6;
-			//$default_offset = 7;
-			if ($tag) {
-				$newbase = 'https://transdirect.plutustec.in/tag/' . $tag_slug;
-			} else {
-				$newbase = 'https://transdirect.plutustec.in/latest-blog/';
-			}
+/**Get current tag val START */
+add_action('wp_ajax_get_tag_val', 'get_tag_callback');
+add_action('wp_ajax_nopriv_get_tag_val', 'get_tag_callback');
+function get_tag_callback(){
+	$tag = $_POST['param'];
+	$lower_tag = strtolower($tag);
+	$tag_slug = str_replace(' ', '-', $lower_tag);
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	if (!$tag) {
+		$args = array(
+			'post_type' => 'post',
+			'orderby' => 'date',
+			'order' => 'DESC',
+		);
+		$loop = new WP_Query($args);
+		$total_pg =  $loop->max_num_pages;
+	} else {
+		$args = array(
+			'post_type' => 'post',
+			'orderby' => 'date',
+			'order' => 'DESC',
+			'tag' => $tag_slug,
+		);
+		$loop = new WP_Query($args);
+		$total_pg = $loop->max_num_pages;
+	}
+		$url = $_POST['base'];
+	if ($tag) {
+		$newbase = 'https://transdirect.plutustec.in/tag/' . $tag_slug;
+	} else {
+		$newbase = 'https://transdirect.plutustec.in/latest-blog/';
+	}
 ?>
 	<div class="row mt-5">
 		<?php
@@ -887,8 +871,8 @@ add_action('woocommerce_product_data_panels', function () {
 		</div>
 	</div>
 <?php
-			die;
-		}
+	die;
+	}
 
 		/**Get current tag val END */
 

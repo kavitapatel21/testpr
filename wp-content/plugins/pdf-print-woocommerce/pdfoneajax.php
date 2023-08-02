@@ -8,6 +8,9 @@ $delete = $wpdb->query("TRUNCATE TABLE $tablename");
 $data=array('order_id' => $order_id);
 $wpdb->insert( $tablename, $data);
 include_once 'vendor/autoload.php';
+// Language file with translations
+$languageFile = include_once 'language_file.php';
+
 	$config = [
 		//'mode' => 'ja',
 		//'allow_charset_conversion' => true,
@@ -51,9 +54,13 @@ include_once 'vendor/autoload.php';
 	$template = file_get_contents($plugins_url);
 	//print_r($template);
 	//die;
-	$pdfcontent = $template;	
+	$pdfcontent = $template;
 	header('Content-type: application/pdf');
-	$mpdf->WriteHTML($pdfcontent);
+
+	// Replace words in the content with translations
+	$translatedContent = strtr($pdfcontent, $languageFile);
+	
+	$mpdf->WriteHTML($translatedContent);
 	$mpdf->SetDisplayMode('fullpage');
 	$mpdf->autoLangToFont  = true;
 	$filename = "見積書" . '_'.date('YmdHis') . '_' . $order_id . '.pdf';
