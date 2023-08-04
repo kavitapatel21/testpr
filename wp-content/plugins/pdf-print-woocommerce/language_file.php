@@ -7,4 +7,5 @@ return [
     'test - red, midium' => 'テスト - 赤、中',
     // Add more translations as needed
 ];
+
 ?>

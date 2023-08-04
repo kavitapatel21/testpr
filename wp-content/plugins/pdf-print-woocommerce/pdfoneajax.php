@@ -29,8 +29,8 @@ $languageFile = include_once 'language_file.php';
 	$mpdf = new \Mpdf\Mpdf($config);
 	$mpdf->SetHTMLFooter('<table width="100%"><tr><td width="33%" align="right">{PAGENO}/{nbpg}</td></tr></table>');
 
-	
-	//******************
+	//********************************
+
 	$tablename = 'wp_order_sequence';
 	
 	$ord_id = $wpdb->get_results("SELECT pdf FROM `wp_order_sequence` WHERE (order_id = $order_id)");
@@ -48,7 +48,7 @@ $languageFile = include_once 'language_file.php';
 		$wpdb->insert( $tablename, $data);
 	}
 
-	//******************
+	//************************************
  
 	$plugins_url = plugins_url().'/pdf-print-woocommerce/invoice-one.php';
 	$template = file_get_contents($plugins_url);
@@ -57,7 +57,7 @@ $languageFile = include_once 'language_file.php';
 	$pdfcontent = $template;
 	header('Content-type: application/pdf');
 
-	// Replace words in the content with translations
+	// Replace words in the content with translations Start
 	$translatedContent = strtr($pdfcontent, $languageFile);
 	
 	$mpdf->WriteHTML($translatedContent);

@@ -82,7 +82,17 @@ add_action('woocommerce_after_single_product_summary', 'wp_kama_woocommerce_afte
 function wp_kama_woocommerce_after_single_product_summary_action()
 {
 	global $woocommerce, $product, $post;
+	$product_id = $product->get_id();
+	$checkbox_value = get_field('variation_table_onoff'); 
+	if ($checkbox_value != 'off') {
+	
+	
 	if ($product->is_type('variable')) {
+		?>
+		<style>
+    div.woocommerce-variation-price, table.variations { display:none; }
+</style>
+		<?php
 		$available_variations = $product->get_available_variations();
 		$name = $product->get_title();
 		$id = $product->get_id();
@@ -93,26 +103,113 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 		//acf group start
 
 		//acf group end
-?>
+	?>
+	
+	
+		<?php
+		$tr_count = array();
+		
+		$tr_description_count = array();
+		$tr_dimensions_count = array();
+		$tr_weight_count = array();
+		
+		$tr_description_display = array();
+		$tr_dimensions_display = array();
+		$tr_weight_display = array();
+		
+		//echo "<pre>";
+		//print_r($available_variations);
+		
+		foreach ($available_variations as $key => $value) { 
+		
+		if($value['variation_description']){
+		array_push($tr_description_count, +1);
+		array_push($tr_description_display, 'yes');		
+		} 
+		
+		if($value['dimensions']['length'] || ['dimensions']['width'] || $value['dimensions']['height']){ 
+		array_push($tr_weight_count, +1);
+		array_push($tr_dimensions_display, 'yes');
+		}	 
+		
+		$weight = $value['weight'];
+		$weight_result = substr($weight, 0, 6);
+		if($weight_result  != "field_"){ 
+		array_push($tr_count, +1);
+		array_push($tr_weight_display, 'yes');
+		}
+		
+		$tr = count($value['attributes']);
+		array_push($tr_count, $tr);	
+		}
+
+		
+		$attributes_count = $tr_count[1];		
+		$description_count = $tr_description_count[0];
+		$dimensions_count = $tr_dimensions_count[0];
+		$weight_count = $tr_weight_count[0];
+		$tr_count_final_total = $attributes_count + $description_count + $dimensions_count + $weight_count;
+		$tr_count_final = $tr_count_final_total + 6;
+		$loop_count = 4 - $tr_count_final_total;
+		
+		
+		?>
+	
 		<div class="varation_table_main" style="overflow-x:auto;">
-			<table class="varation_table" style="width:100%;white-space: nowrap;">
+			<table class="varation_table" style="width:100%;">
 				<tbody>
 					<tr>
-						<th style="text-align:center;background-color: #f5f5f5;width: 300px;">SKU</th>
-						<?php
-						$specifications_group_id = 8748; // ID of the your group as you mentioned 
-						$specifications_fields = array();
-						$fields = acf_get_fields($specifications_group_id);
-						$i = 0;
-						foreach ($fields as $field) {
-							$field_value = get_field($field['name']);
-							if ($field_value && !empty($field_value)) {
+						<th style="text-align:center;background-color: #f5f5f5;width: 80px;"><input type='checkbox' name='selected[]' id="check-demo-all" value=''>  選択する</th>
+						<th style="text-align:center;background-color: #f5f5f5;width: 80px;">画像</th>
+						<th style="text-align:center;background-color: #f5f5f5;width: 140px;">商品コード</th>
+						
+						<?php 
+						if($tr_count_final < 10 ){
+							
+							$specifications_group_id = 8748; 
+							$specifications_fields = array();
+							$fields = acf_get_fields( $specifications_group_id );
+							$counter = 0;
+							foreach ( $fields as $field ) {
+								$field_value = get_field( $field['name'] );		
+								
+								if ( $field_value && !empty( $field_value ) ) {
+								if ( $field['label'] != "Variation table On/Off" && $field['label'] != "カラー" ) {
+								$field['label'];
+								?>
+								<th style="text-align:center;background-color: #f5f5f5;width: 140px;"><?php echo $field['label']; ?></th>
+								<?php
+								$counter++;
+								if ($counter >= $loop_count) {
+									break; 
+								}
+									}
+								
+								} 
+							}
+								//acf group end
+						}
 						?>
-								<th style="text-align:center;background-color: #f5f5f5;"><?php echo $field['label']; ?></th>
-						<?php }
-							$i++;
-							if ($i == 3) break;
-						} ?>
+						
+						<?php //foreach ($available_variations as $key => $value) { ?>
+						
+						<?php if($tr_description_display[0] == 'yes'){ ?>
+						<th style="text-align:center;background-color: #f5f5f5;width: auto;">説明</th>
+						<?php } ?>
+						
+						<?php if($tr_dimensions_display[0] == "yes"){ ?>
+						<th style="text-align:center;background-color: #f5f5f5;width: 160px;">寸法 (長×幅×高) (mm)</th>
+						<?php } ?>
+						
+						<?php 
+						//$weight = $value['weight'];
+						//$weight_result = substr($weight, 0, 6);
+						if($tr_weight_display[0] == "yes" ){  ?>
+						<th style="text-align:center;background-color: #f5f5f5;width: 100px;">重量 (g)</th> 
+						<?php } ?>
+						
+						<?php //} ?>
+						
 						<?php
 						foreach ($product_attr as $attr) {
 							foreach ($attr as $attribute) {
@@ -127,53 +224,123 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 						}
 						?>
 
-						<th style="text-align:center;background-color: #f5f5f5;">在庫状況</th>
+						<th style="text-align:center;background-color: #f5f5f5;">在庫</th>
 						<th style="text-align:center;background-color: #f5f5f5;">価格</th>
 						<th style="text-align:center;background-color: #f5f5f5;">数量</th>
-						<th style="text-align:center;background-color: #f5f5f5;">カートに追加</th>
+						<!--<th style="text-align:center;background-color: #f5f5f5;">カートに追加</th>-->
 
 
 					</tr>
-					<?php foreach ($available_variations as $key => $value) {
-						echo "<pre>";
-						//print_r($value); 
-					?>
+					<?php foreach ($available_variations as $key => $value) { ?>
 						<tr>
-							<td style="font-size: 14px !important;">
-								<div style="width: 300px;white-space: break-spaces;margin:auto;"><?php echo $value['sku']; ?></div>
+						
+							<td><?php if($value['max_qty'] > 0){?>
+								<input type='checkbox' name='selected[]' id="check-demo-<?php echo $value['variation_id'];?>" value='<?php echo $value['variation_id'];?>' data-qty_<?php echo $value['variation_id'];?>='1'>
+							<?php } ?>
 							</td>
-							<?php
-							$specifications_group_id = 8748; // ID of the your group as you mentioned 
-							$specifications_fields = array();
-							$fields = acf_get_fields($specifications_group_id);
-							$i = 0;
-							foreach ($fields as $field) {
-								$field_value = get_field($field['name']);
-								if ($field_value && !empty($field_value)) {
+						
+							<td style="font-size: 12px !important;white-space: nowrap; text-align:center;">
+								<img style="height: 65px;width: 65px;max-width: 65px;" src="<?php echo $value['image']['thumb_src']; ?>">
+							</td>
+						
+							<td style="font-size: 12px !important;white-space: nowrap; text-align:center;">
+								<div class="code" style="width: 140px;white-space: break-spaces;margin:auto; text-align:left;"><?php echo $value['sku']; ?></div>
+							</td>
+							
+							<?php 
+							if($tr_count_final < 10 ){
+								
+								$specifications_group_id = 8748; 
+								$specifications_fields = array();
+								$fields = acf_get_fields( $specifications_group_id );
+								$counter = 0;
+								foreach ( $fields as $field ) {
+									$field_value = get_field( $field['name'] );		
+									if ( $field_value && !empty( $field_value ) ) {
+									if ( $field['label'] != "Variation table On/Off" && $field['label'] != "カラー") {
+									$field['label'];
+									?>
+									<td style="font-size: 12px !important;white-space: nowrap; text-align:center;">
+									<div class="code" style="width: 140px;white-space: break-spaces;margin:auto; text-align:left;">
+									<?php echo $specifications_fields[$field['name']]['value'] = $field_value; ?>
+									</div>
+									</td>
+									<?php
+									$counter++;
+									if ($counter >= $loop_count) {
+										break; 
+									}
+									}
+									} 
+								}
+									//acf group end
+							}
 							?>
-									<td style="text-align:center;font-size: 14px;"><?php echo $specifications_fields[$field['name']]['value'] = $field_value; ?></td>
-							<?php }
-								$i++;
-								if ($i == 3) break;
-							} ?>
-
-							<?php
+							
+							<?php if($tr_description_display[0] == 'yes'){ ?>
+							<td class="explanation" style="font-size: 12px !important; ">		
+								<?php 
+								
+								echo $value['variation_description'];
+																
+								?>
+							</td>
+							<?php } ?>
+							<?php if($tr_dimensions_display[0] == "yes"){ ?>
+							<td class="size_bkp" style="font-size: 12px !important;white-space: nowrap;width: 160px; text-align: center !important;">		
+								<?php 
+								if($value['dimensions']['length']){
+								echo $value['dimensions']['length'];
+								}
+								if($value['dimensions']['width']){
+								echo '×'.$value['dimensions']['width'];
+								}
+								if($value['dimensions']['height']){
+								echo '×'.$value['dimensions']['height'];
+								}
+					
+								?>
+							</td>
+							<?php } ?>
+							
+							<?php 
+							//$weight = $value['weight'];
+							//$weight_result = substr($weight, 0, 6);
+							if($tr_weight_display[0] == "yes" ){ 
+							?>
+							<td class="weight_bkp" style="font-size: 12px !important;white-space: nowrap;width: 100px;">		
+								<?php 
+								$weight = $value['weight'];
+								if($weight){
+									$weight_result = substr($weight, 0, 6);
+									if($weight_result == "field_"){
+										echo " ";	
+									}else{
+										echo $weight;
+									}	
+								}
+								
+								?>
+							</td>
+								<?php } ?>
+					
+						
+							<?php							
 							foreach ($value['attributes'] as $attr_key => $attr_value) {
-
-
+								//echo $attr_key;
 							?>
-								<td style="font-size: 14px !important;">
+								<td style="font-size: 12px !important;white-space: nowrap; text-align:center !important;">
 									<b>
 										<?php
-										$result = substr($attr_key, 0, 16);
-										//echo $result;
-										if ($result == 'attribute_pa_add') {
+										$result = substr($attr_key, 0, 18);
+										if ($result == 'attribute_wrapping') {
 											$taxonomy = str_replace('attribute_', '', $attr_key);
 											$koostis = $product->get_attribute($taxonomy);
-											$str_explode = explode(",", $koostis);
-
+											$str_arr = str_replace('|', ',', $koostis);
+											$str_explode = explode (",", $str_arr); 
+											
 										?>
-											<select id="<?php echo $taxonomy; ?>" class="variable" data-id="<?php echo $value['variation_id']; ?>" name="<?php echo $attr_key; ?>" data-attribute_name="<?php echo $attr_key; ?>" data-show_option_none="yes">
+											<select id="<?php echo $taxonomy; ?>" class="variable_<?php echo $value['variation_id']; ?>" data-id="<?php echo $value['variation_id']; ?>" name="<?php echo $attr_key; ?>" data-attribute_name="<?php echo $attr_key; ?>" data-show_option_none="yes">
 												<option value="">
 													<font style="vertical-align: inherit;">
 														<font style="vertical-align: inherit;">選んでください</font>
@@ -189,12 +356,11 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 												<?php } ?>
 											</select>
 										<?php
-										} else if ($result = substr($attr_key, 0, 16) == 'attribute_%') {
+										//echo $attr_key;
+										} else if (str_contains($attr_key, 'attribute_')) { 
 											echo $attr_value;
 										} else {
-											//echo "Hiiiii";
-											echo $attr_value;
-
+											//echo $attr_value;
 											global $wpdb;
 											$slug = "SELECT name FROM `wp_terms` WHERE slug = '" . $attr_value . "'";
 											$slug_query_array = $wpdb->get_results($slug);
@@ -205,7 +371,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 								</td>
 							<?php } ?>
 
-							<td style="font-size: 14px !important;">
+							<td style="font-size: 12px !important;white-space: nowrap;">
 								<?php
 								$stock = $value['max_qty'];
 								if ($stock > 0) {
@@ -219,8 +385,27 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 								}
 								?>
 							</td>
-							<td style="font-size: 14px !important;"><?php echo "¥" . number_format($value['display_price']); ?></td>
-							<td class="variant_product_quantity" style="font-size: 14px !important;">
+							<td class="sellprice" style="font-size: 12px !important;white-space: nowrap;">
+							<?php 
+							echo "<div style='display: flex;align-items: baseline;justify-content: center'>";
+							if($value['display_price'] < $value['display_regular_price']){
+							$percentage = (($value['display_regular_price'] - $value['display_price']) / $value['display_regular_price']) * 100;
+							echo "<div style='font-size: 14px;color: #666;font-weight: 500;text-decoration: line-through;margin-right: 5px;'>";
+							echo "¥" . number_format($value['display_regular_price']);
+							echo "</div>";
+							echo "<div style='font-size: 14px;color: #ff3300;font-weight: 500;'>";
+							$per = round($percentage);
+							echo "(-".$per."%)";
+							echo "</div>";
+							}
+							echo "</div>";
+							echo "<div style='font-size: 24px;color: #ff3300;font-weight: 600;margin-right: 10px;'>";
+							echo "¥" . number_format($value['display_price']); 
+							echo "</div>";
+							
+							?>
+							</td>
+							<td class="variant_product_quantity" style="font-size: 12px !important;white-space: nowrap;">
 								<?php $permalink = get_permalink($product->get_id());
 								$step = 1;
 								$min_value = 1;
@@ -234,23 +419,22 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 								<div class="quantity">
 									<label class="screen-reader-text" for="<?php echo esc_attr($id); ?>"><?php esc_html_e('Quantity', 'woocommerce'); ?></label>
 									<input type="button" value="-" class="qty_button minus quantity_counter" data-id="<?php echo $value['variation_id'] ?>" />
-									<input type="number" data-id="<?php echo $value['variation_id'] ?>" id="<?php echo esc_attr($id); ?>" class="input-text qty text quantity_counter" step="<?php echo esc_attr($step); ?>" min="<?php echo esc_attr($min_value); ?>" max="<?php echo esc_attr(0 < $max_value ? $max_value : ''); ?>" name="<?php echo esc_attr($input_name); ?>" value="<?php echo esc_attr($input_value); ?>" title="<?php echo esc_attr_x('Qty', 'Product quantity input tooltip', 'woocommerce'); ?>" size="4" />
+									<input type="number" id="<?php echo esc_attr($id); ?>" class="input-text qty text quantity_counter" step="<?php echo esc_attr($step); ?>" min="<?php echo esc_attr($min_value); ?>" max="<?php echo esc_attr(0 < $max_value ? $max_value : ''); ?>" name="<?php echo esc_attr($input_name); ?>" value="<?php echo esc_attr($input_value); ?>" title="<?php echo esc_attr_x('Qty', 'Product quantity input tooltip', 'woocommerce'); ?>" size="4" />
 									<input type="button" value="+" class="qty_button plus quantity_counter" data-id="<?php echo $value['variation_id'] ?>" />
 								</div>
-
 							</td>
-							<td style="width:115px;font-size: 14px !important;">
-								<form action="<?php echo esc_url($product->add_to_cart_url()); ?>" method="post" enctype='multipart/form-data' id="cart_form">
-									<input type="hidden" name="variation_id" value="<?php echo $value['variation_id'] ?>" />
-									<input type="hidden" name="product_id" value="<?php echo esc_attr($post->ID); ?>" />
-									<input type="hidden" name="add-to-cart" value="<?php echo esc_attr($post->ID); ?>" />
-									<input type="hidden" id="<?php echo "quantityy_" . $value['variation_id'] ?>" name="quantity" class="quantity_value" value="1" data-id="<?php echo $value['variation_id'] ?>" data-prduct-id="<?php echo esc_attr($post->ID); ?>" />
+							<!--<td style="width:100px;font-size: 12px !important;white-space: nowrap; text-align:center;">
+								<form action="<?php //echo esc_url($product->add_to_cart_url()); ?>" method="post" enctype='multipart/form-data'>
+									<input type="hidden" name="variation_id" value="<?php //echo $value['variation_id'] ?>" />
+									<input type="hidden" name="product_id" value="<?php //echo esc_attr($post->ID); ?>" />
+									<input type="hidden" name="add-to-cart" value="<?php //echo esc_attr($post->ID); ?>" />
+									<input type="hidden" id="<?php //echo "quantity_" . $value['variation_id'] ?>" name="quantity" class="quantity_value" value="1" />
 
 									<?php
-									if (!empty($value['attributes'])) {
+									/**if (!empty($value['attributes'])) {
 										foreach ($value['attributes'] as $attr_key => $attr_value) {
 									?>
-											<input id="<?php echo $attr_key . "_" . $value['variation_id'] ?>" type="hidden" name="<?php echo $attr_key ?>" value="<?php echo $attr_value ?>">
+											<input id="<?php echo $attr_key . "_" . $value['variation_id'] ?>" type="hidden" class="dynamic_variation_<?php echo $value['variation_id'] ?>" name="<?php echo $attr_key ?>" value="<?php echo $attr_value ?>">
 									<?php
 										}
 									}
@@ -266,20 +450,20 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 										<button type="submit" class="single_add_to_cart_button" disabled>
 											<?php echo apply_filters('single_add_to_cart_text', __('', 'woocommerce'), $product->product_type); ?>
 										</button>
-									<?php }
+									<?php }**/
 									?>
 								</form>
-							</td>
+							</td>-->
 
 						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
 
-			<button type="submit" class="custom_addtocart" id="custom_addtocart">
-				ADD TO CART
-			</button>
+			<input type="button" id="chk_btn" value="カートに追加">
+			<input type="button" id="chk_btn_cart_pg" value="今すぐ購入">
 		</div>
+					
 		<script>
 			jQuery('.variable').on('change', function() {
 				var dropdown_name = jQuery(this).attr('name');
@@ -287,133 +471,292 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 				var select_value = this.value;
 				jQuery('#' + dropdown_name + '_' + product_id).val(select_value);
 			});
-
-			jQuery(function(jQuery) {
-
-				// Quantity "plus" and "minus" buttons
-				jQuery(document.body).on('click', '.plus, .minus', function() {
-					var qty = jQuery(this).closest('.quantity').find('.qty');
-					//alert(qty);
-					var val = parseFloat(qty.val());
-
-
-					var max = parseFloat(qty.attr('max'));
-					var min = parseFloat(qty.attr('min'));
-					var step = parseFloat(qty.attr('step'));
-
-					// Change the value if plus or minus
-					if (jQuery(this).is('.plus')) {
-						if (max && (max <= val)) {
-							qty.val(max);
-						} else {
-							qty.val(val + step);
-							var plus_val = val + step
-							//alert(val + step);
-							var data_id_val = jQuery(this).attr("data-id");
-							jQuery('#quantityy_' + data_id_val).val(plus_val).trigger('change');
-							//var variant_id = jQuery(this).attr('data-id');
-							//jQuery('.quantity_value').attr('data-id',variant_id).val(plus_val);
-						}
-					} else {
-						if (min && (min >= val)) {
-							qty.val(min);
-						} else if (val > 1) {
-							qty.val(val - step);
-							var minus_val = val - step
-							var data_id_val = jQuery(this).attr("data-id");
-							jQuery('#quantityy_' + data_id_val).val(minus_val).trigger('change');;
-							//alert(minus_val);
-							//jQuery('.quantity_value').val(minus_val);
-						}
-					}
-
-				});
-			});
-
-			jQuery('#custom_addtocart').click(function(e) {
-				var prduct_arr = [];
-				prduct_id_index = 0;
-				var quantity_arr = [];
-				qty_index = 0;
-				var variant_id_arr = [];
-				variant_id_index = 0;
-				jsonObj = [];
-				//prd = {};
-				jQuery("input[id^='quantityy_']").each(function(i, el) {
-					//console.log('quantity:'+jQuery(this).val());
-					//console.log('variation-id:'+jQuery(this).data('id'));
-					var quantity = jQuery(this).val();
-					//alert(quantity);
-					var variation_id = jQuery(this).data('id');
-					var product_id = jQuery(this).data('prduct-id');
-					prooduct = {};
-					prooduct["quantity"] = quantity;
-					prooduct["variation_id"] = variation_id;
-					prooduct["product_id"] = product_id;
-					jsonObj.push(prooduct);
-				});
-				//console.log(jsonObj);
-				//console.log(quantity_arr);
-				//console.log(variant_id_arr);
-				//console.log(prduct_arr);
-
-				//var formData = jQuery('#cart_form').serialize();
-				//console.log(formData);
-				var data = jsonObj;
-				console.log(data);
-				jQuery.ajax({
-					type: 'POST',
-					url: '<?php echo admin_url('admin-ajax.php'); ?>',
-					dataType: 'json',
-					data: {
-						action: 'woocommerce_ajax_add_to_cart',
-						frmdata: data
-					},
-					//contentType: "application/json",
-					complete: function(data) {
-						alert('success');
-						window.location.reload();
-						//window.location.href = "http://localhost/testpr/cart/";
-					}
-				});
-				e.preventDefault();
-			});
 		</script>
+
 	<?php
+	}else{
+		?>
+			
+		<style>
+    div.woocommerce-variation-price, table.variations { display:block; }
+</style>
+		
+		<div class="varation_table_main" style="overflow-x: auto;">
+    <table class="varation_table" style="width: 100%;">
+        <tbody>
+            <tr>
+				<?php 	
+				$specifications_group_id = 8748; 
+				$specifications_fields = array();
+				$fields = acf_get_fields( $specifications_group_id );
+				foreach ( $fields as $field ) {
+					$field_value = get_field( $field['name'] );		
+					
+					if ( $field_value && !empty( $field_value ) ) {
+					if ( $field['label'] != "Variation table On/Off" && $field['label'] != "カラー" ) {
+					$field['label'];
+					?>
+					<th style="text-align:center;background-color: #f5f5f5;width: 140px;"><?php echo $field['label']; ?></th>
+					<?php
+					}
+					
+					} 
+				}
+					//acf group end
+			
+				?>
+            </tr>
+            <tr>
+			
+				<?php 
+					
+						
+						$specifications_group_id = 8748; 
+						$specifications_fields = array();
+						$fields = acf_get_fields( $specifications_group_id );
+						foreach ( $fields as $field ) {
+							$field_value = get_field( $field['name'] );		
+							if ( $field_value && !empty( $field_value ) ) {
+							if ( $field['label'] != "Variation table On/Off" && $field['label'] != "カラー") {
+							$field['label'];
+							?>
+							<td style="font-size: 12px !important;white-space: nowrap; text-align:center;">
+							<div class="code" style="width: 140px;white-space: break-spaces;margin:auto; text-align:center;">
+							<?php echo $specifications_fields[$field['name']]['value'] = $field_value; ?>
+							</div>
+							</td>
+							<?php
+
+							}
+							} 
+						}
+							//acf group end
+					
+					?>
+            </tr>
+      
+            
+
+        </tbody>
+    </table>
+</div>
+
+		<?php
 	}
+	 } 
 }
-add_action('wp_ajax_woocommerce_ajax_add_to_cart', 'woocommerce_ajax_add_to_cart');
-add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'woocommerce_ajax_add_to_cart');
 
-function woocommerce_ajax_add_to_cart()
-{
 
-	$data = $_POST['frmdata'];
+function add_this_script_footer(){ ?>
+
+	<script>
+		jQuery(function(jQuery) {
+					jQuery(document.body).on('click', '.plus, .minus', function() {
+						var qty = jQuery(this).closest('.quantity').find('.qty');
+						var val = parseFloat(qty.val());
+						var max = parseFloat(qty.attr('max'));
+						var min = parseFloat(qty.attr('min'));
+						var step = parseFloat(qty.attr('step'));
+						if (jQuery(this).is('.plus')) {
+							if (max && (max <= val)) {
+								qty.val(max);
+							} else {
+								qty.val(val + step);
+								var plus_val = val + step
+								
+								var data_id_val = jQuery(this).attr("data-id");
+								
+								jQuery('#quantity_' + data_id_val).val(plus_val);
+								jQuery('#check-demo-'+ data_id_val).attr('data-qty_' + data_id_val,plus_val);
+							}
+						} else {
+							if (min && (min >= val)) {
+								qty.val(min);
+							} else if (val > 1) {
+								qty.val(val - step);
+								var minus_val = val - step
+								
+								var data_id_val = jQuery(this).attr("data-id");
+								jQuery('#quantity_' + data_id_val).val(minus_val);	
+								jQuery('#check-demo-'+ data_id_val).attr('data-qty_' + data_id_val,minus_val);
+							}
+						}
+	
+					});
+				});
+	</script>
+	
+	<?php } 
+	
+	add_action('wp_footer', 'add_this_script_footer'); 
+
+
+function variable_ajax_call(){ ?>
+<script>
+
+jQuery("#check-demo-all").click(function(){
+        jQuery(".varation_table input[type=checkbox]").prop('checked', jQuery(this).prop('checked'));
+
+});
+
+var datas = [];
+var qty = [];
+jsonObj = [];
+var attribute = [];
+jQuery(document).on('click', '#chk_btn', function(e) {
+	jQuery(".varation_table input[type=checkbox]:checked").each(function() {
+		var variation_id = jQuery(this).val();
+		var quantity = jQuery(this).attr('data-qty_'+variation_id);
+		var selected_val = jQuery('.variable_'+variation_id).find(":selected").val();
+		var product_id = jQuery('product_id').val();
+		//alert(selected_val);
+		jQuery('.dynamic_variation_'+variation_id).each(function(index, obj){
+			var variation_val = jQuery(this).val();
+			var variation_name = jQuery(this).attr('name'); 
+			attribute.push({variation_name: variation_name, variation_val: variation_val });
+		});
+		product = {};
+		product["quantity"] = quantity;
+		product["variation_id"] = variation_id;
+		product["selected_val"] = selected_val;
+		product["product_id"] =  product_id;
+		product["attributes"] = []
+		var attributes = [];
+		for (var i = 0; i < attribute.length; i++) {
+			var obj = {
+				attribute_name : attribute[i].variation_name,
+				attribute_val : attribute[i].variation_val,				
+			}	
+			product["attributes"].push(obj)
+		}		
+		jsonObj.push(product);
+	});
+	//console.log(jsonObj);
+	//exit();
+			e.preventDefault();
+			//alert(datas);
+			var datas = jsonObj;
+			//console.log(data);
+			jQuery.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: '<?php echo admin_url('admin-ajax.php'); ?>',
+				data: {
+					'action': 'chk_val',
+					'val': datas,
+				},
+				success: function(response) {
+					setTimeout(function() {
+    					location.reload();
+					}, 1000);
+					jQuery(window).on('beforeunload', function() {
+  					jQuery('body').hide();
+  					jQuery(window).scrollTop(0);
+					});
+				}
+			});
+		});
+
+
+
+		jQuery(document).on('click', '#chk_btn_cart_pg', function(e) {
+	jQuery(".varation_table input[type=checkbox]:checked").each(function() {
+		var variation_id = jQuery(this).val();
+		var quantity = jQuery(this).attr('data-qty_'+variation_id);
+		var selected_val = jQuery('.variable_'+variation_id).find(":selected").val();
+		var selected_attr_name = jQuery('.variable_'+variation_id).attr('name'); 
+		//alert(selected_attr_name);
+		//exit;
+		var product_id = jQuery('product_id').val();
+		//alert(selected_val);
+		jQuery('.dynamic_variation_'+variation_id).each(function(index, obj){
+			var variation_val = jQuery(this).val();
+			var variation_name = jQuery(this).attr('name'); 
+			attribute.push({variation_name: variation_name, variation_val: variation_val });
+		});
+		product = {};
+		product["quantity"] = quantity;
+		product["variation_id"] = variation_id;
+		product["selected_val"] = selected_val;
+		product['selected_attr_name'] = selected_attr_name;
+		product["product_id"] =  product_id;
+		product["attributes"] = []
+		var attributes = [];
+		for (var i = 0; i < attribute.length; i++) {
+			var obj = {
+				attribute_name : attribute[i].variation_name,
+				attribute_val : attribute[i].variation_val,				
+			}	
+			product["attributes"].push(obj)
+		}		
+		jsonObj.push(product);
+	});
+	//console.log(jsonObj);
+	//exit();
+			e.preventDefault();
+			//alert(datas);
+			var datas = jsonObj;
+			//console.log(data);
+			jQuery.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: '<?php echo admin_url('admin-ajax.php'); ?>',
+				data: {
+					'action': 'chk_val',
+					'val': datas,
+				},
+				success: function(response) {
+					//alert('success');
+					//window.location.reload();
+					window.location.href = "http://localhost/testpr/cart";
+				}
+			});
+		});
+</script>
+
+<?php } 
+
+add_action('wp_footer', 'variable_ajax_call'); 
+
+add_action('wp_ajax_chk_val', 'chk_val_callback');
+add_action('wp_ajax_nopriv_chk_val', 'chk_val_callback');
+function chk_val_callback(){
+	//echo '<pre>';
+	$data = $_POST['val'];
+	//print_r($data);
 	foreach ($data as $prd) {
-		$product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($prd['product_id']));
-		$quantity = empty($prd['quantity']) ? 1 : wc_stock_amount($prd['quantity']);
-		$variation_id = absint($prd['variation_id']);
-
-		if (WC()->cart->add_to_cart($product_id, $quantity, $variation_id)) {
-
-			$cart_contents_count = WC()->cart->get_cart_contents_count();
-			$cart_url = wc_get_cart_url();
-			$notice_message = sprintf( __( 'Product added to cart. Cart now contains %d item(s).  <a href="%s" class="button wc-forward">View Cart</a>', 'your-text-domain' ), $cart_contents_count ,esc_url($cart_url));
-			// Display the WooCommerce notice
-			wc_add_notice( $notice_message, 'success' );
-			die;
-		} else {
-
-			$data = array(
-				'error' => true,
-				'product_url' => apply_filters('woocommerce_cart_redirect_after_error', get_permalink($product_id), $product_id)
-			);
-
-			echo wp_send_json($data);
+		$variation_id = $prd['variation_id'];
+		$selecetd_attr_name = $prd['selected_attr_name'];
+		// Replace this with the quantity you want to add to the cart
+		$quantity = $prd['quantity'];
+		$selecetd_item = $prd['selected_val'];
+		$product_id = $prd['product_id'];
+		/**$cart_item_data = array(
+			'wrapping' => $selecetd_item,
+		);*/
+		// Get the product variation data
+		$variation_data = wc_get_product($variation_id);
+		// Add the variation to the cart
+		$variation_attributes = [];
+		//print_r($prd['attributes']);
+		foreach($prd['attributes'] as $attr){
+			array_push($variation_attributes, [$attr['attribute_name'] => $attr['attribute_val']]);
 		}
+
+		$variation = wc_get_product($variation_id);
+		// WC()->cart->add_to_cart($variation_id, $quantity);
+		WC()->cart->add_to_cart($variation_id, $quantity,$variation_attributes,array($selecetd_attr_name => $selecetd_item ));
+		//WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variation->get_variation_attributes(), array('variation' => $variation),$cart_item_data);
 	}
-	wp_die();
+	$cart_contents_count = WC()->cart->get_cart_contents_count();
+	$cart_url = wc_get_cart_url();
+	$notice_message = sprintf( __( 'Product added to cart. Cart now contains %d item(s).  <a href="%s" class="button wc-forward">View Shopping Cart</a>', 'your-text-domain' ), $cart_contents_count ,esc_url($cart_url));
+	// Display the WooCommerce notice
+	wc_add_notice( $notice_message, 'success' );
+   return;
+   die();
 }
+
 
 /**Add custom tab panel in product details page admin START**/
 add_filter('woocommerce_product_data_tabs', function ($tabs) {
