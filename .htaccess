@@ -4,18 +4,8 @@
 # dynamically generated, and should only be modified via WordPress filters.
 # Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
-#for JWT authentication START
-RewriteEngine on
-RewriteCond %{HTTP:Authorization} ^(.*)
-RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
-SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-#for JWT authentication END
-
-#Old code START
-#RewriteEngine On
-#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-#Old code END
-
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /testpr/
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f

@@ -608,6 +608,7 @@ jQuery(document).on('click', '#chk_btn', function(e) {
 		var variation_id = jQuery(this).val();
 		var quantity = jQuery(this).attr('data-qty_'+variation_id);
 		var selected_val = jQuery('.variable_'+variation_id).find(":selected").val();
+		var selected_attr_name = jQuery('.variable_'+variation_id).attr('name');
 		var product_id = jQuery('product_id').val();
 		//alert(selected_val);
 		jQuery('.dynamic_variation_'+variation_id).each(function(index, obj){
@@ -619,6 +620,7 @@ jQuery(document).on('click', '#chk_btn', function(e) {
 		product["quantity"] = quantity;
 		product["variation_id"] = variation_id;
 		product["selected_val"] = selected_val;
+		product['selected_attr_name'] = selected_attr_name;
 		product["product_id"] =  product_id;
 		product["attributes"] = []
 		var attributes = [];
@@ -646,13 +648,14 @@ jQuery(document).on('click', '#chk_btn', function(e) {
 					'val': datas,
 				},
 				success: function(response) {
+					//window.location.reload();
 					setTimeout(function() {
     					location.reload();
 					}, 1000);
 					jQuery(window).on('beforeunload', function() {
   					jQuery('body').hide();
   					jQuery(window).scrollTop(0);
-					});
+				});
 				}
 			});
 		});
@@ -742,10 +745,11 @@ function chk_val_callback(){
 		foreach($prd['attributes'] as $attr){
 			array_push($variation_attributes, [$attr['attribute_name'] => $attr['attribute_val']]);
 		}
-
+		
 		$variation = wc_get_product($variation_id);
 		// WC()->cart->add_to_cart($variation_id, $quantity);
 		WC()->cart->add_to_cart($variation_id, $quantity,$variation_attributes,array($selecetd_attr_name => $selecetd_item ));
+		
 		//WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variation->get_variation_attributes(), array('variation' => $variation),$cart_item_data);
 	}
 	$cart_contents_count = WC()->cart->get_cart_contents_count();
@@ -753,7 +757,8 @@ function chk_val_callback(){
 	$notice_message = sprintf( __( 'Product added to cart. Cart now contains %d item(s).  <a href="%s" class="button wc-forward">View Shopping Cart</a>', 'your-text-domain' ), $cart_contents_count ,esc_url($cart_url));
 	// Display the WooCommerce notice
 	wc_add_notice( $notice_message, 'success' );
-   return;
+	
+   return true;
    die();
 }
 
@@ -1370,3 +1375,12 @@ function star_rating_val_callback(){
 	die();
 }
 //Star rating value ajax END
+
+//Update shipping weight on admin panel programatically START
+add_action('woocommerce_admin_process_product_object', 'save_shipping_weight_value');
+function save_shipping_weight_value( $product ) {
+    if ( isset($_POST['_weight']) && ! empty($_POST['_weight'])) {
+        $product->update_meta_data( '_weight', esc_attr($_POST['_weight']) );
+    } 
+}
+//Update shipping weight on admin panel programatically END
