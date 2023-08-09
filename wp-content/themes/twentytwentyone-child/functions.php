@@ -150,10 +150,19 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 		$weight_count = $tr_weight_count[0];
 		$tr_count_final_total = $attributes_count + $description_count + $dimensions_count + $weight_count;
 		$tr_count_final = $tr_count_final_total + 6;
-		$loop_count = 4 - $tr_count_final_total;
-		
-		
+		$loop_count = 4 - $tr_count_final_total;	
 		?>
+
+		<!--Search HTML Start-->
+		<form role="search" method="get" class="custom-variation-search-form">
+    	<label for="color-search">Search by Color:</label>
+    	<input type="search" id="color-search" class="search-field" placeholder="Search by color..." value="" name="color_search" />
+
+   	 	<label for="size-search">Search by Size:</label>
+    	<input type="search" id="size-search" class="search-field" placeholder="Search by size..." value="" name="size_search" />
+		</form>
+		</br>
+		<!--Search HTML END-->
 	
 		<div class="varation_table_main" style="overflow-x:auto;">
 			<table class="varation_table" style="width:100%;">
@@ -327,7 +336,8 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 						
 							<?php							
 							foreach ($value['attributes'] as $attr_key => $attr_value) {
-								//echo $attr_key;
+								//echo "<pre>";
+								//print_r($attr_key);
 							?>
 								<td style="font-size: 12px !important;white-space: nowrap; text-align:center !important;">
 									<b>
@@ -481,7 +491,9 @@ function wp_kama_woocommerce_after_single_product_summary_action()
     div.woocommerce-variation-price, table.variations { display:block; }
 </style>
 		
-		<div class="varation_table_main" style="overflow-x: auto;">
+		
+
+<div class="varation_table_main" style="overflow-x: auto;">
     <table class="varation_table" style="width: 100%;">
         <tbody>
             <tr>
@@ -593,6 +605,30 @@ function add_this_script_footer(){ ?>
 
 function variable_ajax_call(){ ?>
 <script>
+
+/**Search feature on variation table START **/
+jQuery(document).ready(function() {
+    jQuery('#color-search, #size-search').on('input', function() {
+        var colorValue = jQuery('#color-search').val();
+        var sizeValue = jQuery('#size-search').val();
+
+        jQuery.ajax({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            type: 'GET',
+            data: {
+                action: 'custom_variation_search',
+                color_search: colorValue,
+                size_search: sizeValue,
+            },
+            success: function(response) {
+				alert('sucess');
+                //jQuery('#custom-variation-results').html(response);
+            },
+        });
+    });
+});
+/**Search feature on variation table END **/
+
 
 jQuery("#check-demo-all").click(function(){
         jQuery(".varation_table input[type=checkbox]").prop('checked', jQuery(this).prop('checked'));
@@ -761,6 +797,34 @@ function chk_val_callback(){
    return true;
    die();
 }
+
+/**Variation table custom search START */
+function custom_variation_search_callback() {
+    $color_search = sanitize_text_field($_GET['color_search']);
+    $size_search = sanitize_text_field($_GET['size_search']);
+
+    // Customize this query to fetch your variations based on the search values
+    $args = array(
+        // Add your query arguments here
+    );
+
+    $variations = new WP_Query($args);
+
+    if ($variations->have_posts()) {
+        while ($variations->have_posts()) {
+            $variations->the_post();
+            // Display variation content
+        }
+        wp_reset_postdata();
+    } else {
+        echo 'No variations found.';
+    }
+
+    die();
+}
+add_action('wp_ajax_custom_variation_search', 'custom_variation_search_callback');
+add_action('wp_ajax_nopriv_custom_variation_search', 'custom_variation_search_callback');
+/**Variation table custom search END */
 
 
 /**Add custom tab panel in product details page admin START**/
