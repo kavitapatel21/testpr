@@ -155,6 +155,8 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 
 		<!--Search HTML Start-->
 		<form role="search" method="get" class="custom-variation-search-form">
+		<label for="variation-search">Search by size or color...</label>
+		<input type="text" id="variation-search" placeholder="Search by size or color">
 		<label for="product-name">Search by Product Name:</label>
     	<input type="search" id="product-name" class="search-field" placeholder="Search by product name..." value="" name="product_name_search" />
 
@@ -642,6 +644,22 @@ function add_this_script_footer(){ ?>
     				});				
 				});
 				//Filter with product size END
+
+				//Filter with color or size using single search START
+				jQuery(document).ready(function($) {
+    				jQuery('#variation-search').on('keyup', function() {
+        			var value = jQuery(this).val().toLowerCase();
+        				jQuery('#varation_table .variation-row').filter(function() {
+            				var size = jQuery(this).data('size').toLowerCase();
+            				var color = jQuery(this).data('color').toLowerCase();
+							//console.log('size' + size.indexOf(value) > -1);
+							//console.log('color' + color.indexOf(value) > -1);
+            				var data = size.indexOf(value) > -1 || color.indexOf(value) > -1;
+							jQuery(this).toggle(data);
+        				})
+    				});
+				});
+				//Filter with color or size using single search END
 
 				//Variant product listing Serach feature END	
 	</script>
@@ -1482,3 +1500,24 @@ function save_shipping_weight_value( $product ) {
     } 
 }
 //Update shipping weight on admin panel programatically END
+
+
+//Display variation name & stock on shop page START
+add_action( 'woocommerce_after_shop_loop_item', 'bbloomer_echo_stock_variations_loop' );
+    
+function bbloomer_echo_stock_variations_loop(){
+    global $product;
+    if ( $product->get_type() == 'variable' ) {
+        foreach ( $product->get_available_variations() as $key ) {
+            $variation = wc_get_product( $key['variation_id'] );
+            $stock = $variation->get_availability();
+            $stock_string = $stock['availability'] ? $stock['availability'] : __( 'In stock', 'woocommerce' );
+            $attr_string = array();
+            foreach ( $key['attributes'] as $attr_name => $attr_value ) {
+                $attr_string[] = $attr_value;
+            }
+            echo '<br/>' . implode( ', ', $attr_string ) . ': ' . $stock_string;
+        }
+    }
+}
+//Display variation name & stock on shop page END
