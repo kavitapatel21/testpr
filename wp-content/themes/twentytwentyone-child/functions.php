@@ -155,6 +155,9 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 
 		<!--Search HTML Start-->
 		<form role="search" method="get" class="custom-variation-search-form">
+		<label for="product-name">Search by Product Name:</label>
+    	<input type="search" id="product-name" class="search-field" placeholder="Search by product name..." value="" name="product_name_search" />
+
     	<label for="color-search">Search by Color:</label>
     	<input type="search" id="color-search" class="search-field" placeholder="Search by color..." value="" name="color_search" />
 
@@ -162,10 +165,11 @@ function wp_kama_woocommerce_after_single_product_summary_action()
     	<input type="search" id="size-search" class="search-field" placeholder="Search by size..." value="" name="size_search" />
 		</form>
 		</br>
+		<input type="hidden" value="<?php echo $product_id; ?>" class="current_product_id"/>
 		<!--Search HTML END-->
 	
 		<div class="varation_table_main" style="overflow-x:auto;">
-			<table class="varation_table" style="width:100%;">
+			<table class="varation_table" style="width:100%;" id="varation_table">
 				<tbody>
 					<tr>
 						<th style="text-align:center;background-color: #f5f5f5;width: 80px;"><input type='checkbox' name='selected[]' id="check-demo-all" value=''>  選択する</th>
@@ -225,6 +229,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 						?>
 								<th style="text-align:center;background-color: #f5f5f5;">
 									<?php $taxonomy   = $attribute['name'];
+									
 									echo $label_name = wc_attribute_label($taxonomy);
 									?>
 								</th>
@@ -240,8 +245,9 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 
 
 					</tr>
-					<?php foreach ($available_variations as $key => $value) { ?>
-						<tr>
+					<?php foreach ($available_variations as $key => $value) { 
+						?>
+						<tr class="variation-row" data-color = '<?php echo $value['attributes']['attribute_color']; ?>' data-size = '<?php echo $value['attributes']['attribute_size']; ?>'>
 						
 							<td><?php if($value['max_qty'] > 0){?>
 								<input type='checkbox' name='selected[]' id="check-demo-<?php echo $value['variation_id'];?>" value='<?php echo $value['variation_id'];?>' data-qty_<?php echo $value['variation_id'];?>='1'>
@@ -307,7 +313,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 								if($value['dimensions']['height']){
 								echo '×'.$value['dimensions']['height'];
 								}
-					
 								?>
 							</td>
 							<?php } ?>
@@ -338,6 +343,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 							foreach ($value['attributes'] as $attr_key => $attr_value) {
 								//echo "<pre>";
 								//print_r($attr_key);
+								//echo $attr_value;
 							?>
 								<td style="font-size: 12px !important;white-space: nowrap; text-align:center !important;">
 									<b>
@@ -496,7 +502,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 <div class="varation_table_main" style="overflow-x: auto;">
     <table class="varation_table" style="width: 100%;">
         <tbody>
-            <tr>
+            <tr class="variation-row">
 				<?php 	
 				$specifications_group_id = 8748; 
 				$specifications_fields = array();
@@ -562,7 +568,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 function add_this_script_footer(){ ?>
 
 	<script>
-		jQuery(function(jQuery) {
+				jQuery(function(jQuery) {
 					jQuery(document.body).on('click', '.plus, .minus', function() {
 						var qty = jQuery(this).closest('.quantity').find('.qty');
 						var val = parseFloat(qty.val());
@@ -587,6 +593,8 @@ function add_this_script_footer(){ ?>
 							} else if (val > 1) {
 								qty.val(val - step);
 								var minus_val = val - step
+
+
 								
 								var data_id_val = jQuery(this).attr("data-id");
 								jQuery('#quantity_' + data_id_val).val(minus_val);	
@@ -596,6 +604,46 @@ function add_this_script_footer(){ ?>
 	
 					});
 				});
+
+				//Variant product listing Serach feature START
+
+				//Filter with prouct name START
+				jQuery(document).ready(function($) {
+    				jQuery('#product-name').on('keyup', function() {
+        				var value = jQuery(this).val().toLowerCase();
+						console.log(value);
+        				jQuery('#varation_table .variation-row').filter(function() {
+							jQuery(this).toggle(jQuery(this).text().toLowerCase().indexOf(value) > -1);
+       			 		});
+					});
+				});
+			    //Filter with prouct name END
+
+				//Filter with product color START
+				jQuery(document).ready(function($) {
+					jQuery('#color-search').on('keyup', function() {
+        				var value = jQuery(this).val().toLowerCase();
+        				jQuery('#varation_table .variation-row').filter(function() {
+            				var color = jQuery(this).data('color').toLowerCase();
+            				jQuery(this).toggle(color.indexOf(value) > -1);
+        				});
+    				});				
+				});
+				//Filter with product color END
+
+				//Filter with product size START
+				jQuery(document).ready(function($) {
+					jQuery('#size-search').on('keyup', function() {
+        				var value = jQuery(this).val().toLowerCase();
+        				jQuery('#varation_table .variation-row').filter(function() {
+            				var size = jQuery(this).data('size').toLowerCase();
+            				jQuery(this).toggle(size.indexOf(value) > -1);
+        				});
+    				});				
+				});
+				//Filter with product size END
+
+				//Variant product listing Serach feature END	
 	</script>
 	
 	<?php } 
@@ -604,30 +652,11 @@ function add_this_script_footer(){ ?>
 
 
 function variable_ajax_call(){ ?>
+<script type='text/javascript' src='https://www.osusumeshop.jp/wp-content/themes/martfury/js/plugins/notify.min.js?ver=1.0.0' id='notify-js'></script>
 <script>
+	
+	  var martfury = martfury || {};
 
-/**Search feature on variation table START **/
-jQuery(document).ready(function() {
-    jQuery('#color-search, #size-search').on('input', function() {
-        var colorValue = jQuery('#color-search').val();
-        var sizeValue = jQuery('#size-search').val();
-
-        jQuery.ajax({
-            url: '<?php echo admin_url('admin-ajax.php'); ?>',
-            type: 'GET',
-            data: {
-                action: 'custom_variation_search',
-                color_search: colorValue,
-                size_search: sizeValue,
-            },
-            success: function(response) {
-				alert('sucess');
-                //jQuery('#custom-variation-results').html(response);
-            },
-        });
-    });
-});
-/**Search feature on variation table END **/
 
 
 jQuery("#check-demo-all").click(function(){
@@ -684,14 +713,41 @@ jQuery(document).on('click', '#chk_btn', function(e) {
 					'val': datas,
 				},
 				success: function(response) {
+				//popup code start
+				var $msg = "";
+					var $content; 
+					var className = "success";
+					var $msgtxt = 'view shopping cart';
+					var $link = "http://localhost/testpr/cart/";
+	  				$content = response.data.msg;
+					$msg ='<a href="' + $link + '" class="btn-button">' + $msgtxt +"</a>";
+					//alert($msg);
+					$message = '<div class="message-box">' + $msg + "</div>";
+					//alert($message);
+    				jQuery.notify.addStyle("martfury", {
+      				html:
+        			'<div><i class="icon-checkmark-circle message-icon"></i>' + $content + $message + '<span class="close icon-cross2"></span></div>',
+    				});
+    				jQuery.notify($content, {
+					className: className,
+					 // if autoHide, hide after milliseconds
+  					autoHideDelay: 9000,
+      				style: "martfury",
+     				showAnimation: "fadeIn",
+      				hideAnimation: "fadeOut",
+    				});
+					//popup code end
+
+					/**Old code START */
 					//window.location.reload();
 					setTimeout(function() {
-    					location.reload();
-					}, 1000);
-					jQuery(window).on('beforeunload', function() {
-  					jQuery('body').hide();
-  					jQuery(window).scrollTop(0);
-				});
+    				location.reload();
+					}, 9000);
+					//jQuery(window).on('beforeunload', function() {
+  					//jQuery('body').hide();
+  					//jQuery(window).scrollTop(0);
+				//});
+				/**Old code END */
 				}
 			});
 		});
@@ -789,43 +845,21 @@ function chk_val_callback(){
 		//WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variation->get_variation_attributes(), array('variation' => $variation),$cart_item_data);
 	}
 	$cart_contents_count = WC()->cart->get_cart_contents_count();
-	$cart_url = wc_get_cart_url();
-	$notice_message = sprintf( __( 'Product added to cart. Cart now contains %d item(s).  <a href="%s" class="button wc-forward">View Shopping Cart</a>', 'your-text-domain' ), $cart_contents_count ,esc_url($cart_url));
+	//$cart_url = wc_get_cart_url();
+	//$notice_message = sprintf( __( 'Product added to cart. Cart now contains %d item(s).  <a href="%s" class="button wc-forward">View Shopping Cart</a>', 'your-text-domain' ), $cart_contents_count ,esc_url($cart_url));
 	// Display the WooCommerce notice
-	wc_add_notice( $notice_message, 'success' );
-	
+	//wc_add_notice( $notice_message, 'success' );
+	$result = array(
+		'msg' => 'Product added to cart. Cart now contains '.$cart_contents_count.'item(s).',
+	);
+	if ($result == false) {
+		wp_send_json_error();
+	} else {
+		wp_send_json_success($result);
+	}
    return true;
    die();
 }
-
-/**Variation table custom search START */
-function custom_variation_search_callback() {
-    $color_search = sanitize_text_field($_GET['color_search']);
-    $size_search = sanitize_text_field($_GET['size_search']);
-
-    // Customize this query to fetch your variations based on the search values
-    $args = array(
-        // Add your query arguments here
-    );
-
-    $variations = new WP_Query($args);
-
-    if ($variations->have_posts()) {
-        while ($variations->have_posts()) {
-            $variations->the_post();
-            // Display variation content
-        }
-        wp_reset_postdata();
-    } else {
-        echo 'No variations found.';
-    }
-
-    die();
-}
-add_action('wp_ajax_custom_variation_search', 'custom_variation_search_callback');
-add_action('wp_ajax_nopriv_custom_variation_search', 'custom_variation_search_callback');
-/**Variation table custom search END */
-
 
 /**Add custom tab panel in product details page admin START**/
 add_filter('woocommerce_product_data_tabs', function ($tabs) {
