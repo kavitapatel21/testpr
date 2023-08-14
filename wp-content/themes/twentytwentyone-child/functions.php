@@ -645,7 +645,7 @@ function add_this_script_footer(){ ?>
 				});
 				//Filter with product size END
 
-				//Filter with color or size using single search START
+				//Filter with color or size using single input type START
 				jQuery(document).ready(function($) {
     				jQuery('#variation-search').on('keyup', function() {
         			var value = jQuery(this).val().toLowerCase();
@@ -659,7 +659,7 @@ function add_this_script_footer(){ ?>
         				})
     				});
 				});
-				//Filter with color or size using single search END
+				//Filter with color or size using using single input type END
 
 				//Variant product listing Serach feature END	
 	</script>
