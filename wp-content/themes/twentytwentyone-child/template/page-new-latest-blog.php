@@ -378,7 +378,7 @@ global $wp;
 $base = home_url($wp->request);
 ?>
 <input type="hidden" name="base" value="<?php echo $base; ?>" />
-<div class="container" style="display: none;">
+<div class="container">
     <div class="buttons mt-5">
         <div class="scrollbar">
             <a href="#" class="tags button all active" data-tag="all">All</a>
@@ -583,37 +583,12 @@ $base = home_url($wp->request);
     </div>
 </div>
 
-<div class="container Inside-filterSS">
-    <div class="my-4 wow fadeInUp mb-3 Inside-filterS ">
-        <div class="news-later">
-            <div class="row align-items-center">
-                <div class="col-md-6 wow fadeInUp mb-3 mb-md-0 line-text">
-                    <h5 class="footer-top-subtitile"> Subscribe to our Newsletter </h5>
-                    <h3 class="footer-title"> <span class="news-letter-text">For the latest in fitness,<br>wellbeing and trainer tips</span> </h3>
-                </div>
-                <div class="col-md-6 wow fadeInUp mb-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Email">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Sign Me Up</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <?php
 get_footer();
 ?>
 <script>
-    //$('body').append('<div style = "" id = "indicator"> <div class="my-4 wow fadeInUp mb-3 Inside-filter"> <div class="news-later"><div class="row align-items-center"><div class="col-md-6 wow fadeInUp mb-3 mb-md-0 line-text"><h5 class="footer-top-subtitile"> Subscribe to our Newsletter </h5><h3 class="footer-title"> <span class="news-letter-text">For the latest in fitness,<br>wellbeing and trainer tips</span> </h3> </div><div class="col-md-6 wow fadeInUp mb-3"><div class="input-group"> <input type="text" class="form-control" placeholder="Email"><div class="input-group-append"> <button class="btn btn-outline-secondary" type="button" id="button-addon2">Sign Me Up</button></div></div></div></div></div></div> </div>');
-    $(window).on('load', function() {
-        $('.Inside-filterSS').delay(10000).fadeOut('slow');
-        
-    });
-    $('.container').show().delay(7000);
-    $('.Inside-filterSS').hide();
+    
     new WOW().init();
     wow = new WOW({
         boxClass: 'wow', // default
@@ -667,6 +642,7 @@ get_footer();
     });
 
     $(".tags").click(function() {
+      
         var param = $(this).data('tag');
         var base = $('input[name=base]').val()
         if (param == 'all') {
@@ -682,8 +658,13 @@ get_footer();
                 'param': tags,
                 'base': base
             },
-        }).done(function(res) {
-            $('.append-data').empty().append(res);
+            beforeSend: function() {
+                var form = jQuery('.Inside-filter').show();
+                $('.append-data').empty().append(form);
+    },
+        success:function (result) {
+            $('.append-data').empty().append(result);
+    },    
         });
     });
 </script>

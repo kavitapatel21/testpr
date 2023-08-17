@@ -99,14 +99,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 		$product_id = $id;
 		// echo 
 		$product_attr = get_post_meta($id, '_product_attributes');
-
-		//acf group start
-
-		//acf group end
-	?>
-	
-	
-		<?php
+	?><?php
 		$tr_count = array();
 		
 		$tr_description_count = array();
@@ -143,7 +136,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 		array_push($tr_count, $tr);	
 		}
 
-		
 		$attributes_count = $tr_count[1];		
 		$description_count = $tr_description_count[0];
 		$dimensions_count = $tr_dimensions_count[0];
@@ -205,7 +197,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 								//acf group end
 						}
 						?>
-						
 						<?php //foreach ($available_variations as $key => $value) { ?>
 						
 						<?php if($tr_description_display[0] == 'yes'){ ?>
@@ -222,9 +213,7 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 						if($tr_weight_display[0] == "yes" ){  ?>
 						<th style="text-align:center;background-color: #f5f5f5;width: 100px;">重量 (g)</th> 
 						<?php } ?>
-						
 						<?php //} ?>
-						
 						<?php
 						foreach ($product_attr as $attr) {
 							foreach ($attr as $attribute) {
@@ -239,13 +228,10 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 							}
 						}
 						?>
-
 						<th style="text-align:center;background-color: #f5f5f5;">在庫</th>
 						<th style="text-align:center;background-color: #f5f5f5;">価格</th>
 						<th style="text-align:center;background-color: #f5f5f5;">数量</th>
 						<!--<th style="text-align:center;background-color: #f5f5f5;">カートに追加</th>-->
-
-
 					</tr>
 					<?php foreach ($available_variations as $key => $value) { 
 						?>
@@ -472,16 +458,13 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 									?>
 								</form>
 							</td>-->
-
 						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
-
 			<input type="button" id="chk_btn" value="カートに追加">
 			<input type="button" id="chk_btn_cart_pg" value="今すぐ購入">
-		</div>
-					
+		</div>		
 		<script>
 			jQuery('.variable').on('change', function() {
 				var dropdown_name = jQuery(this).attr('name');
@@ -490,7 +473,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 				jQuery('#' + dropdown_name + '_' + product_id).val(select_value);
 			});
 		</script>
-
 	<?php
 	}else{
 		?>
@@ -499,8 +481,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
     div.woocommerce-variation-price, table.variations { display:block; }
 </style>
 		
-		
-
 <div class="varation_table_main" style="overflow-x: auto;">
     <table class="varation_table" style="width: 100%;">
         <tbody>
@@ -511,7 +491,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 				$fields = acf_get_fields( $specifications_group_id );
 				foreach ( $fields as $field ) {
 					$field_value = get_field( $field['name'] );		
-					
 					if ( $field_value && !empty( $field_value ) ) {
 					if ( $field['label'] != "Variation table On/Off" && $field['label'] != "カラー" ) {
 					$field['label'];
@@ -519,18 +498,13 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 					<th style="text-align:center;background-color: #f5f5f5;width: 140px;"><?php echo $field['label']; ?></th>
 					<?php
 					}
-					
 					} 
 				}
 					//acf group end
-			
 				?>
             </tr>
             <tr>
-			
 				<?php 
-					
-						
 						$specifications_group_id = 8748; 
 						$specifications_fields = array();
 						$fields = acf_get_fields( $specifications_group_id );
@@ -546,21 +520,15 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 							</div>
 							</td>
 							<?php
-
 							}
 							} 
 						}
-							//acf group end
-					
+						//acf group end
 					?>
             </tr>
-      
-            
-
         </tbody>
     </table>
 </div>
-
 		<?php
 	}
 	 } 
@@ -568,7 +536,6 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 
 
 function add_this_script_footer(){ ?>
-
 	<script>
 				jQuery(function(jQuery) {
 					jQuery(document.body).on('click', '.plus, .minus', function() {
@@ -660,23 +627,16 @@ function add_this_script_footer(){ ?>
     				});
 				});
 				//Filter with color or size using using single input type END
-
 				//Variant product listing Serach feature END	
 	</script>
 	
 	<?php } 
-	
 	add_action('wp_footer', 'add_this_script_footer'); 
-
 
 function variable_ajax_call(){ ?>
 <script type='text/javascript' src='https://www.osusumeshop.jp/wp-content/themes/martfury/js/plugins/notify.min.js?ver=1.0.0' id='notify-js'></script>
 <script>
-	
 	  var martfury = martfury || {};
-
-
-
 jQuery("#check-demo-all").click(function(){
         jQuery(".varation_table input[type=checkbox]").prop('checked', jQuery(this).prop('checked'));
 
@@ -1288,8 +1248,6 @@ function get_tag_callback(){
 				);
 			}
 
-
-
 			// Set the base.
 			$base = isset($newbase) ? trailingslashit($newbase) . '%_%' : $fallback_base;
 			$tag =  '<div class="append_page"><div class="pagination-box wow fadeInUp mb-3 filter-pagination pagination">';
@@ -1303,7 +1261,6 @@ function get_tag_callback(){
 				'next_text' => '>>'
 			));
 			$tag .=  '</div></div>';
-
 			//echo $loop->max_num_pages;
 	?>
 	<?php
@@ -1316,7 +1273,7 @@ function get_tag_callback(){
 	?>
 	<!-- End Pagination -->
 
-	<div class="my-4 wow fadeInUp mb-3">
+	<div class="my-4 wow fadeInUp mb-3 Inside-filter">
 		<div class="news-later">
 			<div class="row align-items-center">
 				<div class="col-md-6 wow fadeInUp mb-3 mb-md-0 line-text">
@@ -1337,68 +1294,7 @@ function get_tag_callback(){
 <?php
 	die;
 	}
-
 		/**Get current tag val END */
-
-
-		/**Creating cutom post type withput plugin Start */
-		// Register Custom Post Type
-		/**function hfm_register_custom_post_type() { 
-
-    $labels = array(
-        'name'                  => _x( 'Custom Post Types', 'Post Type General Name', 'text_domain' ),
-        'singular_name'         => _x( 'Post Type', 'Post Type Singular Name', 'text_domain' ),
-        'menu_name'             => __( 'Custom Post Types', 'text_domain' ),
-        'name_admin_bar'        => __( 'Custom Post Type', 'text_domain' ),
-        'archives'              => __( 'Item Archives', 'text_domain' ),
-        'attributes'            => __( 'Item Attributes', 'text_domain' ),
-        'parent_item_colon'     => __( 'Parent Item:', 'text_domain' ),
-        'all_items'             => __( 'All Items', 'text_domain' ),
-        'add_new_item'          => __( 'Add New Item', 'text_domain' ),
-        'add_new'               => __( 'Add New', 'text_domain' ),
-        'new_item'              => __( 'New Item', 'text_domain' ),
-        'edit_item'             => __( 'Edit Item', 'text_domain' ),
-        'update_item'           => __( 'Update Item', 'text_domain' ),
-        'view_item'             => __( 'View Item', 'text_domain' ),
-        'view_items'            => __( 'View Items', 'text_domain' ),
-        'search_items'          => __( 'Search Item', 'text_domain' ),
-        'not_found'             => __( 'Not found', 'text_domain' ),
-        'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
-        'featured_image'        => __( 'Featured Image', 'text_domain' ),
-        'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
-        'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
-        'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
-        'insert_into_item'      => __( 'Insert into item', 'text_domain' ),
-        'uploaded_to_this_item' => __( 'Uploaded to this item', 'text_domain' ),
-        'items_list'            => __( 'Items list', 'text_domain' ),
-        'items_list_navigation' => __( 'Items list navigation', 'text_domain' ),
-        'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
-    );
-    $args = array(
-        'label'                 => __( 'Post Type', 'text_domain' ),
-        'description'           => __( 'Post Type Description', 'text_domain' ),
-        'labels'                => $labels,
-        'supports'              => false,
-        'taxonomies'            => array( 'category', 'post_tag' ),
-        'hierarchical'          => false,
-        'public'                => true,
-        'show_ui'               => true,
-        'show_in_menu'          => true,
-        'menu_position'         => 5,
-        'show_in_admin_bar'     => true,
-        'show_in_nav_menus'     => true,
-        'can_export'            => true,
-        'has_archive'           => true,
-        'exclude_from_search'   => false,
-        'publicly_queryable'    => true,
-        'capability_type'       => 'page',
-    );
-    register_post_type( 'post_type', $args );
-
-}
-add_action( 'init', 'hfm_register_custom_post_type' );*/
-		/**Creating custom posty type without plugin END */
-
 		/* custom post type [START] */
 		function cptui_register_my_cpts_gym_member()
 		{
