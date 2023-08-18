@@ -127,6 +127,15 @@ function custom_orders_list_column_content( $column, $post_id ){
 			<a class='button exists pdf_five'  title ="領収書" style="margin-top: 4px;background-image: url(<?php echo $plugins_image_url_5; ?>);
     background-repeat: no-repeat;background-position: center;padding: 10px 15px 20px;background-size: 23px 23px"   data-id="<?php echo $post_id; ?>" href="#"></a>
 			<?php } ?>
+
+			<?php $pdf_five_on_off = get_option( 'pdf-print-woocommerce-option-pdf-five-on' );  if($pdf_five_on_off == 'on'){ ?>
+			<!----Added "no-links" class in select option to prevent redirection on edit-order page woocommerce------->
+			<select name="vendor_list" id="vendor_list" class="no-link">
+							<option value="choose me" style="display: none">Choose one</option>
+							<option value="demo1">demo 1</option>
+							<option value="demo2">demo 2</option>
+			</select>
+			<?php } ?>
 			</li>
 		</ul>
 	  <?php
@@ -169,6 +178,7 @@ if ( ! function_exists( 'mv_add_other_fields_for_packaging' ) )
 			<?php $pdf_five_on_off = get_option( 'pdf-print-woocommerce-option-pdf-five-on' );  if($pdf_five_on_off == 'on'){ ?>
 			<a class='button exists pdf_five'  style="margin-top: 4px;"   data-id="<?php echo $post->ID; ?>" href="#">領収書</a>
 			<?php } ?>
+			
 			</li>
 		</ul>
 <?php		

@@ -1,7 +1,9 @@
 <?php
 global $wpdb;
 require_once( '../../../wp-load.php' );
-$order_id = $_GET['order_id'];
+//echo '<pre>';
+//print_r($_POST);
+$order_id = $_POST['order_id'];
 $tablename = 'wp_order_pdf_id';
 
 $delete = $wpdb->query("TRUNCATE TABLE $tablename");
@@ -64,8 +66,13 @@ $languageFile = include_once 'language_file.php';
 	$mpdf->SetDisplayMode('fullpage');
 	$mpdf->autoLangToFont  = true;
 	$filename = "見積書" . '_'.date('YmdHis') . '_' . $order_id . '.pdf';
-	$mpdf->Output($filename, 'D');
-	//die;
+	//$filename = $mpdf->Output($filename, 'D');
+	if ($filename == false) {
+		wp_send_json_error();
+	} else {
+		wp_send_json_success($filename);
+	}
+	die;
 	
 ?>
 

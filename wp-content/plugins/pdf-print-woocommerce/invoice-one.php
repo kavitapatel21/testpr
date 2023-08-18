@@ -56,9 +56,6 @@ $order =  $order_id[0]->order_id;
 
 $order = wc_get_order($order); 
 
-
-
-
 ?>
 <html>
 <head>
