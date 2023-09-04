@@ -677,8 +677,12 @@
                 );
                 $loop = new WP_Query($args); ?>
                 <?php while ($loop->have_posts()) : $loop->the_post();
+                $db_ratings = get_post_meta( get_the_ID() , 'starrating', true );
+                echo 'post_id:'.get_the_ID();
+                echo 'database-ratings:'.$db_ratings;
                 ?>
                 
+                    
                     <div class="col-md-4" id="count-expage" data-countpage="<?php echo $loop->max_num_pages; ?>">
 
                     <!--Star rating START-->

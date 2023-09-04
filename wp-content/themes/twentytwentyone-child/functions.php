@@ -636,7 +636,7 @@ function add_this_script_footer(){ ?>
 function variable_ajax_call(){ ?>
 <script type='text/javascript' src='https://www.osusumeshop.jp/wp-content/themes/martfury/js/plugins/notify.min.js?ver=1.0.0' id='notify-js'></script>
 <script>
-	  var martfury = martfury || {};
+	 
 jQuery("#check-demo-all").click(function(){
         jQuery(".varation_table input[type=checkbox]").prop('checked', jQuery(this).prop('checked'));
 
@@ -1431,34 +1431,82 @@ function custom_api_get_all_posts() {
     ));
 }
 
-function custom_api_get_all_posts_callback( $request ) {
+add_action('init','custom_api_get_all_posts_callback');
+//function custom_api_get_all_posts_callback( $request ) {
+function custom_api_get_all_posts_callback(){
     // Initialize the array that will receive the posts' data. 
     $posts_data = array();
+
+	/**Get posts data with pagination[Start]*/
     // Receive and set the page parameter from the $request for pagination purposes
-    $paged = $request->get_param( 'page' );
+    /**$paged = $request->get_param( 'page' );
     $paged = ( isset( $paged ) || ! ( empty( $paged ) ) ) ? $paged : 1; 
     // Get the posts using the 'post' and 'news' post types
-    $posts = get_posts( array(
+	$posts = get_posts( array(
             'paged' => $paged,
             //'post__not_in' => get_option( 'sticky_posts' ),
-            'posts_per_page' => 30,            
+            //'posts_per_page' => -1, 
+			'posts_per_page' => 3,           
             //'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
 			'post_type' => array( 'post')
         )
-    ); 
+    ); */
+	/**Get posts data with pagination[End]*/
+
+	/**Get all posts data without pagination [Start] */
+	$posts = get_posts( array(
+		'posts_per_page' => -1,          
+		//'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
+		//'post_type' => array( 'gym-member')
+		'post_type' => array( 'post')
+		)
+	); 
+	/**Get all posts data without pagination [End] */
+
+	if (empty($posts)) {
+		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
+		$response = array(
+			'statusCode' => 404,
+			'message' => 'Post not found',
+			//'data' => $posts_data,
+		);      
+		return new WP_REST_Response($response);
+	}
     // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
     foreach( $posts as $post ) {
         $id = $post->ID; 
+		
         $post_thumbnail = ( has_post_thumbnail( $id ) ) ? get_the_post_thumbnail_url( $id ) : null;
+
+		// Get the post publish date
+		$publish_date = get_the_date('Y-m-d H:i:s', $post);
+
+		// Format the date as needed (e.g., to 'M d, Y')
+		$formatted_date = date('M d, Y', strtotime($publish_date));
 
         $posts_data[] = (object) array( 
             'id' => $id, 
             'slug' => $post->post_name, 
             'type' => $post->post_type,
             'title' => $post->post_title,
+			'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
+			//'content' => $post->post_content,
             'featured_img_src' => $post_thumbnail,
+			//'post_published_date' => $post->post_date,
+			'post_published_date' => $formatted_date,  // Updated date format
         );
     }                  
-    return $posts_data;                   
+    //return $posts_data;  
+	$response = array(
+		'statusCode' => 200,
+		'message' => 'Success',
+		'data' => $posts_data,
+	);      
+	return new WP_REST_Response($response);
+	//return strip_tags($excerpt);                 
 } 
+
 /* Creating custom API END */
+
+
+
