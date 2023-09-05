@@ -130,11 +130,11 @@ function custom_orders_list_column_content( $column, $post_id ){
 
 			<?php $pdf_five_on_off = get_option( 'pdf-print-woocommerce-option-pdf-five-on' );  if($pdf_five_on_off == 'on'){ ?>
 			<!----Added "no-links" class in select option to prevent redirection on edit-order page woocommerce------->
-			<select name="vendor_list" id="vendor_list" class="no-link">
+			<!--<select name="vendor_list" id="vendor_list" class="no-link">
 							<option value="choose me" style="display: none">Choose one</option>
 							<option value="demo1">demo 1</option>
 							<option value="demo2">demo 2</option>
-			</select>
+			</select>-->
 			<?php } ?>
 			</li>
 		</ul>

@@ -1509,4 +1509,18 @@ function custom_api_get_all_posts_callback(){
 /* Creating custom API END */
 
 
-
+/**Admin css [Start] */
+function custom_admin_css() {
+    echo '<style>
+        /* Your custom CSS rules go here */
+		.widefat td{
+			white-space: nowrap;
+		}
+		table.table-view-list {
+    		width: auto !important;
+    		overflow-x: auto !important;
+		}
+    </style>';
+}
+add_action('admin_head', 'custom_admin_css');
+/**Admin css [End] */
