@@ -1420,6 +1420,24 @@ function bbloomer_echo_stock_variations_loop(){
 
 
 /* Creating custom API START */
+function modify_api_response($data, $post, $request) {
+    // Check if it's a post response and if 'post_content' is set
+    if ($data['type'] === 'post' && isset($data['content']['rendered'])) {
+        $content = $data['content']['rendered'];
+
+        // Replace image dimensions in the post content
+        $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
+            $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', '', $matches[0]); // Remove width and height attributes
+            return str_replace('src', 'srcset', $new_image_tag); // Replace 'src' with 'srcset'
+        }, $content);
+
+        $data['content']['rendered'] = $content;
+    }
+
+    return $data;
+}
+
+add_filter('rest_prepare_post', 'modify_api_response', 10, 3);
 
 /** You can fetch data in postman using http://localhost/testpr/wp-json/custom/v1/all-posts link **/
 add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
@@ -1453,12 +1471,15 @@ function custom_api_get_all_posts_callback(){
     ); */
 	/**Get posts data with pagination[End]*/
 
+	
+
+
 	/**Get all posts data without pagination [Start] */
 	$posts = get_posts( array(
 		'posts_per_page' => -1,          
 		//'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
 		//'post_type' => array( 'gym-member')
-		'post_type' => array( 'post')
+		'post_type' => array( 'post','page'),
 		)
 	); 
 	/**Get all posts data without pagination [End] */
@@ -1474,7 +1495,49 @@ function custom_api_get_all_posts_callback(){
 	}
     // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
     foreach( $posts as $post ) {
-        $id = $post->ID; 
+		$id = $post->ID; 
+
+		/**if (function_exists('elementor_pro') && \Elementor\Plugin::$instance->db->is_built_with_elementor($id)) {
+			// Get the Elementor content and its styles
+			$post_content = \Elementor\Plugin::$instance->frontend->get_builder_content($id);
+			return $post_content;
+		}else{
+			$post_content = $post->post_content;
+		}*/
+		
+		/**Get elementor post content with design [Start] */
+		/**$contentElementor = "";
+
+		if (class_exists("\\Elementor\\Plugin")) {
+			$post_ID = $id;
+
+			$pluginElementor = \Elementor\Plugin::instance();
+			$contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
+		}
+		//echo $contentElementor;
+		if($contentElementor){
+			$post_content = $contentElementor; 
+		}else{
+			$post_content = $post->post_content;
+		}*/
+		/**Get elementor post content with design [End] */
+
+        /**Modify the height and width of images in the post content [Start] **/
+		$content = $post->post_content;
+        $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
+            // Modify the width and height attributes as needed
+            $newWidth = 400; // Set your desired width
+            $newHeight = 300; // Set your desired height
+            $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', 'width="' . $newWidth . '" height="' . $newHeight . '"', $matches[0]);
+
+            // Add inline CSS to the image tag
+            $inline_css = 'style="object-fit: fill;"'; // Modify the inline CSS as needed
+            $new_image_tag = preg_replace('/<img(.*?)>/i', '<img$1 ' . $inline_css . '>', $new_image_tag);
+
+            return $new_image_tag;
+        }, $content);
+		/**Modify the height and width of images in the post content [End] **/
+        
 		
         $post_thumbnail = ( has_post_thumbnail( $id ) ) ? get_the_post_thumbnail_url( $id ) : null;
 
@@ -1489,8 +1552,10 @@ function custom_api_get_all_posts_callback(){
             'slug' => $post->post_name, 
             'type' => $post->post_type,
             'title' => $post->post_title,
-			'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
-			//'content' => $post->post_content,
+			//'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
+			'content' => $content,
+			//'content' => $post_content,
+			//'content' => apply_filters('the_content', get_the_content()),
             'featured_img_src' => $post_thumbnail,
 			//'post_published_date' => $post->post_date,
 			'post_published_date' => $formatted_date,  // Updated date format
@@ -1516,9 +1581,11 @@ function custom_admin_css() {
 		.widefat td{
 			white-space: nowrap;
 		}
-		table.table-view-list {
-    		width: auto !important;
-    		overflow-x: auto !important;
+		.table-view-list {
+			min-width: 100% !important;
+			width : auto; 
+			overflow-x: auto;
+  			display: block;
 		}
     </style>';
 }
