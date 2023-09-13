@@ -1419,175 +1419,300 @@ function bbloomer_echo_stock_variations_loop(){
 //Display variation name & stock on shop page END
 
 
-/* Creating custom API START */
-function modify_api_response($data, $post, $request) {
-    // Check if it's a post response and if 'post_content' is set
-    if ($data['type'] === 'post' && isset($data['content']['rendered'])) {
-        $content = $data['content']['rendered'];
+// /* Creating custom API START */
 
-        // Replace image dimensions in the post content
-        $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
-            $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', '', $matches[0]); // Remove width and height attributes
-            return str_replace('src', 'srcset', $new_image_tag); // Replace 'src' with 'srcset'
-        }, $content);
+// /** You can fetch data in postman using http://localhost/testpr/wp-json/custom/v1/all-posts link **/
+// add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
 
-        $data['content']['rendered'] = $content;
-    }
+// function custom_api_get_all_posts() {
+//     register_rest_route( 'custom/v1', '/all-posts', array(
+//         'methods' => 'GET',
+//         'callback' => 'custom_api_get_all_posts_callback'
+//     ));
+// }
 
-    return $data;
-}
+// add_action('init','custom_api_get_all_posts_callback');
+// //function custom_api_get_all_posts_callback( $request ) {
+// function custom_api_get_all_posts_callback($request){
+// 	/**Get posts data with pagination[Start]*/
+//     // Receive and set the page parameter from the $request for pagination purposes
+//     /**$paged = $request->get_param( 'page' );
+//     $paged = ( isset( $paged ) || ! ( empty( $paged ) ) ) ? $paged : 1; 
+//     // Get the posts using the 'post' and 'news' post types
+// 	$posts = get_posts( array(
+//             'paged' => $paged,
+//             //'post__not_in' => get_option( 'sticky_posts' ),
+//             //'posts_per_page' => -1, 
+// 			'posts_per_page' => 3,           
+//             //'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
+// 			'post_type' => array( 'post')
+//         )
+//     ); */
+// 	/**Get posts data with pagination[End]*/
 
-add_filter('rest_prepare_post', 'modify_api_response', 10, 3);
+// 	/**Get all posts data without pagination [Start] */
+// 	$posts = get_posts( array(
+// 		'posts_per_page' => -1,          
+// 		//'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
+// 		//'post_type' => array( 'gym-member')
+// 		'post_type' => array( 'post','page'),
+// 		)
+// 	); 
+// 	/**Get all posts data without pagination [End] */
 
-/** You can fetch data in postman using http://localhost/testpr/wp-json/custom/v1/all-posts link **/
+// 	if (empty($posts)) {
+// 		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
+// 		$response = array(
+// 			'statusCode' => 404,
+// 			'message' => 'Post not found',
+// 			//'data' => $posts_data,
+// 		);      
+// 		return new WP_REST_Response($response);
+// 	}
+//     // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
+//     foreach( $posts as $post ) {
+// 		$id = $post->ID; 
+
+// 		/**if (function_exists('elementor_pro') && \Elementor\Plugin::$instance->db->is_built_with_elementor($id)) {
+// 			// Get the Elementor content and its styles
+// 			$post_content = \Elementor\Plugin::$instance->frontend->get_builder_content($id);
+// 			return $post_content;
+// 		}else{
+// 			$post_content = $post->post_content;
+// 		}*/
+		
+// 		/**Get elementor post content with design [Start] */
+// 		/**$contentElementor = "";
+
+// 		if (class_exists("\\Elementor\\Plugin")) {
+// 			$post_ID = $id;
+
+// 			$pluginElementor = \Elementor\Plugin::instance();
+// 			$contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
+// 		}
+// 		//echo $contentElementor;
+// 		if($contentElementor){
+// 			$post_content = $contentElementor; 
+// 		}else{
+// 			$post_content = $post->post_content;
+// 		}*/
+// 		/**Get elementor post content with design [End] */
+
+//         /**Modify the height and width of images in the post content [Start] **/
+// 		$content = $post->post_content;
+//         $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
+//             // Modify the width and height attributes as needed
+//             $newWidth = 400; // Set your desired width
+//             $newHeight = 300; // Set your desired height
+//             $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', 'width="' . $newWidth . '" height="' . $newHeight . '"', $matches[0]);
+
+//             // Add inline CSS to the image tag
+//             $inline_css = 'style="object-fit: fill;"'; // Modify the inline CSS as needed
+//             $new_image_tag = preg_replace('/<img(.*?)>/i', '<img$1 ' . $inline_css . '>', $new_image_tag);
+
+//             return $new_image_tag;
+//         }, $content);
+// 		/**Modify the height and width of images in the post content [End] **/
+        
+// 		$dom = new DOMDocument();
+//     	$dom->loadHTML($content);
+
+//     	$anchor_tags = array();
+
+//     	// Find all anchor tags in the post content
+//     	foreach ($dom->getElementsByTagName('a') as $anchor) {
+//         $anchor_tags[] = array(
+//             'text' => $anchor->nodeValue,
+//             'href' => $anchor->getAttribute('href'),
+//         );
+
+//         // Remove the anchor tag from the DOM
+//         $anchor->parentNode->removeChild($anchor);
+//     	}
+
+//     	// Get the modified post content after removing anchor tags
+//     	$modified_content = $dom->saveHTML();
+
+		
+//         $post_thumbnail = ( has_post_thumbnail( $id ) ) ? get_the_post_thumbnail_url( $id ) : null;
+
+// 		// Get the post publish date
+// 		$publish_date = get_the_date('Y-m-d H:i:s', $post);
+
+// 		// Format the date as needed (e.g., to 'M d, Y')
+// 		$formatted_date = date('M d, Y', strtotime($publish_date));
+
+//         $posts_data[] = (object) array( 
+//             'id' => $id, 
+//             'slug' => $post->post_name, 
+//             'type' => $post->post_type,
+//             'title' => $post->post_title,
+// 			//'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
+// 			'content' => $content,
+// 			//'content' => $post_content,
+// 			//'content' => apply_filters('the_content', get_the_content()),
+//             'featured_img_src' => $post_thumbnail,
+// 			//'post_published_date' => $post->post_date,
+// 			'post_published_date' => $formatted_date,  // Updated date format
+//         );
+//     }                  
+//     //return $posts_data;  
+// 	$response = array(
+// 		'statusCode' => 200,
+// 		'message' => 'Success',
+// 		'data' => $posts_data,
+// 	);      
+// 	return new WP_REST_Response($response);
+// 	//return strip_tags($excerpt);                 
+// } 
+
+// /* Creating custom API END */
+
+/**Get pots data API [Start] */
 add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
 
 function custom_api_get_all_posts() {
-    register_rest_route( 'custom/v1', '/all-posts', array(
+    register_rest_route( 'custom/v1', '/get-blog-posts', array(
         'methods' => 'GET',
         'callback' => 'custom_api_get_all_posts_callback'
     ));
 }
 
-add_action('init','custom_api_get_all_posts_callback');
-//function custom_api_get_all_posts_callback( $request ) {
-function custom_api_get_all_posts_callback(){
+//add_action('init','custom_api_get_all_posts_callback');
+
+function custom_api_get_all_posts_callback( $request ) {
     // Initialize the array that will receive the posts' data. 
     $posts_data = array();
-
-	/**Get posts data with pagination[Start]*/
-    // Receive and set the page parameter from the $request for pagination purposes
-    /**$paged = $request->get_param( 'page' );
-    $paged = ( isset( $paged ) || ! ( empty( $paged ) ) ) ? $paged : 1; 
-    // Get the posts using the 'post' and 'news' post types
-	$posts = get_posts( array(
-            'paged' => $paged,
-            //'post__not_in' => get_option( 'sticky_posts' ),
-            //'posts_per_page' => -1, 
-			'posts_per_page' => 3,           
-            //'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
+    $posts = get_posts( array(
+            'posts_per_page' => -1,   
+		    'post_status' => 'publish',
 			'post_type' => array( 'post')
         )
-    ); */
-	/**Get posts data with pagination[End]*/
-
-	
-
-
-	/**Get all posts data without pagination [Start] */
-	$posts = get_posts( array(
-		'posts_per_page' => -1,          
-		//'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
-		//'post_type' => array( 'gym-member')
-		'post_type' => array( 'post','page'),
-		)
-	); 
-	/**Get all posts data without pagination [End] */
-
-	if (empty($posts)) {
-		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
-		$response = array(
-			'statusCode' => 404,
-			'message' => 'Post not found',
-			//'data' => $posts_data,
-		);      
-		return new WP_REST_Response($response);
-	}
+    ); 
     // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
     foreach( $posts as $post ) {
-		$id = $post->ID; 
+        $id = $post->ID; 
 
-		/**if (function_exists('elementor_pro') && \Elementor\Plugin::$instance->db->is_built_with_elementor($id)) {
-			// Get the Elementor content and its styles
-			$post_content = \Elementor\Plugin::$instance->frontend->get_builder_content($id);
-			return $post_content;
-		}else{
-			$post_content = $post->post_content;
-		}*/
-		
-		/**Get elementor post content with design [Start] */
-		/**$contentElementor = "";
-
-		if (class_exists("\\Elementor\\Plugin")) {
-			$post_ID = $id;
-
-			$pluginElementor = \Elementor\Plugin::instance();
-			$contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
+		if (empty($posts)) {
+			return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
 		}
-		//echo $contentElementor;
-		if($contentElementor){
-			$post_content = $contentElementor; 
+		$author_id=$post->post_author;
+		$author_name = get_the_author_meta( 'display_name', $author_id );
+		$tags_name = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "names"));
+		$tags_slug = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "slugs"));
+    	$categories_name = wp_get_post_terms($post->ID, 'category', array("fields" => "names"));
+		$categories_slug = wp_get_post_terms($post->ID, 'category', array("fields" => "slugs"));
+
+		/**Get featured image url [Start] */
+		$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
+		if(!empty($post_thumbnail_id)) {
+		$post_thumbnail =  wp_get_attachment_url( get_post_thumbnail_id($post->ID));
 		}else{
-			$post_content = $post->post_content;
-		}*/
-		/**Get elementor post content with design [End] */
+			$post_thumbnail = 'null';
+		}
+		if ($post_thumbnail === false) {
+			$post_thumbnail = "";
+		}
+		/**Get featured image url [End] */
 
-        /**Modify the height and width of images in the post content [Start] **/
-		$content = $post->post_content;
-        $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
-            // Modify the width and height attributes as needed
-            $newWidth = 400; // Set your desired width
-            $newHeight = 300; // Set your desired height
-            $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', 'width="' . $newWidth . '" height="' . $newHeight . '"', $matches[0]);
-
-            // Add inline CSS to the image tag
-            $inline_css = 'style="object-fit: fill;"'; // Modify the inline CSS as needed
-            $new_image_tag = preg_replace('/<img(.*?)>/i', '<img$1 ' . $inline_css . '>', $new_image_tag);
-
-            return $new_image_tag;
-        }, $content);
-		/**Modify the height and width of images in the post content [End] **/
-        
+		/**Get posts content & clean up unwanted characters in post-content [Start] */
+		$post_content = $post->post_content;
+		// Use DOMDocument to parse the post content
+		$dom = new DOMDocument('1.0', 'UTF-8'); // Specify UTF-8 encoding
+		$dom->loadHTML(mb_convert_encoding($post_content, 'HTML-ENTITIES', 'UTF-8')); // Convert encoding
+		// Find all anchor tags in the post content
+		$anchorsToRemove = [];
+		foreach ($dom->getElementsByTagName('a') as $anchor) {
+    		$anchorsToRemove[] = $anchor;
+		}
+		// Remove the anchor tags from the DOM
+		foreach ($anchorsToRemove as $anchor) {
+    		$anchor->parentNode->removeChild($anchor);
+		}
+		// Get the modified post content after removing anchor tags
+		$modified_content = $dom->saveHTML();
 		
-        $post_thumbnail = ( has_post_thumbnail( $id ) ) ? get_the_post_thumbnail_url( $id ) : null;
+		// Clean up unwanted characters like Â and &nbsp;
+		$modified_content = str_replace(array("Â", "&nbsp;"), '', $modified_content);
+		/**Get posts content & clean up unwanted characters in post-content [End] */
 
-		// Get the post publish date
-		$publish_date = get_the_date('Y-m-d H:i:s', $post);
-
-		// Format the date as needed (e.g., to 'M d, Y')
-		$formatted_date = date('M d, Y', strtotime($publish_date));
-
-        $posts_data[] = (object) array( 
-            'id' => $id, 
-            'slug' => $post->post_name, 
-            'type' => $post->post_type,
-            'title' => $post->post_title,
-			//'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
-			'content' => $content,
-			//'content' => $post_content,
-			//'content' => apply_filters('the_content', get_the_content()),
-            'featured_img_src' => $post_thumbnail,
-			//'post_published_date' => $post->post_date,
-			'post_published_date' => $formatted_date,  // Updated date format
+        $posts_data[] = array( 
+            'post_id' => $id, 
+            'post_type' => $post->post_type,
+			'post_slug' => $post->post_name, 
+            'post_title' => $post->post_title,
+			'post_content' => $modified_content,
+            'post_featured_img_src' => $post_thumbnail,
+			'post_status' => $post->post_status,
+			'post_author' => $author_name,
+			'post_category' => $categories_name,
+			'post_category_slug' => $categories_slug,
+			'post_tag' => $tags_name,
+			'post_tag_slug' => $tags_slug,
+			'post_published_date' => $post->post_date,
         );
-    }                  
-    //return $posts_data;  
+    }    
 	$response = array(
 		'statusCode' => 200,
 		'message' => 'Success',
 		'data' => $posts_data,
-	);      
-	return new WP_REST_Response($response);
-	//return strip_tags($excerpt);                 
+	);       
+	return new WP_REST_Response($response, 200);            
 } 
-
-/* Creating custom API END */
-
+/**Get pots data API [End] */
 
 /**Admin css [Start] */
 function custom_admin_css() {
     echo '<style>
         /* Your custom CSS rules go here */
-		.widefat td{
+		/**.widefat td{
 			white-space: nowrap;
 		}
 		.table-view-list {
 			min-width: 100% !important;
-			width : auto; 
+			width : auto !important; 
 			overflow-x: auto;
-  			display: block;
+  			//display: block;
+		}*/
+		.widefat td{
+			white-space: nowrap;
+		}
+		.wp-list-table {
+			overflow-x: auto !important;
+			min-width: 100% !important;
+			width : auto !important; 
+			display: block;
+		}
+		
+		/* Adjust the scrollbar appearance as needed */
+		/* Create a sticky horizontal scrollbar after the posts listing */
+
+		.scrollbar-spacer {
+			height: 12px; /* Adjust the height as needed */
+			background: #bdbdbd; /* Background color for the spacer */
+			position: sticky;
+			overflow-x: auto !important;
+		}
+		.wp-list-table::-webkit-scrollbar {
+			height: 12px;
+		}
+		
+		.wp-list-table::-webkit-scrollbar-track {
+			background: #bdbdbd;
+		}
+		
+		.wp-list-table::-webkit-scrollbar-thumb {
+			background: #888;
 		}
     </style>';
+	?>
+	<script>
+		jQuery(document).ready(function($) {
+    // Insert a container after the posts listing
+    $('.wp-list-table').after('<div class="scrollbar-spacer"></div>');
+});
+	</script>
+	<?php
 }
-add_action('admin_head', 'custom_admin_css');
+add_action('admin_footer', 'custom_admin_css');
 /**Admin css [End] */
