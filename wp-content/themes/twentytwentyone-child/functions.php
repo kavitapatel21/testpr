@@ -1716,3 +1716,150 @@ function custom_admin_css() {
 }
 add_action('admin_footer', 'custom_admin_css');
 /**Admin css [End] */
+
+/**Creating custom cron for add-update post on admin panel [Start] */
+function my_cron_schedules($schedules){
+    if(!isset($schedules["10min"])){
+        $schedules["10min"] = array(
+            'interval' => 10*60,
+            'display' => __('Once every 10 minutes'));
+    }
+    return $schedules;
+}
+add_filter('cron_schedules','my_cron_schedules');
+
+if (!wp_next_scheduled('my_task_hook')) {
+	wp_schedule_event( time(), '10min', 'my_task_hook' );
+}
+
+add_action ( 'my_task_hook', 'my_task_function' );
+add_action ( 'init', 'my_task_function' );
+function my_task_function() {
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	  CURLOPT_URL => 'https://recovr.com/wp-json/custom/v1/get-blog-posts',
+	  CURLOPT_RETURNTRANSFER => true,
+	  CURLOPT_ENCODING => '',
+	  CURLOPT_MAXREDIRS => 10,
+	  CURLOPT_TIMEOUT => 0,
+	  CURLOPT_FOLLOWLOCATION => true,
+	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	  CURLOPT_CUSTOMREQUEST => 'GET',
+	));
+	
+	$response = curl_exec($curl);
+	
+	curl_close($curl);
+	$res = json_decode($response);
+	foreach($res->data as $post_data){
+		$post_id = $post_data->post_id;
+		$post_title = $post_data->post_title;
+		$post_status = $post_data->post_status;
+		$post_content = $post_data->post_content;
+		$post_date = $post_data->post_published_date;
+		//$post_author = $post_data->post_author;
+		$post_author_name = $post_data->post_author; // Replace with the actual author's name from your API data.
+		$post_author_id = null;
+
+		// Check if the author already exists.
+		$existing_author = get_user_by('login', $post_author_name);
+
+		if ($existing_author) {
+    	// Author exists, get their ID.
+    	$post_author_id = $existing_author->ID;
+		//echo "user exist id:" . $post_author_id;
+		} else {
+    	// Author doesn't exist, create a new user with the "author" role.
+    	$user_data = array(
+        'user_login' => $post_author_name,
+        'user_pass' => wp_generate_password(),
+        'display_name' => $post_author_name,
+        'role' => 'author', // Specify the role here.
+    	);
+
+    	$post_author_id = wp_insert_user($user_data);
+		//echo "user created id:" . $post_author_id;
+		}
+		$image = $post_data->post_featured_img_src; // url of image
+
+		//check if post with $post_data->post_id is already in database, if so, update post $post_data->post_id
+		if (get_post_status($post_data->post_id) ) {
+    		$post = array(
+    		'ID'  =>   $post_id,
+    		'post_title' =>  $post_title,
+			'post_content' =>  $post_content,
+			'post_status' =>  $post_status,
+			'post_author' =>  $post_author_id,
+			'post_type' => 'post',
+			'post_date' => $post_date
+    		);  
+    		$post_id = wp_update_post($post);
+			// echo 'Update data:';
+			// print_r($post);
+		
+		// Set the featured image
+		// Extract the basename from the image URL
+		$image_url_basename = wp_basename($image);
+		global $wpdb;
+
+		// Construct the SQL query to find the image by basename
+		$sql = $wpdb->prepare(
+			"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value LIKE %s",
+			'%' . $wpdb->esc_like($image_url_basename)
+		);
+	
+		$image_id = $wpdb->get_var($sql);
+		if(!has_post_thumbnail($post_id)){
+		if ($image_id) {
+			// An image with the same basename exists in the media library
+			// You can choose to use it or take appropriate action.
+			set_post_thumbnail($post_id, $image_id);
+			// The image does not exist in the media library, so let's add it
+		}else{
+			$image_id = media_sideload_image($image, 0, '', 'id');
+			set_post_thumbnail($post_id, $image_id);
+		}	
+		}	
+		}
+		//if not in database, add post with $post_data->post_id
+		else {
+    		$post = array(
+    		'import_id'  =>   $post_id,
+    		'post_title' =>  $post_title,
+			'post_content' =>  $post_content,
+			'post_status' =>  $post_status,
+			'post_author' =>  $post_author_id,
+			'post_type' => 'post',
+			'post_date' => $post_date
+    		);  
+    		$post_id = wp_insert_post($post);
+			// echo 'Insert data:';
+			// print_r($post);
+
+		// Set the featured image
+		// Extract the basename from the image URL
+		$image_url_basename = wp_basename($image);
+		global $wpdb;
+
+		// Construct the SQL query to find the image by basename
+		$sql = $wpdb->prepare(
+			"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value LIKE %s",
+			'%' . $wpdb->esc_like($image_url_basename)
+		);
+	
+		$image_id = $wpdb->get_var($sql);
+		if(!has_post_thumbnail($post_id)){
+			if ($image_id) {
+				// An image with the same basename exists in the media library
+				// You can choose to use it or take appropriate action.
+				set_post_thumbnail($post_id, $image_id);
+				// The image does not exist in the media library, so let's add it
+			}else{
+				$image_id = media_sideload_image($image, 0, '', 'id');
+				set_post_thumbnail($post_id, $image_id);
+			}	
+			}	
+		}		
+	}
+}
+/**Creating custom cron for add-update post on admin panel [End] */

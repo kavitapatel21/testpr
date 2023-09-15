@@ -37,6 +37,7 @@ define( 'DB_CHARSET', 'utf8mb4' );
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+define( 'WP_POST_REVISIONS', TRUE);
 /**#@+
  * Authentication unique keys and salts.
  *
@@ -91,8 +92,8 @@ ini_set('error_reporting', E_ALL );
 define('WP_DEBUG_DISPLAY', false);
 
 /**JWT authentication START */
-define('JWT_AUTH_SECRET_KEY', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RwciIsImlhdCI6MTY5MDk4MDE3NSwibmJmIjoxNjkwOTgwMTc1LCJleHAiOjE2OTE1ODQ5NzUsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.D7DzcWDrcLz1SClz1GyE4xh17BWs8VAyDWTc3rhlZ0g');
-define('JWT_AUTH_CORS_ENABLE', true);
+//define('JWT_AUTH_SECRET_KEY', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RwciIsImlhdCI6MTY5MDk4MDE3NSwibmJmIjoxNjkwOTgwMTc1LCJleHAiOjE2OTE1ODQ5NzUsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.D7DzcWDrcLz1SClz1GyE4xh17BWs8VAyDWTc3rhlZ0g');
+//define('JWT_AUTH_CORS_ENABLE', true);
 /**JWT authentication END */
 
 /* Add any custom values between this line and the "stop editing" line. */
