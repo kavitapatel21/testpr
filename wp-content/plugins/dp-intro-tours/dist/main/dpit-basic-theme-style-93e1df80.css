@@ -1,0 +1,19 @@
+/*!
+ * 
+ * Intro Tour Tutorial
+ * 
+ * @author [object Object]
+ * @version 5.4.1
+ * @link http://www.gnu.org/licenses/gpl-2.0.txt
+ * @license GPL-2.0+
+ * 
+ * Copyright (c) 2023 [object Object]
+ * 
+ * This plugin is released under GPL-2.0+ license to be included in wordpres.org plugin repository
+ * 
+ * Compiled with the help of https://wpack.io
+ * A zero setup Webpack Bundler Script for WordPress
+ */
+.dp-noscroll{overflow:hidden}.dpit-theme-basic .dpit-button{background-color:rgba(var(--accent-color), 0.4);color:rgba(var(--accent-contrast-inv-color), 0.9);font-weight:600;text-transform:uppercase}.dpit-theme-basic .dpit-button:not(.dpit-disabled):focus{color:rgb(var(--accent-contrast-color));background-color:rgb(var(--accent-color), 0.8)}@media(hover: hover){.dpit-theme-basic .dpit-button:not(.dpit-disabled):active,.dpit-theme-basic .dpit-button:not(.dpit-disabled):hover,.dpit-theme-basic .dpit-button:not(.dpit-disabled).hovered{color:rgb(var(--accent-contrast-color));background-color:rgba(var(--accent-color))}}.dpit-theme-basic.dpit-light-accent .dpit-button{color:rgba(var(--accent-contrast-inv-color), 0.8)}
+
+/*# sourceMappingURL=dpit-basic-theme-style-93e1df80.css.map*/

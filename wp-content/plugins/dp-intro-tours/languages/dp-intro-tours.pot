@@ -1,0 +1,1774 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Intro Tour Tutorial PRO Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-05 15:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.2; wp-5.7-RC3-50511\n"
+"X-Domain: dp-intro-tours"
+
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:444
+msgid "$KEEP CURRENT URL"
+msgstr ""
+
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:447
+msgid "$KEEP PREV. STEP URL"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:263
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:263
+msgid "(visual frontend builder)"
+msgstr ""
+
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:141
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:151
+msgid ".mobile_menu_bar_toggle"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:120
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:120
+msgid "15% just for you with coupon code: VBVHUUR9"
+msgstr ""
+
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:176
+msgid "480"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin.php:207
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin.php:207
+msgid ""
+"<br><br>Heads up !! This is the major release with many new cool features :)"
+"<br>We've made all possible fixes to keep compatibility back, but we ask "
+"that you review all tours after the update.<br> If you encounter any "
+"problems after the update, please do not hesitate to contact our support."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:950
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:950
+msgid "Accent Color"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:21 _archive/acf-fields-PRO.php:18
+#: _archive/acf-fields.php:14
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:21
+msgid "Activate"
+msgstr ""
+
+#: _archive/acf-fields-PRO.php:29 _archive/acf-fields.php:25
+msgid ""
+"Activate / Deactivate this intro tour. When tour is deactivated, you can "
+"still edit it with visual builder, however it is not executed for public."
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:65
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:58
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:58
+msgid "Activate License"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:35 _archive/acf-fields-PRO.php:32
+#: _archive/acf-fields.php:28
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:35
+msgid "Active"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:441
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:441
+msgid "Add Link"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:20
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:20
+msgid "Add New"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:21
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:21
+msgid "Add New Intro Tour"
+msgstr ""
+
+#: _archive/acf-fields-PRO.php:52 _archive/acf-fields.php:340
+msgid "Add second trigger / One trigger is enough"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:55
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:55
+msgid ""
+"Add second trigger so you can combine their settings and cover huge amount "
+"of use cases. E.g. run automatically but just in case of first visit of "
+"particular user together with starting when an info button is pressed."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:44 acf-inc/acf-config-functions.php:236
+#: _archive/acf-fields-PRO.php:41
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:44
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:236
+msgid "Additional Trigger"
+msgstr ""
+
+#: _archive/acf-fields.php:329
+msgid "Additional Trigger - PRO"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:838
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:838
+#, php-format
+msgid "Adjust bullets animation size: 10 - 90 % from window width"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:652
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:652
+msgid "Adjusts tour's behaviour."
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:107
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:107
+msgid "All"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:24
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:24
+msgid "All Intro Tours"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin.php:219
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin.php:219
+msgid "All pages"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:324
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:324
+msgid "Allow Just for Logged in Users"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:740
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:740
+msgid "Allow Redirect To Extraneous Web"
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:109
+#: _archive/class-dp-intro-sell-codes.php:200
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:149
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:241
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:149
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:241
+msgid "An error occurred, please try again."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:558
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:558
+msgid "Auto"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:159
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:159
+msgid "Available in"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:576
+msgid "Back"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:649
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:649
+msgid "Behavior"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:559
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:559
+msgid "Bottom"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:835
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:835
+msgid "Bullets Animation Size"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:550
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:550
+msgid ""
+"By default, the tour starts when the top of the element hits the top of the "
+"window. But what if we want to start a tour when the element is, for example,"
+" 20px from above? Just use this option and set a number without 'px' or '%'. "
+"The unit is selected in the field below."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:315
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:315
+msgid "Cancel Tour Button"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:563
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:563
+msgid "Center"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:44
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:44
+msgid ""
+"Check the box if the reference element is in the main mobile menu. It allows "
+"to automatically open and close the mobile menu during the tour. It only "
+"takes effect if the Mobile Ref. Selector is set and the selectors for "
+"opening and closing the mobile menu are set on the global plugin options "
+"page."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:572
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:572
+msgid "Click event"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:17
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:17
+msgid "Configuration of Intro Tour"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:39
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:39
+msgid "Content (text/html) *"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:208
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:208
+msgid "Context menu open"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:155
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:155
+msgid "Create New"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:138
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:138
+msgid ""
+"Creating of guided tutorial tours for your web can be easy and fun. Excited "
+"to start building your first intro tour?"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:152
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:152
+msgid ""
+"CSS selector of element that is responsible for mobile menu closing ( x )"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:142
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:142
+msgid ""
+"CSS selector of element that is responsible for mobile menu opening "
+"(hamburger menu)."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:907
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:907
+msgid "Custom Font"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:400
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:400
+msgid "Custom Post Type (PRO)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:440
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:440
+msgid "Custom selector - visual selection (eg when clicking on a button)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:430
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:430
+msgid ""
+"CUSTOM SELECTOR: e.g. '.button or #btn' ( defined manually as css selector "
+"or visually by our frontend builder)."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:321
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:321
+msgid "Custom text for cancel tour button."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:301
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:301
+msgid "Custom text for next step button."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:311
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:311
+msgid "Custom text for previous step button."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:331
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:331
+msgid "Custom text of finished tour button."
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:62
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:55
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:55
+msgid "Deactivate License"
+msgstr ""
+
+#: dbg/class-dp-intro-tours-DBG.php:27
+msgid "Debug"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:187
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:187
+msgid "Default Accent Color"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:197
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:197
+msgid "Default Theme"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:67 _archive/acf-fields-PRO.php:64
+#: _archive/acf-fields.php:351
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:67
+msgid "Define Your tour step by step"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:300
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:300
+msgid ""
+"Defines a URL key to unlock the tour for selected users only. The tour only "
+"starts for users to whom you submit a URL with a key in the form of the "
+"<strong>start-intro-tour='Your Unlock Key'</strong> parameter."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:43
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:43
+#, php-format
+msgid ""
+"Defines an alternative reference element for mobile devices with a display "
+"width less than or equal to %dpx. This only makes sense if the reference "
+"element in the mobile display differs from the standard reference element or "
+"is part of mobile MENU. You can adjust the mobile screen width limit in the "
+"global settings of the plugin."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:38
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:38
+msgid ""
+"Defines reference element for current step in form of css selector eg '."
+"testimonial-box', '#section-1'. In case of selector for multiple elements, "
+"first is used."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:454
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:454
+msgid ""
+"Defines the CSS selector for the element (button) that is responsible for "
+"initiating this tour."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:403
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:403
+msgid ""
+"Defines the page / post / product where the introductory tour should start. "
+"To run it on other custom types, check out the PRO version."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:481
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:481
+msgid ""
+"Defines the type of event that is used as a starter (on specified element by "
+"Selector field above)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:513
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:513
+msgid ""
+"Defines the type of event that is used as a trigger. (page load, page scroll,"
+" page resize)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:239
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:239
+msgid "Defines where and how this tour will start."
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:243
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:243
+msgid "Design / Behavior (admin board setup)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:892
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:892
+msgid "Design adjustments"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:797
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:797
+msgid "Disable Bullet Navigation"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:664
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:664
+msgid "Disable Exit on Overlay Click"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:816
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:816
+msgid "Disable Running Bullets Animation"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:819
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:819
+msgid ""
+"Disable running bullets animation in the beginning of thr tour and in case "
+"of redirection to other page in PRO."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:213
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:213
+msgid "Disable visualization of index of current intro step."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:59 _archive/acf-fields-PRO.php:56
+#: _archive/acf-fields.php:344
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:59
+msgid "Disabled"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:55
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:55
+#, php-format
+msgid ""
+"Do you want to target the main menu elements? With %s it will also play well "
+"in mobile view. Thanks to our visual builder, its setup is easy and "
+"intuitive :)"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:578
+msgid "Done"
+msgstr ""
+
+#. The title to be displayed in the browser window for this page.
+#: admin/class-dp-intro-tours-admin-settings.php:48
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:48
+msgid "DP Intro Tours Global"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:47
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:47
+msgid "DP Intro Tours Global Options"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:56
+#: _archive/class-dp-intro-tours-admin-settings-PRO copy.php:105
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:56
+msgid "DP Intro Tours Options"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:611
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:611
+msgid ""
+"E.g. if 'Event' is set as 'Element is scrolled in viewport', tour won't "
+"start, when element is scrolled in view for second time, after previous tour "
+"has finished."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:919
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:919
+msgid "e.g. Lato, 'Lucida Grande', Tahoma, Sans-Serif"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:22
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:22
+msgid "Edit Intro Tour"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:187
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:187
+msgid "Edit Intro Tour:"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:178
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:178
+msgid "Edit:"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:209
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:209
+msgid "Element is scrolled in viewport"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:42
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:42
+msgid ""
+"Enable / disable user's interaction with reference element (don't block "
+"click and other events)."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:343
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:343
+msgid "Enable for Mobile Phones"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:362
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:362
+msgid "Enable for Wide Screens"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:327
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:327
+msgid ""
+"Enable this setting if you want to run the tour ONLY for logged in / "
+"registered users."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:58 _archive/acf-fields-PRO.php:55
+#: _archive/acf-fields.php:343
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:58
+msgid "Enabled"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:246
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:246
+#, php-format
+msgid ""
+"Enables changing themes on the fly on frontend by adding theme id %s as "
+"class into %s."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:478
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:478
+msgid "Event"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:325
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:325
+msgid "Finished Tour Button"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:259
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:259
+msgid "First User Visit Only"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:217
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:217
+msgid "Form become focused"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:219
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:219
+msgid "Form changed (typing ... )"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:218
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:218
+msgid "Form lose focus"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:220
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:220
+msgid "Form was submitted"
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:111
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:111
+msgid "from possible"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:69
+#: admin/class-dp-intro-tours-admin-settings.php:133
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:58
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:58
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:68
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:69
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:69
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:133
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:58
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:58
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:68
+msgid "General"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:193
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:193
+msgid "Global accent color for all intro tours"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:205
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:205
+msgid "Global design of intro."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:206
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:206
+msgid ""
+"Global design of intro. In PRO there is another 3 themes and global theme "
+"can be overridden by configuration of specific tour."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:381
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:381
+msgid "Global Start at All Pages"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:781
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:781
+msgid "Hide button for exiting of the tour."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:252
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:252
+msgid "Hide elements when tour starts (ADVANCED)"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:221
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:221
+msgid ""
+"Hide graphical visualization of tour progress in form of bullets. These are "
+"also possible to use for navigation to specific step."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:234
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:234
+msgid "Hide Plugin's Menu"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:759
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:759
+msgid "Hide Previous Step Button"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:762
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:762
+msgid ""
+"Hide previous step button (web app and dynamic links support, where previous "
+"doesn't work)"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:237
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:237
+msgid ""
+"Hide setting menu item in main admin menu for a cleaner look of admin board. "
+"Once activated, an option will be added in your main WordPress Settings menu."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:778
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:778
+msgid "Hide Skip Tour Button"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:218
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:218
+msgid "Hide Step Bullets"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:210
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:210
+msgid "Hide Step Number"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://deeppresentation.com/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://deeppresentation.com/plugins/dp-intro-tours"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:724
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:724
+msgid ""
+"If On, the URLs of the next step are strictly compared - query parameters "
+"included. It reloads between 2 steps with the same URL but different query "
+"parameters."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:743
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:743
+msgid ""
+"If On, you can configure step's url as an extraneous and it won't be blocked."
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:122
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:122
+msgid ""
+"If you intend to use reference elements that are different for the mobile "
+"version, please adjust the mobile break point to correspond with your "
+"WordPress theme."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:58
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:58
+#, php-format
+msgid ""
+"In %s you can setup simultaneously 2 trigger configurations for each tour. "
+"Therefore you can combine their settings and cover huge amount of use cases. "
+"E.g. run automatically but just in case of first visit of particular visitor "
+"together with starting when an info button is pressed :)"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:56
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:56
+#, php-format
+msgid ""
+"In %s, you can choose from 5 fancy design themes. Therefore, you can "
+"precisely match the vibe of your web. In addition, you can override default "
+"tour's behavior, theme, accent color and font for each tour separately :)"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:117
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:117
+msgid ""
+"In case you intend to use main menu element as a reference element in your "
+"tour, please set visually or manually selectors of mobile menu opener / "
+"closer (hamburger menu)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:743
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:743
+msgid ""
+"In this way you can create cross domain tour, if you configure starting of "
+"tour at your other owned domain or you can just redirect visitor at the and "
+"of the tour to extraneous url from whatever reason."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:547
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:547
+msgid "In View Port Offset"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:576
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:576
+msgid "In View Port Offset Unit"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:36 _archive/acf-fields-PRO.php:33
+#: _archive/acf-fields.php:29
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:36
+msgid "Inactive"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:702
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:702
+msgid "Increment Step After Reload"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:439
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:439
+msgid "Insert/edit link"
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:104
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:104
+msgid "installation covered by this key is active"
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:111
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:111
+msgid "installations covered by this key are active"
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:107
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:107
+msgid "installations covered by this key are used"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:42
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:42
+msgid "Interaction"
+msgstr ""
+
+#: _archive/acf-fields.php:388
+msgid "Intro related posts multi-page"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:19
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:19
+msgid "Intro Tour"
+msgstr ""
+
+#: _archive/acf-fields.php:384
+msgid "Intro tour - helper"
+msgstr ""
+
+#: _archive/acf-fields-PRO.php:14
+msgid "Intro Tour PRO"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:97
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:97
+msgid "Intro Tour Tutorial Global Options"
+msgstr ""
+
+#. Name of the plugin
+msgid "Intro Tour Tutorial PRO Plugin"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:18
+#: includes/class-dp-intro-tours-post-type-registrator.php:31
+#: includes/class-dp-intro-tours-post-type-registrator.php:38
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:18
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:31
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:38
+msgid "Intro Tours"
+msgstr ""
+
+#. The title to be displayed in the browser window for this page.
+#: admin/class-dp-intro-tours-admin-settings.php:57
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:57
+msgid "Intro Tours Global Options"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:44
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:44
+msgid "Is in Mob. MENU?"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:77
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:77
+msgid "is not activated. Activate to gain regular update."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:448
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:448
+msgid "keeps always previous (lower idx) step"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:214
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:214
+msgid "Keyboard key down"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:215
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:215
+msgid "Keyboard key press"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:216
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:216
+msgid "Keyboard release key"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:70
+#: admin/class-dp-intro-tours-admin-settings.php:134
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:60
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:60
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:70
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:70
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:70
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:134
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:60
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:60
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:70
+msgid "Labeling"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:280
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:280
+msgid "Labeling options"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:562
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:562
+msgid "Left"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:59
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:69
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:59
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:59
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:69
+msgid "License"
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:117
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/sellcodes_plugin_updater.php:117
+msgid "License expiration"
+msgstr ""
+
+#: PRO/adminators/class-dp-intro-tours-adminator-core.php:18
+#: package/dp-intro-tours-pro/PRO/adminators/class-dp-intro-tours-adminator-core.php:18
+msgid "License Key"
+msgstr ""
+
+#: PRO/adminators/DEEP_PRESENTATION/class-dp-intro-tours-adminator.php:21
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:97
+#: PRO/adminators/TEMPLATE_MONSTER/class-dp-intro-tours-adminator.php:21
+#: package/dp-intro-tours-pro/PRO/adminators/DEEP_PRESENTATION/class-dp-intro-tours-adminator.php:21
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:97
+#: package/dp-intro-tours-pro/PRO/adminators/TEMPLATE_MONSTER/class-dp-intro-tours-adminator.php:21
+msgid "License key, that you received after payment at"
+msgstr ""
+
+#: PRO/adminators/class-dp-intro-tours-adminator-core.php:101
+#: package/dp-intro-tours-pro/PRO/adminators/class-dp-intro-tours-adminator-core.php:101
+msgid "License settings"
+msgstr ""
+
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:49
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:49
+msgid "License Status"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:195
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:195
+msgid "License tab"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:450
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:450
+msgid "Link inserted."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:449
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:449
+msgid "Link selected."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:242
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:242
+msgid "Load all themes (ADVANCED)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:278
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:278
+msgid "Lock by URL Parameter"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:292
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:292
+msgid "Locked"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:177
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:177
+msgid ""
+"Maximal width of screen in pixels, where mobile styles are still applied.<br>"
+"<br>Each wordpress template has its own values, so for optimal functionality "
+"of the plugin it is recommended to identify this threshold value eg using "
+"developer tools (switch to mobile view - responsive and gradually reduce the "
+"width to the point where your template switches to mobile style)"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:95
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:114
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:95
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:114
+msgid ""
+"May you consider extending to keep updates with new features and security "
+"ensured."
+msgstr ""
+
+#. Minimum input length in characters to start searching posts in the "Insert/edit link" modal.
+#: includes/class-dp-intro-tours-helper.php:454
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:454
+msgctxt "minimum input length for searching post links"
+msgid "1"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:61
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:71
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:61
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:61
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:71
+msgid "Mobile"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:168
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:168
+msgid "Mobile Break Point"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:146
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:146
+msgid "Mobile Menu Closer Selector"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:136
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:136
+msgid "Mobile Menu Opener Selector"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:43
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:43
+msgid "Mobile Ref. Selector"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:201
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:201
+msgid "Mouse click"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:207
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:207
+msgid "Mouse cursor leaving the element"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:204
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:204
+msgid "Mouse double-click"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:205
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:205
+msgid "Mouse hover over element"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:206
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:206
+msgid "Mouse wheel action"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:317
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:317
+msgid "my_url_key_12345"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:23
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:23
+msgid "New Intro Tour"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:575
+msgid "Next"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:295
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:295
+msgid "Next Step Button"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:698
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:698
+msgid "No"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:28
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:28
+msgid "No Intro Tours found"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:29
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:29
+msgid "No Intro Tours found in the Trash"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:443
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:443
+msgid "No results found."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:867
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:867
+msgid "no scrolling (immediately fade into to next step)"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:452
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:452
+msgid "No search term specified. Showing recent pages, products and posts."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:743
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:743
+msgid ""
+"Of course this has a sense only for a last step as after such a redirection "
+"tours ends."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:339 acf-inc/acf-config-functions.php:358
+#: acf-inc/acf-config-functions.php:377 acf-inc/acf-config-functions.php:396
+#: acf-inc/acf-config-functions.php:679 acf-inc/acf-config-functions.php:717
+#: acf-inc/acf-config-functions.php:736 acf-inc/acf-config-functions.php:755
+#: acf-inc/acf-config-functions.php:774 acf-inc/acf-config-functions.php:793
+#: acf-inc/acf-config-functions.php:812 acf-inc/acf-config-functions.php:831
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:339
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:358
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:377
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:396
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:679
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:717
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:736
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:755
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:774
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:793
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:812
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:831
+msgid "Off"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:567
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:567
+msgid "Offset in pixels or %"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:338 acf-inc/acf-config-functions.php:357
+#: acf-inc/acf-config-functions.php:376 acf-inc/acf-config-functions.php:395
+#: acf-inc/acf-config-functions.php:678 acf-inc/acf-config-functions.php:716
+#: acf-inc/acf-config-functions.php:735 acf-inc/acf-config-functions.php:754
+#: acf-inc/acf-config-functions.php:773 acf-inc/acf-config-functions.php:792
+#: acf-inc/acf-config-functions.php:811 acf-inc/acf-config-functions.php:830
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:338
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:357
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:376
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:395
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:678
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:716
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:735
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:754
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:773
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:792
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:811
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:830
+msgid "On"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:608
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:608
+msgid "Once Per Starting Page Load"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:41
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:41
+msgid ""
+"Optionally you can alter tooltip position. However, this preference won't be "
+"in effect in all cases, as if there is no space enough for required "
+"positioning, algorithm choose position automatically."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:451
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:451
+msgid "Or search:"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:953
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:953
+msgid ""
+"Override default accent color from plugin's global settings page for this "
+"tour."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:929
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:929
+msgid ""
+"Override default theme setup from plugin's global settings page for this "
+"tour."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:895
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:895
+msgid "Override global design settings from"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:910
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:910
+msgid ""
+"Overrides font of presentational elements by custom font. You can use single "
+"value or multiple fonts used as a fallback delimited by commas. However "
+"plugin won't load font files for you. You should use already loaded fonts."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:430
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:430
+msgid "page"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:400
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:400
+msgid "Page / Post / Product"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:40
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:40
+msgid "Page / Post URL"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:510
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:510
+msgid "Page Event"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:530
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:530
+msgid "Page load"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:532
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:532
+msgid "Page resize"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:531
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:531
+msgid "Page scroll"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:895
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:895
+msgid "particularly for this tour."
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:195
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:195
+msgid "Please, activate your plugin at"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:85
+#: _archive/class-dp-intro-tours-admin-settings-PRO copy.php:130
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:85
+msgid "Please, activate your plugin here."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:141
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:141
+msgid "Plugin General Options"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:84
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:84
+msgid "Plugin License Options"
+msgstr ""
+
+#: _archive/acf-fields.php:412
+msgid "Plugin Version"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:895
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:895
+msgid "plugin's global setting page"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:433
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:433
+msgid "portfolio"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:432
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:432
+msgid "post"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:623
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:613
+msgid "preferred position?"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:202
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:202
+msgid "Press mouse button"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:305
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:305
+msgid "Previous Step Button"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:431
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:431
+msgid "product"
+msgstr ""
+
+#: PRO/adminators/CODE_CANYON/class-dp-intro-tours-adminator.php:19
+#: package/dp-intro-tours-pro/PRO/adminators/CODE_CANYON/class-dp-intro-tours-adminator.php:19
+msgid "Purchase Code"
+msgstr ""
+
+#: PRO/adminators/CODE_CANYON/class-dp-intro-tours-adminator.php:15
+#: package/dp-intro-tours-pro/PRO/adminators/CODE_CANYON/class-dp-intro-tours-adminator.php:15
+msgid ""
+"Purchase Code (CodeCanyon), that you received after payment at codecanyon."
+"net/"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:38
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:38
+msgid "Reference Selector *"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:40
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:40
+msgid ""
+"Relative URL of page, post, product or other custom post type, where "
+"specified target element is at. (Eg. \"/\" = root of your web). If required "
+"url is not listed in Insert/edit link tool, just type it manually as all "
+"CPTs are supported. In case of linking to extraneous web, use absolute url "
+"of course."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:203
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:203
+msgid "Release mouse button"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:561
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:561
+msgid "Right"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:270
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:270
+msgid "Run an initial tour only on a user's first visit."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:634
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:634
+msgid "Run intro tour only once during current webpage load."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:864
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:864
+msgid "Scroll Speed"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:27
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:27
+msgid "Search Intro Tours"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:451
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:451
+msgid "Selector"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:258
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:258
+msgid ""
+"Selectors (delimited by ',') of elements, that should be hidden, when tour "
+"starts and shown again when tour ends."
+msgstr ""
+
+#: PRO/class-dp-intro-tours-public-PRO.php:199
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-public-PRO.php:199
+msgid "Set Mobile Menu Opener"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:683
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:683
+msgid "Should Be Content Under Overlay Blurred?"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:229
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:229
+msgid "Show graphical visualization of tour progress in form of progress bar."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:226
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:226
+msgid "Show Tour Progress Bar"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:446
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:446
+msgid ""
+"similar to PREV. STEP but eg. it is keeping following step when you walk "
+"tour back"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:577
+msgid "Skip"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:45
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:45
+msgid "Skip on mobile"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:46
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:46
+msgid "Skip on wide screens"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:145
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:145
+msgid "specific tour configuration"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:430
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:430
+msgid "Specifies the type of trigger:"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:579
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:579
+msgid "Specifies unit of In View Port Offset option."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:471
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:471
+msgid "Specify a DOM element as a trigger"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:64 _archive/acf-fields-PRO.php:61
+#: _archive/acf-fields.php:348
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:64
+msgid "Steps"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:222
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:222
+msgid "Steps (visual frontend builder)"
+msgstr ""
+
+#: _archive/acf-fields.php:415
+msgid "Store version of plugin which updated current intro tour last time."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:721
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:721
+msgid "Strict URL Compare"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:705
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:705
+msgid "Submission of non-AJAX forms support."
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:263
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:263
+msgid "Target"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:39
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:39
+msgid "Text or html code, that is shown in current tour's step."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:143
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:143
+msgid "Thank you for using"
+msgstr ""
+
+#: _archive/class-dp-intro-tours-admin-settings-PRO copy.php:131
+msgid ""
+"Thank you for using DP Intro Tours. You can customise your tour style here."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:230
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:230
+msgid "The page is defined by Page / Post / Product option above."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:229
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:229
+msgid ""
+"The page is defined by Page / Post URL of the first intro step in STEPS "
+"table."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:867
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:867
+msgid "the slowest"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"The ultimate multi-page introductory tours that you can create intuitively "
+"using the visual front-end builder and detailed configuration in the admin "
+"board. You can teach users how to use your site, or introduce a new feature "
+"or product in an effective and user-friendly way. The tour is designed to "
+"guide the user with their full attention in the way you define, without "
+"\"sharp breaks\" in the tour's story. The plugin offers a flexible "
+"definition of your tour and it's a start."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:926
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:926
+msgid "Theme"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:166
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:166
+msgid "This can be overridden by specific tour configuration in"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:167
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:167
+msgid "This can be overridden by specific tour configuration."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:365
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:365
+#, php-format
+msgid ""
+"To disable the tour for devices with a screen larger than %d pixels, turn "
+"off this setting. You can adjust the mobile screen width limit in the global "
+"settings of the plugin."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:346
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:346
+#, php-format
+msgid ""
+"To disable the tour for mobile phones with a screen width of less then or "
+"equal to %d pixels, turn off this setting. You can adjust the mobile screen "
+"width limit in the global settings of the plugin."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:384
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:384
+msgid "To run this tour globally on all pages, turn this setting on."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:46
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:46
+#, php-format
+msgid ""
+"To skip step on devices with a screen larger than %d pixels, check the box. "
+"You can adjust the mobile screen width limit in the global settings of the "
+"plugin."
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:45
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:45
+#, php-format
+msgid ""
+"To skip step on mobile phones with a screen width of less then or equal to "
+"%d pixels, check the box. You can adjust the mobile screen width limit in "
+"the global settings of the plugin."
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:112
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:112
+msgid "today"
+msgstr ""
+
+#. Author of the plugin
+msgid "Tomáš Groulík <deeppresentation>"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:41
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:41
+msgid "Tooltip Position"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:560
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:560
+msgid "Top"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:213
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:213
+msgid "Touch cancel"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:212
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:212
+msgid "Touch end"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:211
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:211
+msgid "Touch move"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:210
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:210
+msgid "Touch start"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:236
+#: public/class-dp-intro-tours-public.php:263
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:236
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:263
+msgid "Trigger"
+msgstr ""
+
+#: public/class-dp-intro-tours-public.php:236
+#: package/dp-intro-tours-pro/public/class-dp-intro-tours-public.php:236
+msgid "Trigger (admin board setup)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:427
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:427
+msgid "Trigger Object"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin.php:398
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin.php:398
+msgid "Try build your tour with PRO"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:667
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:667
+msgid ""
+"Turn this setting on to disable the end of the tour when the user clicks on "
+"the overlay."
+msgstr ""
+
+#: includes/dp-intro-tours-route-builder.php:48
+#: includes/dp-intro-tours-route-builder.php:170
+#: includes/dp-intro-tours-route.php:42 includes/dp-intro-tours-route.php:60
+#: PRO/adminators/class-dp-intro-tours-adminator-core.php:73
+#: PRO/adminators/class-dp-intro-tours-adminator-core.php:96
+#: package/dp-intro-tours-pro/includes/dp-intro-tours-route-builder.php:48
+#: package/dp-intro-tours-pro/includes/dp-intro-tours-route-builder.php:170
+#: package/dp-intro-tours-pro/includes/dp-intro-tours-route.php:42
+#: package/dp-intro-tours-pro/includes/dp-intro-tours-route.php:60
+#: package/dp-intro-tours-pro/PRO/adminators/class-dp-intro-tours-adminator-core.php:73
+#: package/dp-intro-tours-pro/PRO/adminators/class-dp-intro-tours-adminator-core.php:96
+msgid "Unauthorized! Try it somewhere else!"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:95
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:95
+#, php-format
+msgid "Unfortunately your license for %s already expired."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:297
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:297
+msgid "Unlock key"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:293
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:293
+msgid "Unlocked"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:440
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:440
+msgid "Update"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:118
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:118
+msgid "UPGRADE NOW"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:181
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:181
+msgid "Use default font from your WordPress theme."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:177
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:177
+msgid "Use WordPress Theme Font"
+msgstr ""
+
+#: includes/class-dp-intro-tours-helper.php:445
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-helper.php:445
+msgid "variable link"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:25
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:25
+msgid "View Intro Tour"
+msgstr ""
+
+#: includes/class-dp-intro-tours-post-type-registrator.php:26
+#: package/dp-intro-tours-pro/includes/class-dp-intro-tours-post-type-registrator.php:26
+msgid "View Intro Tours"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:800
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:800
+msgid ""
+"When this setting is on, visitor can't navigate to intro steps by click on "
+"navigational bullets in intro tooltip."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:32
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:32
+msgid ""
+"When tour is deactivated, you can still edit it with visual builder, however "
+"it is not executed for public."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:439
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:439
+msgid "Whole page (eg when loading a page)"
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:430
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:430
+msgid "WHOLE PAGE: page load, window resize etc."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:57
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:57
+#, php-format
+msgid ""
+"Would you like to send an intro tour invitation just for a specific people? "
+"May you want to give a try to %s and boost this feature."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:697
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:697
+msgid "Yes"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-promo.php:54
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-promo.php:54
+#, php-format
+msgid ""
+"Yes! You don't need to limit yourself to single-page intro tour only. %s can "
+"rock your whole web up !!"
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:281
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:281
+msgid "You can customize texts of intro elements here."
+msgstr ""
+
+#: acf-inc/acf-config-functions.php:281
+#: package/dp-intro-tours-pro/acf-inc/acf-config-functions.php:281
+msgid ""
+"You can send intro tour invitation to specific person only by sending a tour "
+"start URL with an unlock parameter<br><br>E.g. for tour starting on the home "
+"page: www.your-home-page-address.com/?<strong>start-intro-tour='Your Unlock "
+"Key'</strong>.<br><br> If you want the tour to start as soon as the visitor "
+"clicks on the link sent to them, then set options below as Trigger Object = "
+"Whole Page and Page Event = Page load."
+msgstr ""
+
+#: admin/class-dp-intro-tours-admin-settings.php:145
+#: package/dp-intro-tours-pro/admin/class-dp-intro-tours-admin-settings.php:145
+msgid ""
+"You can setup global style and behavior here. Some of these options are "
+"overridable by"
+msgstr ""
+
+#: includes/dp-intro-tours-route-builder.php:45
+#: includes/dp-intro-tours-route-builder.php:167
+#: package/dp-intro-tours-pro/includes/dp-intro-tours-route-builder.php:45
+#: package/dp-intro-tours-pro/includes/dp-intro-tours-route-builder.php:167
+msgid "You have no capabilities to edit intro tours"
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-promo-PRO.php:114
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-promo-PRO.php:114
+#, php-format
+msgid "Your license for %s is expiring %s."
+msgstr ""
+
+#: PRO/class-dp-intro-tours-admin-settings-PRO.php:85
+#: package/dp-intro-tours-pro/PRO/class-dp-intro-tours-admin-settings-PRO.php:85
+msgid "Your license information"
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:33
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:108
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:108
+msgid "Your license is activated now."
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:232
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:275
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:275
+msgid "Your license is deactivated now."
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:134
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:174
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:174
+msgid "Your license key has been disabled."
+msgstr ""
+
+#: _archive/class-dp-intro-sell-codes.php:140
+#: PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:180
+#: package/dp-intro-tours-pro/PRO/adminators/SELL_CODES/class-dp-intro-tours-adminator.php:180
+msgid "Your license key has reached its activation limit."
+msgstr ""
