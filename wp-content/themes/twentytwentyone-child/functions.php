@@ -1419,154 +1419,155 @@ function bbloomer_echo_stock_variations_loop(){
 //Display variation name & stock on shop page END
 
 
-// /* Creating custom API START */
+/* Creating custom API START */
 
-// /** You can fetch data in postman using http://localhost/testpr/wp-json/custom/v1/all-posts link **/
-// add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
+/** You can fetch data in postman using http://localhost/testpr/wp-json/custom/v1/all-posts link **/
+add_action( 'rest_api_init', 'custom_api_get_all_postss' );   
 
-// function custom_api_get_all_posts() {
-//     register_rest_route( 'custom/v1', '/all-posts', array(
-//         'methods' => 'GET',
-//         'callback' => 'custom_api_get_all_posts_callback'
-//     ));
-// }
+function custom_api_get_all_postss() {
+    register_rest_route( 'custom/v1', '/all-posts', array(
+        'methods' => 'GET',
+        'callback' => 'custom_api_get_all_posts_callback'
+    ));
+}
 
-// add_action('init','custom_api_get_all_posts_callback');
-// //function custom_api_get_all_posts_callback( $request ) {
-// function custom_api_get_all_posts_callback($request){
-// 	/**Get posts data with pagination[Start]*/
-//     // Receive and set the page parameter from the $request for pagination purposes
-//     /**$paged = $request->get_param( 'page' );
-//     $paged = ( isset( $paged ) || ! ( empty( $paged ) ) ) ? $paged : 1; 
-//     // Get the posts using the 'post' and 'news' post types
-// 	$posts = get_posts( array(
-//             'paged' => $paged,
-//             //'post__not_in' => get_option( 'sticky_posts' ),
-//             //'posts_per_page' => -1, 
-// 			'posts_per_page' => 3,           
-//             //'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
-// 			'post_type' => array( 'post')
-//         )
-//     ); */
-// 	/**Get posts data with pagination[End]*/
+add_action('init','custom_api_get_all_posts_callbacks');
+//function custom_api_get_all_posts_callback( $request ) {
+function custom_api_get_all_posts_callbacks($request){
+	/**Get posts data with pagination[Start]*/
+    // Receive and set the page parameter from the $request for pagination purposes
+    //$paged = $request->get_param( 'page' );
+    //$paged = ( isset( $paged ) || ! ( empty( $paged ) ) ) ? $paged : 1; 
+    // Get the posts using the 'post' and 'news' post types
+	// $posts = get_posts( array(
+    //         'paged' => $paged,
+    //         //'post__not_in' => get_option( 'sticky_posts' ),
+    //         //'posts_per_page' => -1, 
+	// 		'posts_per_page' => 3,           
+    //         //'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
+	// 		'post_type' => array( 'post')
+    //     )
+    // ); 
+	/**Get posts data with pagination[End]*/
 
-// 	/**Get all posts data without pagination [Start] */
-// 	$posts = get_posts( array(
-// 		'posts_per_page' => -1,          
-// 		//'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
-// 		//'post_type' => array( 'gym-member')
-// 		'post_type' => array( 'post','page'),
-// 		)
-// 	); 
-// 	/**Get all posts data without pagination [End] */
+	/**Get all posts data without pagination [Start] */
+	$posts = get_posts( array(
+		'posts_per_page' => -1,          
+		//'post_type' => array( 'post', 'books', 'movies' ) // This is the line that allows to fetch multiple post types. 
+		//'post_type' => array( 'gym-member')
+		//'post_type' => array( 'post','page'),
+		'post_type' => array( 'post'),
+		)
+	); 
+	/**Get all posts data without pagination [End] */
 
-// 	if (empty($posts)) {
-// 		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
-// 		$response = array(
-// 			'statusCode' => 404,
-// 			'message' => 'Post not found',
-// 			//'data' => $posts_data,
-// 		);      
-// 		return new WP_REST_Response($response);
-// 	}
-//     // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
-//     foreach( $posts as $post ) {
-// 		$id = $post->ID; 
+	if (empty($posts)) {
+		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
+		$response = array(
+			'statusCode' => 404,
+			'message' => 'Post not found',
+			//'data' => $posts_data,
+		);      
+		return new WP_REST_Response($response);
+	}
+    // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
+    foreach( $posts as $post ) {
+		$id = $post->ID; 
 
-// 		/**if (function_exists('elementor_pro') && \Elementor\Plugin::$instance->db->is_built_with_elementor($id)) {
-// 			// Get the Elementor content and its styles
-// 			$post_content = \Elementor\Plugin::$instance->frontend->get_builder_content($id);
-// 			return $post_content;
-// 		}else{
-// 			$post_content = $post->post_content;
-// 		}*/
+		/**if (function_exists('elementor_pro') && \Elementor\Plugin::$instance->db->is_built_with_elementor($id)) {
+			// Get the Elementor content and its styles
+			$post_content = \Elementor\Plugin::$instance->frontend->get_builder_content($id);
+			return $post_content;
+		}else{
+			$post_content = $post->post_content;
+		}*/
 		
-// 		/**Get elementor post content with design [Start] */
-// 		/**$contentElementor = "";
+		/**Get elementor post content with design [Start] */
+		/**$contentElementor = "";
 
-// 		if (class_exists("\\Elementor\\Plugin")) {
-// 			$post_ID = $id;
+		if (class_exists("\\Elementor\\Plugin")) {
+			$post_ID = $id;
 
-// 			$pluginElementor = \Elementor\Plugin::instance();
-// 			$contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
-// 		}
-// 		//echo $contentElementor;
-// 		if($contentElementor){
-// 			$post_content = $contentElementor; 
-// 		}else{
-// 			$post_content = $post->post_content;
-// 		}*/
-// 		/**Get elementor post content with design [End] */
+			$pluginElementor = \Elementor\Plugin::instance();
+			$contentElementor = $pluginElementor->frontend->get_builder_content($post_ID);
+		}
+		//echo $contentElementor;
+		if($contentElementor){
+			$post_content = $contentElementor; 
+		}else{
+			$post_content = $post->post_content;
+		}*/
+		/**Get elementor post content with design [End] */
 
-//         /**Modify the height and width of images in the post content [Start] **/
-// 		$content = $post->post_content;
-//         $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
-//             // Modify the width and height attributes as needed
-//             $newWidth = 400; // Set your desired width
-//             $newHeight = 300; // Set your desired height
-//             $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', 'width="' . $newWidth . '" height="' . $newHeight . '"', $matches[0]);
+        /**Modify the height and width of images in the post content [Start] **/
+		$content = $post->post_content;
+        // $content = preg_replace_callback('/<img[^>]+>/i', function ($matches) {
+        //     // Modify the width and height attributes as needed
+        //     $newWidth = 400; // Set your desired width
+        //     $newHeight = 300; // Set your desired height
+        //     $new_image_tag = preg_replace('/(width|height)="(\d+)"/i', 'width="' . $newWidth . '" height="' . $newHeight . '"', $matches[0]);
 
-//             // Add inline CSS to the image tag
-//             $inline_css = 'style="object-fit: fill;"'; // Modify the inline CSS as needed
-//             $new_image_tag = preg_replace('/<img(.*?)>/i', '<img$1 ' . $inline_css . '>', $new_image_tag);
+        //     // Add inline CSS to the image tag
+        //     $inline_css = 'style="object-fit: fill;"'; // Modify the inline CSS as needed
+        //     $new_image_tag = preg_replace('/<img(.*?)>/i', '<img$1 ' . $inline_css . '>', $new_image_tag);
 
-//             return $new_image_tag;
-//         }, $content);
-// 		/**Modify the height and width of images in the post content [End] **/
+        //     return $new_image_tag;
+        // }, $content);
+		/**Modify the height and width of images in the post content [End] **/
         
-// 		$dom = new DOMDocument();
-//     	$dom->loadHTML($content);
+		// $dom = new DOMDocument();
+    	// $dom->loadHTML($content);
 
-//     	$anchor_tags = array();
+    	// $anchor_tags = array();
 
-//     	// Find all anchor tags in the post content
-//     	foreach ($dom->getElementsByTagName('a') as $anchor) {
-//         $anchor_tags[] = array(
-//             'text' => $anchor->nodeValue,
-//             'href' => $anchor->getAttribute('href'),
-//         );
+    	// // Find all anchor tags in the post content
+    	// foreach ($dom->getElementsByTagName('a') as $anchor) {
+        // $anchor_tags[] = array(
+        //     'text' => $anchor->nodeValue,
+        //     'href' => $anchor->getAttribute('href'),
+        // );
 
-//         // Remove the anchor tag from the DOM
-//         $anchor->parentNode->removeChild($anchor);
-//     	}
+        // // Remove the anchor tag from the DOM
+        // $anchor->parentNode->removeChild($anchor);
+    	// }
 
-//     	// Get the modified post content after removing anchor tags
-//     	$modified_content = $dom->saveHTML();
+    	// // Get the modified post content after removing anchor tags
+    	// $modified_content = $dom->saveHTML();
 
 		
-//         $post_thumbnail = ( has_post_thumbnail( $id ) ) ? get_the_post_thumbnail_url( $id ) : null;
+        $post_thumbnail = ( has_post_thumbnail( $id ) ) ? get_the_post_thumbnail_url( $id ) : null;
 
-// 		// Get the post publish date
-// 		$publish_date = get_the_date('Y-m-d H:i:s', $post);
+		// Get the post publish date
+		$publish_date = get_the_date('Y-m-d H:i:s', $post);
 
-// 		// Format the date as needed (e.g., to 'M d, Y')
-// 		$formatted_date = date('M d, Y', strtotime($publish_date));
+		// Format the date as needed (e.g., to 'M d, Y')
+		$formatted_date = date('M d, Y', strtotime($publish_date));
 
-//         $posts_data[] = (object) array( 
-//             'id' => $id, 
-//             'slug' => $post->post_name, 
-//             'type' => $post->post_type,
-//             'title' => $post->post_title,
-// 			//'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
-// 			'content' => $content,
-// 			//'content' => $post_content,
-// 			//'content' => apply_filters('the_content', get_the_content()),
-//             'featured_img_src' => $post_thumbnail,
-// 			//'post_published_date' => $post->post_date,
-// 			'post_published_date' => $formatted_date,  // Updated date format
-//         );
-//     }                  
-//     //return $posts_data;  
-// 	$response = array(
-// 		'statusCode' => 200,
-// 		'message' => 'Success',
-// 		'data' => $posts_data,
-// 	);      
-// 	return new WP_REST_Response($response);
-// 	//return strip_tags($excerpt);                 
-// } 
+        $posts_data[] = (object) array( 
+            'id' => $id, 
+            'slug' => $post->post_name, 
+            'type' => $post->post_type,
+            'title' => $post->post_title,
+			//'content' => wp_strip_all_tags($post->post_content), //To remove html & css from content in response(getting only raw content)
+			'content' => $content,
+			//'content' => $post_content,
+			//'content' => apply_filters('the_content', get_the_content()),
+            'featured_img_src' => $post_thumbnail,
+			//'post_published_date' => $post->post_date,
+			'post_published_date' => $formatted_date,  // Updated date format
+        );
+    }                  
+    //return $posts_data;  
+	$response = array(
+		'statusCode' => 200,
+		'message' => 'Success',
+		'data' => $posts_data,
+	);      
+	return new WP_REST_Response($response);
+	//return strip_tags($excerpt);                 
+} 
 
-// /* Creating custom API END */
+/* Creating custom API END */
 
 /**Get pots data API [Start] */
 add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
@@ -1745,3 +1746,253 @@ function my_task_function() {
 	require_once ABSPATH . 'custom-cron.php';
 }
 /**Creating custom cron for add-update post on admin panel [End] */
+
+/**Get current tag val optimized START */
+add_action('wp_ajax_get_tag_val_optimized', 'get_tag_callback_optimized');
+add_action('wp_ajax_nopriv_get_tag_val_optimized', 'get_tag_callback_optimized');
+function get_tag_callback_optimized(){
+	$tag = $_POST['param'];
+	$lower_tag = strtolower($tag);
+	$tag_slug = str_replace(' ', '-', $lower_tag);
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+	if (!$tag) {
+		$args = array(
+			'post_type' => 'post',
+			'orderby' => 'date',
+			'order' => 'DESC',
+		);
+		$loop = new WP_Query($args);
+		$total_pg =  $loop->max_num_pages;
+	} else {
+		$args = array(
+			'post_type' => 'post',
+			'orderby' => 'date',
+			'order' => 'DESC',
+			'tag' => $tag_slug,
+		);
+		$loop = new WP_Query($args);
+		$total_pg = $loop->max_num_pages;
+	}
+		$url = $_POST['base'];
+	if ($tag) {
+		$newbase = 'https://transdirect.plutustec.in/tag/' . $tag_slug;
+	} else {
+		$newbase = 'https://transdirect.plutustec.in/latest-blog/';
+	}
+?>
+	<div class="row mt-5">
+		<?php
+			if ($tag) {
+				$args = array(
+					'post_type' => 'post',
+					'posts_per_page' => 1,
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'tag' => $tag_slug,
+					'paged' => $paged
+				);
+			} else {
+				$args = array(
+					'post_type' => 'post',
+					'posts_per_page' => 1,
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'paged' => $paged
+				);
+			}
+			$firstPosts = array();
+			$loop = new WP_Query($args);
+		?>
+		<?php
+			while ($loop->have_posts()) : $loop->the_post();
+				$post_id = get_the_ID();
+				$firstPosts[] = $post_id;
+		?>
+			<div class="col-12 wow fadeInUp mb-3 " data-wow-duration="2s">
+				<div class="card item fitness">
+					<div class="row no-gutters raw">
+						<div class="col-md-8">
+							<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
+							<a href="<?php the_permalink(); ?>"><img class="img-fluid" src="<?php echo $url; ?>" alt="..."></a>
+						</div>
+						<div class="col-md-4">
+							<div class="card-body d-flex flex-wrap h-100 flex-column">
+								<div>
+									<?php $posttags = get_the_tags();
+									if ($posttags) {
+										foreach ($posttags as $tag) { ?>
+											<span class="badge badge-secondary"><span class="badge badge-secondary"><?php echo $tag->name; ?></span></span>
+									<?php }
+									} ?>
+								</div>
+								<h3 class="card-text"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a></h3>
+								<div class="star-bottom d-flex flex-column justify-content-between">
+									<div class="star-group">
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+										<i class="fa-solid fa-star main-color"></i>
+									</div>
+									<div class="drop-box">
+										<div class="drop-img mr-2">
+											<img class="img-fluid" src="https://transdirect.plutustec.in/wp-content/uploads/2022/06/spheres.svg" />
+										</div>
+										<div class="">
+											<span><strong><?php echo get_the_author(); ?></strong></span>
+											<span>-</span>
+											<span class="text-muted">recovr.com</span>
+											<p class="mb-0 text-muted"><strong><?php echo get_the_date('F jS, Y'); ?></strong></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php endwhile; ?>
+		<?php wp_reset_postdata(); ?>
+		<?php
+			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+			if ($tag) {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post__not_in' => $firstPosts,
+					'posts_per_page' => 6,
+					'tag' => $tag_slug,
+					'paged' => $paged
+				);
+			} else {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post__not_in' => $firstPosts,
+					'paged' => $paged,
+					'posts_per_page' => 6,
+				);
+			}
+			$loop = new WP_Query($args);
+			while ($loop->have_posts()) : $loop->the_post();
+		?>
+			<div class="col-md-6 wow fadeInUp mb-3" data-wow-duration="2s">
+				<div class="card item life h-100">
+					<div>
+						<?php $url = wp_get_attachment_url(get_post_thumbnail_id($loop->ID)); ?>
+						<a href="<?php the_permalink(); ?>"><img src="<?php echo $url; ?>" class="card-img-top" alt="..."></a>
+					</div>
+					<div class="card-body d-flex flex-wrap h-100 flex-column">
+						<div>
+							<?php $posttags = get_the_tags();
+							if ($posttags) {
+								foreach ($posttags as $tag) { ?>
+									<span class="badge badge-secondary"><span class="badge badge-secondary"><?php echo $tag->name; ?></span></span>
+							<?php }
+							} ?>
+						</div>
+						<h3 class="card-text"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a></h3>
+						<div class="star-bottom d-flex flex-column justify-content-between">
+							<div class="star-group">
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+								<i class="fa-solid fa-star main-color"></i>
+							</div>
+							<div class="drop-box">
+								<div class="drop-img mr-2">
+									<img class="img-fluid" src="https://transdirect.plutustec.in/wp-content/uploads/2022/06/spheres.svg" />
+								</div>
+								<div class="">
+									<span><strong><?php echo get_the_author(); ?></strong></span>
+									<span>-</span>
+									<span class="text-muted">recovr.com</span>
+									<p class="mb-0 text-muted"><strong><?php echo get_the_date('F jS, Y'); ?></strong></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php
+			endwhile;
+		?>
+		<?php wp_reset_postdata(); ?>
+	</div>
+
+	<!-- Start Pagination - WP-PageNavi -->
+	<?php
+
+			$big = 999999999;
+			// Fallback if there is not base set.
+			$fallback_base = str_replace($big, '%#%', esc_url(get_pagenum_link($big)));
+
+			if ($tag) {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post_status' => 'publish',
+					'tag' => $tag_slug
+				);
+				//echo '<pre>';
+				//print_r($args);
+			} else {
+				$args = array(
+					'post_type' => 'post',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post_status' => 'publish'
+				);
+			}
+
+			// Set the base.
+			$base = isset($newbase) ? trailingslashit($newbase) . '%_%' : $fallback_base;
+			$tag =  '<div class="append_page"><div class="pagination-box wow fadeInUp mb-3 filter-pagination pagination">';
+			$tag .=  paginate_links(array(
+				'base' => $base,
+				'format' => 'page/%#%',
+				'current' => max(1, get_query_var('paged')),
+				'total' => $total_pg,
+				'show_all' => true,
+				'prev_text' => '<<',
+				'next_text' => '>>'
+			));
+			$tag .=  '</div></div>';
+			//echo $loop->max_num_pages;
+	?>
+	<?php
+			//if ($loop->max_num_pages > 1) : 
+	?>
+	<ul class="pagination">
+		<li class="tags"><?php echo $tag; ?></li>
+	</ul>
+	<?php //endif;
+	?>
+	<!-- End Pagination -->
+
+	<div class="my-4 wow fadeInUp mb-3 Inside-filter">
+		<div class="news-later">
+			<div class="row align-items-center">
+				<div class="col-md-6 wow fadeInUp mb-3 mb-md-0 line-text">
+					<h5 class="footer-top-subtitile"> Subscribe to our Newsletter </h5>
+					<h3 class="footer-title"> <span class="news-letter-text">For the latest in fitness,<br>wellbeing and trainer tips</span> </h3>
+				</div>
+				<div class="col-md-6 wow fadeInUp mb-3">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Email">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button" id="button-addon2">Sign Me Up</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+	die;
+	}
+/**Get current tag val END */

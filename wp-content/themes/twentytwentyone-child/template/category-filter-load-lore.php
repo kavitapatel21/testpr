@@ -653,6 +653,7 @@
     <div class="categories-list">
         <?php
         $categories = get_categories();
+        //print_r($categories);
         foreach ($categories as $category) {
             echo '<input type="checkbox" name="exspostfilter" id="exspostfilter" value="' . $category->cat_ID . '"> ' . $category->name . '<br />';
         }
@@ -678,8 +679,8 @@
                 $loop = new WP_Query($args); ?>
                 <?php while ($loop->have_posts()) : $loop->the_post();
                 $db_ratings = get_post_meta( get_the_ID() , 'starrating', true );
-                echo 'post_id:'.get_the_ID();
-                echo 'database-ratings:'.$db_ratings;
+                //echo 'post_id:'.get_the_ID();
+                //echo 'database-ratings:'.$db_ratings;
                 ?>
                 
                     
@@ -790,6 +791,7 @@
             $("input[type=checkbox]:checked").each(function() {
                 filval.push($(this).val());
             });
+            //alert(filval);
             $.ajax({
                 type: 'POST',
                 url: '<?php echo admin_url('admin-ajax.php'); ?>',
