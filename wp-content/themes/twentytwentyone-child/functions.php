@@ -1996,3 +1996,15 @@ function get_tag_callback_optimized(){
 	die;
 	}
 /**Get current tag val END */
+
+// jquery form validation ajax-call [Start]
+add_action('wp_ajax_result_page_sub', 'result_page_sub_callback');
+add_action('wp_ajax_nopriv_result_page_sub', 'result_page_sub_callback');
+function result_page_sub_callback()
+{
+	//print_r($_POST);
+	//return true;
+	echo true;
+	die;
+}
+// jquery form validation ajax-call [End]
