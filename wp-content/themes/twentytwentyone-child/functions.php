@@ -2008,3 +2008,12 @@ function result_page_sub_callback()
 	die;
 }
 // jquery form validation ajax-call [End]
+
+/**Creating global variable [Start] */
+add_action('init','create_and_store_global_var_val');
+function create_and_store_global_var_val(){
+global $domain,$flag;
+$domain = 'Hey , I am gloal variable';
+$flag = false;
+}
+/**Creating global variable [End] */

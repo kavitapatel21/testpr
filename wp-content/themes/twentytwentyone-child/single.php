@@ -11,6 +11,12 @@
  */
 
 get_header();
+if($flag){
+	echo $domain;
+}else {
+	echo 'variable is false';
+}
+
 
 /* Start the Loop */
 while (have_posts()) :

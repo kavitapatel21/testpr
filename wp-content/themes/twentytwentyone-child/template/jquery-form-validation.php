@@ -1,6 +1,16 @@
 <?php
 /* Template Name: Jquery Form validation
 Post Type: post, page, event */
+echo custom_var;
+echo die();
+if($flag){
+	echo $domain;
+}else{
+   echo 'variable is false';
+}
+echo '<br>';
+echo "My Global Variable: " . getenv('MY_GLOBAL_VARIABLE'). '<br>';
+echo "Another Global Variable: " . getenv('ANOTHER_GLOBAL_VARIABLE');
 ?>
 
 <head>
