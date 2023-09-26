@@ -2,7 +2,7 @@
 /* Template Name: Jquery Form validation
 Post Type: post, page, event */
 echo custom_var;
-echo die();
+
 if($flag){
 	echo $domain;
 }else{

@@ -1,6 +1,6 @@
 <?php
 //echo "here - Custom cron run";
-require_once('wp-load.php');
+require_once(ABSPATH .'wp-load.php');
 require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 $curl = curl_init();

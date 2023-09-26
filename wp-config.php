@@ -110,6 +110,6 @@ require_once ABSPATH . 'wp-settings.php';
 
 
 /**.env file code [Start] */
-require_once ABSPATH . '/dotenv';
+require_once ABSPATH . '/dotenv.php';
 define('custom_var', 'hello you got the value');
 /**.env file code [End] */

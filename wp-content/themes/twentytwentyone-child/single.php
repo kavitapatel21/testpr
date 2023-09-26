@@ -69,6 +69,41 @@ while (have_posts()) :
 	);
 endwhile; // End of the loop.
 
+/* Showing related posts [Start] */
+// Query related posts 
+$related_posts_args = array(
+    'post_type' => 'post', // You can specify custom post types if needed
+    'posts_per_page' => 2, // Number of related posts to display
+    'post__not_in' => array(get_the_ID()), // Exclude the current post
+    'orderby' => 'rand', // You can change the ordering method
+);
+
+
+$related_posts_query = new WP_Query($related_posts_args);
+
+/* Related posts HTML [Start] */
+if ($related_posts_query->have_posts()) :
+?>
+    <div class="related-posts">
+        <h2>Related Posts</h2>
+        <ul>
+            <?php while ($related_posts_query->have_posts()) : $related_posts_query->the_post(); ?>
+                <li>
+                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                </li>
+            <?php endwhile; ?>
+        </ul>
+    </div>
+    <?php
+/*Related posts HTML [End] */
+
+    // Reset post data
+    wp_reset_postdata();
+endif;
+
+/* Showing related posts [End] */
+
 get_footer();
 
+?>
 
