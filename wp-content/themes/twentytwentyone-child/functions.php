@@ -2062,3 +2062,32 @@ function create_and_store_global_var_val()
 	/* Download xml file [End] */
 	/* Creating XML file [End] */
 }
+
+
+/**Creating custom cron for add-update post on admin panel [Start] */
+/* function my_cron_schedules($schedules)
+{
+	if (!isset($schedules["1min"])) {
+		$schedules["1min"] = array(
+			'interval' => 60,
+			'display' => __('Once every 1 minutes')
+		);
+	}
+	return $schedules;
+}
+add_filter('cron_schedules', 'my_cron_schedules');
+
+if (!wp_next_scheduled('my_task_hook')) {
+	wp_schedule_event(time(), '1min', 'my_task_hook');
+}
+
+//add_action('init', 'my_task_function');
+//add_action('init', 'my_task_function');
+add_action('my_task_hook', 'my_task_function');
+function my_task_function()
+{
+	echo require_once ABSPATH .'custom-cron.php';
+} */
+
+echo "Ignore message in git-commit due to git ignore file";
+?>
