@@ -103,50 +103,50 @@ function wp_kama_woocommerce_after_single_product_summary_action()
 			// echo 
 			$product_attr = get_post_meta($id, '_product_attributes');
 			?><?php
-			$tr_count = array();
+				$tr_count = array();
 
-			$tr_description_count = array();
-			$tr_dimensions_count = array();
-			$tr_weight_count = array();
+				$tr_description_count = array();
+				$tr_dimensions_count = array();
+				$tr_weight_count = array();
 
-			$tr_description_display = array();
-			$tr_dimensions_display = array();
-			$tr_weight_display = array();
+				$tr_description_display = array();
+				$tr_dimensions_display = array();
+				$tr_weight_display = array();
 
-			//echo "<pre>";
-			//print_r($available_variations);
+				//echo "<pre>";
+				//print_r($available_variations);
 
-			foreach ($available_variations as $key => $value) {
+				foreach ($available_variations as $key => $value) {
 
-				if ($value['variation_description']) {
-					array_push($tr_description_count, +1);
-					array_push($tr_description_display, 'yes');
+					if ($value['variation_description']) {
+						array_push($tr_description_count, +1);
+						array_push($tr_description_display, 'yes');
+					}
+
+					if ($value['dimensions']['length'] || ['dimensions']['width'] || $value['dimensions']['height']) {
+						array_push($tr_weight_count, +1);
+						array_push($tr_dimensions_display, 'yes');
+					}
+
+					$weight = $value['weight'];
+					$weight_result = substr($weight, 0, 6);
+					if ($weight_result  != "field_") {
+						array_push($tr_count, +1);
+						array_push($tr_weight_display, 'yes');
+					}
+
+					$tr = count($value['attributes']);
+					array_push($tr_count, $tr);
 				}
 
-				if ($value['dimensions']['length'] || ['dimensions']['width'] || $value['dimensions']['height']) {
-					array_push($tr_weight_count, +1);
-					array_push($tr_dimensions_display, 'yes');
-				}
-
-				$weight = $value['weight'];
-				$weight_result = substr($weight, 0, 6);
-				if ($weight_result  != "field_") {
-					array_push($tr_count, +1);
-					array_push($tr_weight_display, 'yes');
-				}
-
-				$tr = count($value['attributes']);
-				array_push($tr_count, $tr);
-			}
-
-			$attributes_count = $tr_count[1];
-			$description_count = $tr_description_count[0];
-			$dimensions_count = $tr_dimensions_count[0];
-			$weight_count = $tr_weight_count[0];
-			$tr_count_final_total = $attributes_count + $description_count + $dimensions_count + $weight_count;
-			$tr_count_final = $tr_count_final_total + 6;
-			$loop_count = 4 - $tr_count_final_total;
-		?>
+				$attributes_count = $tr_count[1];
+				$description_count = $tr_description_count[0];
+				$dimensions_count = $tr_dimensions_count[0];
+				$weight_count = $tr_weight_count[0];
+				$tr_count_final_total = $attributes_count + $description_count + $dimensions_count + $weight_count;
+				$tr_count_final = $tr_count_final_total + 6;
+				$loop_count = 4 - $tr_count_final_total;
+				?>
 
 			<!--Search HTML Start-->
 			<form role="search" method="get" class="custom-variation-search-form">
@@ -1600,108 +1600,7 @@ function custom_api_get_all_posts_callbacks($request)
 
 /* Creating custom API END */
 
-/**Get pots data API [Start] */
-add_action('rest_api_init', 'custom_api_get_all_posts');
 
-function custom_api_get_all_posts()
-{
-	register_rest_route('custom/v1', '/get-blog-posts', array(
-		'methods' => 'GET',
-		'callback' => 'custom_api_get_all_posts_callback'
-	));
-}
-
-//add_action('init','custom_api_get_all_posts_callback');
-
-function custom_api_get_all_posts_callback($request)
-{
-	// Initialize the array that will receive the posts' data. 
-	$posts_data = array();
-	$posts = get_posts(
-		array(
-			'posts_per_page' => -1,
-			'post_status' => 'publish',
-			'post_type' => array('post')
-		)
-	);
-	if (empty($posts)) {
-		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
-		$response = array(
-			'statusCode' => 404,
-			'message' => 'post_not_found',
-			'data' => 'null',
-		);
-		return new WP_REST_Response($response);
-	}
-	// Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
-	foreach ($posts as $post) {
-		$id = $post->ID;
-
-
-		$author_id = $post->post_author;
-		$author_name = get_the_author_meta('display_name', $author_id);
-		$tags_name = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "names"));
-		$tags_slug = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "slugs"));
-		$categories_name = wp_get_post_terms($post->ID, 'category', array("fields" => "names"));
-		$categories_slug = wp_get_post_terms($post->ID, 'category', array("fields" => "slugs"));
-
-		/**Get featured image url [Start] */
-		$post_thumbnail_id = get_post_thumbnail_id($post->ID);
-		if (!empty($post_thumbnail_id)) {
-			$post_thumbnail =  wp_get_attachment_url(get_post_thumbnail_id($post->ID));
-		} else {
-			$post_thumbnail = 'null';
-		}
-		if ($post_thumbnail === false) {
-			$post_thumbnail = "";
-		}
-		/**Get featured image url [End] */
-
-		/**Get posts content & clean up unwanted characters in post-content [Start] */
-		$post_content = $post->post_content;
-		// Use DOMDocument to parse the post content
-		$dom = new DOMDocument('1.0', 'UTF-8'); // Specify UTF-8 encoding
-		$dom->loadHTML(mb_convert_encoding($post_content, 'HTML-ENTITIES', 'UTF-8')); // Convert encoding
-		// Find all anchor tags in the post content
-		$anchorsToRemove = [];
-		foreach ($dom->getElementsByTagName('a') as $anchor) {
-			$anchorsToRemove[] = $anchor;
-		}
-		// Remove the anchor tags from the DOM
-		foreach ($anchorsToRemove as $anchor) {
-			$anchor->parentNode->removeChild($anchor);
-		}
-		// Get the modified post content after removing anchor tags
-		$modified_content = $dom->saveHTML();
-
-		// Clean up unwanted characters like Â and &nbsp;
-		$modified_content = str_replace(array("Â", "&nbsp;"), '', $modified_content);
-		/**Get posts content & clean up unwanted characters in post-content [End] */
-
-		$posts_data[] = array(
-			'post_id' => $id,
-			'post_type' => $post->post_type,
-			'post_slug' => $post->post_name,
-			'post_title' => $post->post_title,
-			'post_content' => $modified_content,
-			'post_featured_img_src' => $post_thumbnail,
-			'post_status' => $post->post_status,
-			'post_author' => $author_name,
-			'post_category' => $categories_name,
-			'post_category_slug' => $categories_slug,
-			'post_tag' => $tags_name,
-			'post_tag_slug' => $tags_slug,
-			'post_published_date' => $post->post_date,
-		);
-	}
-	$response = array(
-		'statusCode' => 200,
-		'message' => 'Success',
-		'data' => $posts_data,
-	);
-	return new WP_REST_Response($response, 200);
-}
-/**Get pots data API [End] */
 
 /**Admin css [Start] */
 function custom_admin_css()
@@ -2055,7 +1954,7 @@ function create_and_store_global_var_val()
 	fclose($fp); */
 
 	/* Download xml file [Start] */
-   /* 	header('Content-type: text/xml');
+	/* 	header('Content-type: text/xml');
     header('Content-Disposition: attachment; filename="text.xml"');
     echo $sitemap;
     exit(); */
@@ -2067,10 +1966,10 @@ function create_and_store_global_var_val()
 /**Creating custom cron for add-update post on admin panel [Start] */
 /* function my_cron_schedules($schedules)
 {
-	if (!isset($schedules["1min"])) {
-		$schedules["1min"] = array(
-			'interval' => 60,
-			'display' => __('Once every 1 minutes')
+	if (!isset($schedules["1day"])) {
+		$schedules["1day"] = array(
+			'interval' => 86400,
+			'display' => __('Once every day')
 		);
 	}
 	return $schedules;
@@ -2078,7 +1977,7 @@ function create_and_store_global_var_val()
 add_filter('cron_schedules', 'my_cron_schedules');
 
 if (!wp_next_scheduled('my_task_hook')) {
-	wp_schedule_event(time(), '1min', 'my_task_hook');
+	wp_schedule_event(time(), '1day', 'my_task_hook');
 }
 
 //add_action('init', 'my_task_function');
@@ -2086,8 +1985,257 @@ if (!wp_next_scheduled('my_task_hook')) {
 add_action('my_task_hook', 'my_task_function');
 function my_task_function()
 {
-	echo require_once ABSPATH .'custom-cron.php';
+	require_once ABSPATH .'blog-posts-cron.php';
 } */
 
-echo "Ignore message in git-commit due to git ignore file";
+//echo "Ignore message in git-commit due to git ignore file";
+
+// Add a new interval of 180 seconds
+// See http://codex.wordpress.org/Plugin_API/Filter_Reference/cron_schedules
+/* add_filter('cron_schedules', 'isa_add_every_one_minutes');
+function isa_add_every_one_minutes($schedules)
+{
+	$schedules['every_one_minutes'] = array(
+		'interval'  => 60,
+		'display'   => __('Every 1 Minutes')
+	);
+	return $schedules;
+}
+
+// Schedule an action if it's not already scheduled
+if (!wp_next_scheduled('isa_add_every_one_minutes')) {
+	wp_schedule_event(time(), 'every_one_minutes', 'isa_add_every_one_minutes');
+}
+
+// Hook into that action that'll fire every one minutes
+add_action('isa_add_every_one_minutes', 'every_one_minutes_event_func');
+function every_one_minutes_event_func()
+{
+
+}
+ */
+
+//cron file
+/* add_filter('cron_schedules', 'example_add_cron_interval');
+
+function example_add_cron_interval($schedules)
+{
+	$schedules['sixty_seconds'] = array(
+		'interval' => 86400, //[interval] => 86400 once a daily
+		'display' => esc_html__('Every one minute'),
+	);
+
+	return $schedules;
+}
+
+add_action('wp', 'launch_the_action');
+function launch_the_action()
+{
+	if (!wp_next_scheduled("custom_cron_blog")) {
+		wp_schedule_event(time(), "sixty_seconds", "custom_cron_blog");
+	}
+}
+
+add_action('custom_cron_blog', 'create_update_blog');
+//add_action('init', 'create_update_blog');
+function create_update_blog()
+{
+	// do something
+	require_once(ABSPATH . 'wp-load.php');
+	require_once(ABSPATH . 'wp-admin/includes/media.php');
+	require_once(ABSPATH . 'wp-admin/includes/file.php');
+	require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+	global $wpdb;
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => 'https://recovr.com/wp-json/custom/v1/get-blog-posts',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => '',
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => 'GET',
+	));
+
+	$response = curl_exec($curl);
+
+	curl_close($curl);
+	$res = json_decode($response);
+	foreach ($res->data as $post_data) {
+		$post_id = $post_data->post_id;
+		$post_title = $post_data->post_title;
+		$post_status = $post_data->post_status;
+		$post_content = $post_data->post_content;
+		$post_date = $post_data->post_published_date;
+		$post_tags = $post_data->post_tag;
+		$post_category = $post_data->post_category;
+
+		$category_ids = array();
+
+		// Loop through category names and get their IDs
+		foreach ($post_category as $category_name) {
+			$category = get_term_by('name', $category_name, 'category');
+			if ($category && !is_wp_error($category)) {
+				$category_ids[] = $category->term_id;
+			} else {
+				// Category doesn't exist, so create it
+				$new_category_id = wp_create_category($category_name);
+				if (!is_wp_error($new_category_id)) {
+					$category_ids[] = $new_category_id;
+				}
+			}
+		}
+		// echo "category ids:";
+		// print_r($category_ids);
+
+		//$post_author = $post_data->post_author;
+		$post_author_name = $post_data->post_author; // Replace with the actual author's name from your API data.
+		$post_author_id = null;
+
+		// Check if the author already exists.
+		$existing_author = get_user_by('login', $post_author_name);
+
+		if ($existing_author) {
+			// Author exists, get their ID.
+			$post_author_id = $existing_author->ID;
+			//echo "user exist id:" . $post_author_id;
+		} else {
+			// Author doesn't exist, create a new user with the "author" role.
+			$user_data = array(
+				'user_login' => $post_author_name,
+				'user_pass' => wp_generate_password(),
+				'display_name' => $post_author_name,
+				'role' => 'author', // Specify the role here.
+			);
+
+			$post_author_id = wp_insert_user($user_data);
+			//echo "user created id:" . $post_author_id;
+		}
+		$image = $post_data->post_featured_img_src; // url of image
+
+		//check if post with $post_data->post_id is already in database, if so, update post $post_data->post_id
+		if (get_post_status($post_data->post_id)) {
+			$post = array(
+				'ID'  =>   $post_id,
+				'post_title' =>  $post_title,
+				'post_content' =>  $post_content,
+				'post_status' =>  $post_status,
+				'post_author' =>  $post_author_id,
+				'post_type' => 'post',
+				'post_date' => $post_date,
+				'tags_input' => $post_tags,
+				// 'tax_query' => array(
+				// 	'relation' => 'AND',
+				// 	array(
+				// 		'taxonomy' => 'category', // Specify the taxonomy (e.g., 'category', 'custom_taxonomy').
+				// 		'field' => 'name', // You can specify the field to search in (e.g., 'name', 'term_id', 'slug').
+				// 		'terms' => $post_category, // Replace with the category names you want to query.
+				// 		'operator' => 'IN', // Use 'IN' to include posts in any of the specified categories.
+				// 	),
+				// ),
+			);
+
+			// Update post categories using wp_set_post_categories
+			if (!empty($category_ids)) {
+				wp_set_post_categories($post_id, $category_ids);
+			}
+			// print_r($post);
+			// echo '<br>';
+			$post_id = wp_update_post($post);
+
+			// Set the featured image
+			// Extract the basename from the image URL
+			$image_url_basename = wp_basename($image);
+			//echo $image_url_basename;
+
+
+			// Construct the SQL query to find the image by basename
+			$sql = $wpdb->prepare(
+				"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value LIKE %s",
+				'%' . $wpdb->esc_like($image_url_basename)
+			);
+
+			$image_id = $wpdb->get_var($sql);
+			if (has_post_thumbnail($post_id)) {
+				echo "image already set";
+			} else {
+				if ($image_id) {
+					echo "image found";
+					// An image with the same basename exists in the media library; set it as the featured image
+					set_post_thumbnail($post_id, $image_id);
+				} else {
+					// The image does not exist in the media library, so let's add it
+					echo "new image found & uploaded";
+					$image_id = media_sideload_image($image, $post_id, '', 'id');
+					if (!is_wp_error($image_id)) {
+						set_post_thumbnail($post_id, $image_id);
+					}
+				}
+			}
+		}
+		//if not in database, add post with $post_data->post_id
+		else {
+			$post = array(
+				'import_id'  =>   $post_id, //Cretae post with custom id (get id by third-party api call)
+				'post_title' =>  $post_title,
+				'post_content' =>  $post_content,
+				'post_status' =>  $post_status,
+				'post_author' =>  $post_author_id,
+				'post_type' => 'post',
+				'post_date' => $post_date,
+				'tags_input' => $post_tags,
+				// 'tax_query' => array(
+				// 	'relation' => 'AND',
+				// 	array(
+				// 		'taxonomy' => 'category', // Specify the taxonomy (e.g., 'category', 'custom_taxonomy').
+				// 		'field' => 'name', // You can specify the field to search in (e.g., 'name', 'term_id', 'slug').
+				// 		'terms' => $post_category, // Replace with the category names you want to query.
+				// 		'operator' => 'IN', // Use 'IN' to include posts in any of the specified categories.
+				// 	),
+				// ),
+			);
+			// Update post categories using wp_set_post_categories
+			if (!empty($category_ids)) {
+				wp_set_post_categories($post_id, $category_ids);
+			}
+			// print_r($post);
+			// echo '<br>';
+			$post_id = wp_insert_post($post);
+
+			// Set the featured image
+			// Extract the basename from the image URL
+			$image_url_basename = wp_basename($image);
+			global $wpdb;
+
+			// Construct the SQL query to find the image by basename
+			$sql = $wpdb->prepare(
+				"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value LIKE %s",
+				'%' . $wpdb->esc_like($image_url_basename)
+			);
+
+			$image_id = $wpdb->get_var($sql);
+			if (has_post_thumbnail($post_id)) {
+				echo "image already set";
+			} else {
+				if ($image_id) {
+					echo "image found";
+					// An image with the same basename exists in the media library; set it as the featured image
+					set_post_thumbnail($post_id, $image_id);
+				} else {
+					// The image does not exist in the media library, so let's add it
+					echo "new image found & uploaded";
+					$image_id = media_sideload_image($image, $post_id, '', 'id');
+					if (!is_wp_error($image_id)) {
+						set_post_thumbnail($post_id, $image_id);
+					}
+				}
+			}
+		}
+	}
+} */
+
+
+
 ?>
