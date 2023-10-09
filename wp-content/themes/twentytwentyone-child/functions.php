@@ -2237,5 +2237,88 @@ function create_update_blog()
 } */
 
 
+/**Image upload & set in cron job [Start] */
+function upload_img_from_api(){
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    require_once(ABSPATH . 'wp-admin/includes/media.php');
+    require_once(ABSPATH . 'wp-admin/includes/file.php');
+    require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
 
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://recovr.com/wp-json/custom/v1/get-blog-posts',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    $res = json_decode($response);
+    foreach ($res->data as $post_data) {
+        /**Get API data [Start] */
+        $post_id = $post_data->post_id;
+        $image_url = $post_data->post_featured_img_src; // URL of the image
+		//echo $image_url;
+		$img_name = 'apipost_' . $post_id;
+        $unique_image_name = 'apipost_' . $post_id.'.jpg'; // Generate a unique identifier for the image
+        // Check if an image with the same unique identifier already exists in the media library
+		$args = array(
+			'post_type' => 'attachment',
+			'post_status' => 'any',
+			'posts_per_page' => -1,
+			'fields' => 'ids',
+			's' => $img_name, // Search by the image name
+		);
+	
+		$query = new WP_Query($args);
+		
+        if ($query->have_posts()) {
+            // The image with the same unique identifier exists, and $existing_attachment contains its details
+            // Set the existing image as the featured image for the post
+            $attachment_id = $query->posts[0];
+            set_post_thumbnail($post_id, $attachment_id);
+            echo '<br>Image already exists with ID: ' . $query->posts[0] . ' and set as featured image for post ' . $post_id;
+        } else {
+            // The image doesn't exist, download and upload it as before
+            $temp_file = download_url($image_url);
+            
+            // ... (existing code for downloading and uploading with the unique name)
+            
+            // Check for download errors
+            if (is_wp_error($temp_file)) {
+                // Handle the error, e.g., log it or display a message
+                echo 'Error downloading image: ' . $temp_file->get_error_message();
+            } else {
+                // Prepare the upload file array with the unique name
+                $file_array = array(
+                    'name'     => $unique_image_name,
+                    'tmp_name' => $temp_file
+                );
+
+                // Upload the image to the media library
+                $attachment_id = media_handle_sideload($file_array, 0);
+                
+                // Check for upload errors
+                if (is_wp_error($attachment_id)) {
+                    // Handle the error, e.g., log it or display a message
+                    echo 'Error uploading image: ' . $attachment_id->get_error_message();
+                } else {
+                    // Image was successfully uploaded, and $attachment_id contains the media ID
+                    // Set the uploaded image as the featured image for the post
+                    set_post_thumbnail($post_id, $attachment_id);
+                }
+
+                // Clean up the temporary file
+                unlink($temp_file);
+            }
+        }
+    }
+}
+/**Image upload & set in cron job [End] */
 ?>
