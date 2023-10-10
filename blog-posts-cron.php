@@ -56,23 +56,58 @@ foreach ($res->data as $post_data) {
         );
         $post_author_id = wp_insert_user($user_data);
     }
-     // Loop through category names and get their IDs [Start]
-     $category_ids = array();
-     foreach ($post_category as $category_name) {
-         $category = get_term_by('name', $category_name, 'category');
-         if ($category && !is_wp_error($category)) {
-             $category_ids[] = $category->term_id;
-         } else {
-             // Category doesn't exist, so create it
-             $new_category_id = wp_create_category($category_name);
-             if (!is_wp_error($new_category_id)) {
-                 $category_ids[] = $new_category_id;
-             }
-         }
-     }
-     if (!empty($category_ids)) {
-         wp_set_post_categories($post_id, $category_ids);
-     }
+    // Loop through category names and get their IDs [Start]
+    $category_ids = array();
+    foreach ($post_category as $category_name) {
+        $category = get_term_by('name', $category_name, 'category');
+        if ($category && !is_wp_error($category)) {
+            $category_ids[] = $category->term_id;
+        } else {
+            // Category doesn't exist, so create it
+            $new_category_id = wp_create_category($category_name);
+            if (!is_wp_error($new_category_id)) {
+                $category_ids[] = $new_category_id;
+            }
+        }
+    }
+    if (!empty($category_ids)) {
+        wp_set_post_categories($post_id, $category_ids);
+    }
+    // Loop through category names and get their IDs [End]
+
+    /** loop through category names and get their IDs [Start]*/
+    /* $tag_names = $post_data->post_tag; // Assuming $post_data->post_tag contains a comma-separated list of tag names
+    // Initialize an array to store tag IDs
+    $tag_ids = array();
+
+    // Loop through each tag name
+    foreach ($tag_names as $tag_name) {
+        $tag_name = trim($tag_name); // Remove leading/trailing spaces
+    
+        // Check if the tag exists by name
+        $existing_tag_by_name = term_exists($tag_name, 'post_tag');
+    
+        if ($existing_tag_by_name && isset($existing_tag_by_name['term_id'])) {
+            // Tag already exists by name, get its ID
+            $tag_id = $existing_tag_by_name['term_id'];
+        } else {
+            // Tag doesn't exist by name, create it
+            $new_tag = wp_insert_term($tag_name, 'post_tag', array('slug' => $tag_name, 'term_id' => null));
+    
+            if (!is_wp_error($new_tag)) {
+                $tag_id = $new_tag['term_id'];
+            } else {
+                // Handle the case where tag creation failed
+                echo "Tag creation failed: " . $new_tag->get_error_message();
+                continue; // Skip this tag and move on to the next
+            }
+        }
+    
+        // Add the tag ID to the array
+        $tag_ids[] = $tag_id;
+    }
+    wp_set_post_tags($post_id, $tag_ids); */
+    /** loop through category names and get their IDs [End]*/
     /**Create post_Author [End] */
 
     /**Insert Posts [Start] */
@@ -88,10 +123,7 @@ foreach ($res->data as $post_data) {
             'post_author' =>  $post_author_id,
             'post_type' => 'post',
         );
-
         $post_id = wp_insert_post($post);
-
-       
         /**Insert Posts [End] */
     } else {
         /**Update posts [Start] */
@@ -101,14 +133,46 @@ foreach ($res->data as $post_data) {
             'post_status' =>  $post_status,
             'post_content' =>  $post_content,
             'post_date' => $post_date,
-            'tags_input' => $post_tags,
+            //'tags_input' => $post_tags,
             'post_author' =>  $post_author_id,
             'post_type' => 'post',
         );
         $post_id = wp_update_post($post);
+        $tag_ids = array();
+        foreach ($post_tags as $tag_name) {
+            $tag_name = trim($tag_name); // Remove leading/trailing spaces
+
+            // Check if the tag exists by name
+            $existing_tag_by_name = term_exists($tag_name, 'post_tag');
+
+            if ($existing_tag_by_name && isset($existing_tag_by_name['term_id'])) {
+                // Tag already exists by name, get its ID
+                $tag_id = $existing_tag_by_name['term_id'];
+            } else {
+                // Tag doesn't exist by name, create it
+                $new_tag = wp_insert_term($tag_name, 'post_tag', array('slug' => $tag_name, 'term_id' => null));
+                print_r($new_tag);
+                if (!is_wp_error($new_tag)) {
+                    $tag_id = $new_tag['term_id'];
+                } else {
+                    // Handle the case where tag creation failed
+                    echo "Tag creation failed: " . $new_tag->get_error_message();
+                    continue; // Skip this tag and move on to the next
+                }
+            }
+
+            // Add the tag ID to the array
+            $tag_ids[] = $tag_id;
+        }
+         $post_id = $post_data->post_id;
+        // echo 'postid:'.$post_id.'<br>';
+        // echo "tagsid";
+        // print_r($tag_ids);
+        // echo '<br>';
+        // Update post tags
+        wp_set_post_tags($post_id, $post_tags);
         /**Update posts [End] */
     }
-    
 }
 
 //Call image upload & set function

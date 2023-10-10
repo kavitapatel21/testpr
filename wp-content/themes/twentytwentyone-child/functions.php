@@ -2321,4 +2321,151 @@ function upload_img_from_api(){
     }
 }
 /**Image upload & set in cron job [End] */
+
+/**Create cutom API to send post data [Start] */
+/**Get pots data API [Start] */
+add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
+
+function custom_api_get_all_posts() {
+    register_rest_route( 'custom/v1', '/get-blog-posts', array(
+        'methods' => 'GET',
+        'callback' => 'custom_api_get_all_posts_callback'
+    ));
+}
+
+add_action('init','custom_api_get_all_posts_callback');
+
+function custom_api_get_all_posts_callback( $request ) {
+    // Initialize the array that will receive the posts' data. 
+    $posts_data = array();
+    $posts = get_posts( array(
+            'posts_per_page' => -1,   
+		    'post_status' => 'publish',
+			'post_type' => array( 'post')
+        )
+    ); 
+	if (empty($posts)) {
+		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
+		$response = array(
+			'statusCode' => 404,
+			'message' => 'post_not_found',
+			'data' => 'null',
+		);       
+		return new WP_REST_Response($response);
+	}
+    // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
+    foreach( $posts as $post ) {
+        $id = $post->ID; 
+		$author_id=$post->post_author;
+		$author_name = get_the_author_meta( 'display_name', $author_id );
+		$tags_name = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "names"));
+		$tags_slug = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "slugs"));
+    	$categories_name = wp_get_post_terms($post->ID, 'category', array("fields" => "names"));
+		$categories_slug = wp_get_post_terms($post->ID, 'category', array("fields" => "slugs"));
+
+		/**Get featured image url [Start] */
+		$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
+		if(!empty($post_thumbnail_id)) {
+		$post_thumbnail =  wp_get_attachment_url( get_post_thumbnail_id($post->ID));
+		}else{
+			$post_thumbnail = 'null';
+		}
+		if ($post_thumbnail === false) {
+			$post_thumbnail = "";
+		}
+		/**Get featured image url [End] */
+
+		/**Get posts content & clean up unwanted characters in post-content [Start] */
+		$post_content = $post->post_content;
+		// Use DOMDocument to parse the post content
+		 $dom = new DOMDocument('1.0', 'UTF-8'); // Specify UTF-8 encoding
+	     $dom->loadHTML(mb_convert_encoding($post_content, 'HTML-ENTITIES', 'UTF-8')); // Convert encoding
+		// // Find all anchor tags in the post content
+		// $anchorsToRemove = [];
+		// foreach ($dom->getElementsByTagName('a') as $anchor) {
+    	// 	$anchorsToRemove[] = $anchor;
+		// }
+		// // Remove the anchor tags from the DOM
+		// foreach ($anchorsToRemove as $anchor) {
+    	// 	$anchor->parentNode->removeChild($anchor);
+		// }
+		// // Get the modified post content after removing anchor tags
+		// $modified_content = $dom->saveHTML();
+		// // Clean up unwanted characters like Â and &nbsp;
+		// $modified_content = str_replace(array("Â", "&nbsp;"), '', $modified_content);
+		/**Get posts content & clean up unwanted characters in post-content [End] */
+
+		 // Find all anchor tags in the post content
+		 $anchorsToRemove = [];
+		 foreach ($dom->getElementsByTagName('a') as $anchor) {
+			 $parentElement = $anchor->parentNode;
+			 if ($parentElement->tagName === 'figure') {
+				 // If the anchor tag is within a figure element, remove only the anchor tag itself
+				 $anchorsToRemove[] = $anchor;
+			 }else{
+				$anchorsToRemove[] = $anchor;
+			 }
+		 }
+	 
+		 // Remove the anchor tags from the DOM
+		 foreach ($anchorsToRemove as $anchor) {
+			 $parentElement = $anchor->parentNode;
+			 $anchorChildren = [];
+			 foreach ($anchor->childNodes as $child) {
+				 $anchorChildren[] = $child;
+			 }
+			 // Remove the anchor tag
+			 $parentElement->removeChild($anchor);
+			 // Append the child nodes of the anchor tag back to the parent (figure) element
+			 foreach ($anchorChildren as $child) {
+				 $parentElement->appendChild($child);
+			 }
+		 }
+	 
+		 // Get the modified post content
+		 $post_content = $dom->saveHTML();
+	 
+		 // Clean up unwanted characters like Â and &nbsp;
+		 $post_content = str_replace(array("Â", "&nbsp;"), '', $post_content);
+
+        $posts_data[] = array( 
+            'post_id' => $id, 
+            'post_type' => $post->post_type,
+			'post_slug' => $post->post_name, 
+            'post_title' => $post->post_title,
+			'post_content' => $post_content,
+            'post_featured_img_src' => $post_thumbnail,
+			'post_status' => $post->post_status,
+			'post_author' => $author_name,
+			'post_category' => $categories_name,
+			'post_category_slug' => $categories_slug,
+			'post_tag' => $tags_name,
+			'post_tag_slug' => $tags_slug,
+			'post_published_date' => $post->post_date,
+        );
+    }    
+	$response = array(
+		'statusCode' => 200,
+		'message' => 'Success',
+		'data' => $posts_data,
+	);       
+	return new WP_REST_Response($response, 200);            
+} 
+/**Get pots data API [End] */
+
+// function custom_500_error_handling() {
+//     //if (is_500_error()) {
+//         status_header(500);
+//         include(get_template_directory() . '/500-error.php'); // Adjust the path as needed
+//         exit;
+//    // }
+// }
+
+// function is_500_error() {
+//     return (
+//         defined('WP_ADMIN') && WP_ADMIN === true &&
+//         defined('WPINC') && file_exists(WPINC . '/class-wp-error.php')
+//     );
+// }
+// add_action('wp', 'custom_500_error_handling');
 ?>
