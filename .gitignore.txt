@@ -1,0 +1,6 @@
+/wp-content/updraft/
+# Ignore ZIP files
+*.zip
+
+# Ignore XML files
+*.xml
