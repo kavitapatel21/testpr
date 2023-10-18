@@ -1,4 +1,4 @@
-/wp-content/updraft/
+wp-content/updraft/
 # Ignore ZIP files
 *.zip
 

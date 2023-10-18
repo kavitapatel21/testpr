@@ -20,6 +20,8 @@ get_header();
 ?>
 
 <?php
+echo "HERE";
+
 $tag = ''; // Initialize the tag to be empty.
 if (isset($_POST['tag'])) {
     $tag = sanitize_text_field($_POST['tag']); // Get the selected tag.
