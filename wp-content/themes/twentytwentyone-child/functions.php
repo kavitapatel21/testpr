@@ -2699,6 +2699,6 @@ function filter_page_posts() {
 //}
 
 function header_Code(){
-
+ echo "google analytic script";
 }
 ?>
