@@ -2696,5 +2696,9 @@ function filter_page_posts() {
 // function Register_custom_widget( $widgets_manager ) {
 //     include plugin_dir_path( __FILE__ ) . 'class-Webkul-Elementor-widget.php';
 //     $widgets_manager->register( new Webkul_Elementor_Widget() );
-// }
+//}
+
+function header_Code(){
+
+}
 ?>
