@@ -362,6 +362,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri() ?>/template/js/get-env-val-js.js" type="text/javascript"></script>
 
 <?php
 /*
@@ -374,6 +376,33 @@ get_header();
 ?>
 
 <?php
+
+/* Get .env file varible value [Start] */
+$envFilePath = ABSPATH . '.env';
+if (file_exists($envFilePath)) {
+    $envFileContents = file_get_contents($envFilePath);
+    $envFileLines = explode("\n", $envFileContents);
+    // Parse and load the environment variables
+    foreach ($envFileLines as $line) {
+        $line = trim($line);
+        if (!empty($line) && strpos($line, '=') !== false) {
+            list($key, $value) = explode('=', $line, 2);
+            $_ENV[$key] = $value;
+            putenv("$key=$value");
+        }
+    }
+
+    // Access environment variables
+    $customVar = getenv('VARIABLE_NAME_SITE');
+    echo $customVar . "<br>";
+    echo getenv('VARIABLE_NAME')."<br>";
+    // Use the variables in your code
+    // ...
+} else {
+    // Handle the case when the .env file doesn't exist
+    echo ".env file not found.<br>";
+}
+/* Get .env file variable value [End] */
 global $wp;
 $base = home_url($wp->request);
 ?>

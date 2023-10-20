@@ -1907,7 +1907,7 @@ function get_tag_callback_optimized()
 			</div>
 		</div>
 	</div>
-<?php
+	<?php
 	die;
 }
 /**Get current tag val END */
@@ -2238,36 +2238,37 @@ function create_update_blog()
 
 
 /**Image upload & set in cron job [Start] */
-function upload_img_from_api(){
-    require_once(ABSPATH . 'wp-admin/includes/image.php');
-    require_once(ABSPATH . 'wp-admin/includes/media.php');
-    require_once(ABSPATH . 'wp-admin/includes/file.php');
-    require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
+function upload_img_from_api()
+{
+	require_once(ABSPATH . 'wp-admin/includes/image.php');
+	require_once(ABSPATH . 'wp-admin/includes/media.php');
+	require_once(ABSPATH . 'wp-admin/includes/file.php');
+	require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
 
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://recovr.com/wp-json/custom/v1/get-blog-posts',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-    ));
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => 'https://recovr.com/wp-json/custom/v1/get-blog-posts',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => '',
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => 'GET',
+	));
 
-    $response = curl_exec($curl);
+	$response = curl_exec($curl);
 
-    curl_close($curl);
-    $res = json_decode($response);
-    foreach ($res->data as $post_data) {
-        /**Get API data [Start] */
-        $post_id = $post_data->post_id;
-        $image_url = $post_data->post_featured_img_src; // URL of the image
+	curl_close($curl);
+	$res = json_decode($response);
+	foreach ($res->data as $post_data) {
+		/**Get API data [Start] */
+		$post_id = $post_data->post_id;
+		$image_url = $post_data->post_featured_img_src; // URL of the image
 		//echo $image_url;
 		$img_name = 'apipost_' . $post_id;
-        $unique_image_name = 'apipost_' . $post_id.'.jpg'; // Generate a unique identifier for the image
-        // Check if an image with the same unique identifier already exists in the media library
+		$unique_image_name = 'apipost_' . $post_id . '.jpg'; // Generate a unique identifier for the image
+		// Check if an image with the same unique identifier already exists in the media library
 		$args = array(
 			'post_type' => 'attachment',
 			'post_status' => 'any',
@@ -2275,99 +2276,102 @@ function upload_img_from_api(){
 			'fields' => 'ids',
 			's' => $img_name, // Search by the image name
 		);
-	
+
 		$query = new WP_Query($args);
-		
-        if ($query->have_posts()) {
-            // The image with the same unique identifier exists, and $existing_attachment contains its details
-            // Set the existing image as the featured image for the post
-            $attachment_id = $query->posts[0];
-            set_post_thumbnail($post_id, $attachment_id);
-            echo '<br>Image already exists with ID: ' . $query->posts[0] . ' and set as featured image for post ' . $post_id;
-        } else {
-            // The image doesn't exist, download and upload it as before
-            $temp_file = download_url($image_url);
-            
-            // ... (existing code for downloading and uploading with the unique name)
-            
-            // Check for download errors
-            if (is_wp_error($temp_file)) {
-                // Handle the error, e.g., log it or display a message
-                echo 'Error downloading image: ' . $temp_file->get_error_message();
-            } else {
-                // Prepare the upload file array with the unique name
-                $file_array = array(
-                    'name'     => $unique_image_name,
-                    'tmp_name' => $temp_file
-                );
 
-                // Upload the image to the media library
-                $attachment_id = media_handle_sideload($file_array, 0);
-                
-                // Check for upload errors
-                if (is_wp_error($attachment_id)) {
-                    // Handle the error, e.g., log it or display a message
-                    echo 'Error uploading image: ' . $attachment_id->get_error_message();
-                } else {
-                    // Image was successfully uploaded, and $attachment_id contains the media ID
-                    // Set the uploaded image as the featured image for the post
-                    set_post_thumbnail($post_id, $attachment_id);
-                }
+		if ($query->have_posts()) {
+			// The image with the same unique identifier exists, and $existing_attachment contains its details
+			// Set the existing image as the featured image for the post
+			$attachment_id = $query->posts[0];
+			set_post_thumbnail($post_id, $attachment_id);
+			echo '<br>Image already exists with ID: ' . $query->posts[0] . ' and set as featured image for post ' . $post_id;
+		} else {
+			// The image doesn't exist, download and upload it as before
+			$temp_file = download_url($image_url);
 
-                // Clean up the temporary file
-                unlink($temp_file);
-            }
-        }
-    }
+			// ... (existing code for downloading and uploading with the unique name)
+
+			// Check for download errors
+			if (is_wp_error($temp_file)) {
+				// Handle the error, e.g., log it or display a message
+				echo 'Error downloading image: ' . $temp_file->get_error_message();
+			} else {
+				// Prepare the upload file array with the unique name
+				$file_array = array(
+					'name'     => $unique_image_name,
+					'tmp_name' => $temp_file
+				);
+
+				// Upload the image to the media library
+				$attachment_id = media_handle_sideload($file_array, 0);
+
+				// Check for upload errors
+				if (is_wp_error($attachment_id)) {
+					// Handle the error, e.g., log it or display a message
+					echo 'Error uploading image: ' . $attachment_id->get_error_message();
+				} else {
+					// Image was successfully uploaded, and $attachment_id contains the media ID
+					// Set the uploaded image as the featured image for the post
+					set_post_thumbnail($post_id, $attachment_id);
+				}
+
+				// Clean up the temporary file
+				unlink($temp_file);
+			}
+		}
+	}
 }
 /**Image upload & set in cron job [End] */
 
 /**Create cutom API to send post data [Start] */
 /**Get pots data API [Start] */
-add_action( 'rest_api_init', 'custom_api_get_all_posts' );   
+add_action('rest_api_init', 'custom_api_get_all_posts');
 
-function custom_api_get_all_posts() {
-    register_rest_route( 'custom/v1', '/get-blog-posts', array(
-        'methods' => 'GET',
-        'callback' => 'custom_api_get_all_posts_callback'
-    ));
+function custom_api_get_all_posts()
+{
+	register_rest_route('custom/v1', '/get-blog-posts', array(
+		'methods' => 'GET',
+		'callback' => 'custom_api_get_all_posts_callback'
+	));
 }
 
-add_action('init','custom_api_get_all_posts_callback');
+add_action('init', 'custom_api_get_all_posts_callback');
 
-function custom_api_get_all_posts_callback( $request ) {
-    // Initialize the array that will receive the posts' data. 
-    $posts_data = array();
-    $posts = get_posts( array(
-            'posts_per_page' => -1,   
-		    'post_status' => 'publish',
-			'post_type' => array( 'post')
-        )
-    ); 
+function custom_api_get_all_posts_callback($request)
+{
+	// Initialize the array that will receive the posts' data. 
+	$posts_data = array();
+	$posts = get_posts(
+		array(
+			'posts_per_page' => -1,
+			'post_status' => 'publish',
+			'post_type' => array('post')
+		)
+	);
 	if (empty($posts)) {
 		//return new WP_Error('post_not_found', 'Post not found', array('status' => 404));
 		$response = array(
 			'statusCode' => 404,
 			'message' => 'post_not_found',
 			'data' => 'null',
-		);       
+		);
 		return new WP_REST_Response($response);
 	}
-    // Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
-    foreach( $posts as $post ) {
-        $id = $post->ID; 
-		$author_id=$post->post_author;
-		$author_name = get_the_author_meta( 'display_name', $author_id );
+	// Loop through the posts and push the desired data to the array we've initialized earlier in the form of an object
+	foreach ($posts as $post) {
+		$id = $post->ID;
+		$author_id = $post->post_author;
+		$author_name = get_the_author_meta('display_name', $author_id);
 		$tags_name = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "names"));
 		$tags_slug = wp_get_post_terms($post->ID, 'post_tag', array("fields" => "slugs"));
-    	$categories_name = wp_get_post_terms($post->ID, 'category', array("fields" => "names"));
+		$categories_name = wp_get_post_terms($post->ID, 'category', array("fields" => "names"));
 		$categories_slug = wp_get_post_terms($post->ID, 'category', array("fields" => "slugs"));
 
 		/**Get featured image url [Start] */
-		$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
-		if(!empty($post_thumbnail_id)) {
-		$post_thumbnail =  wp_get_attachment_url( get_post_thumbnail_id($post->ID));
-		}else{
+		$post_thumbnail_id = get_post_thumbnail_id($post->ID);
+		if (!empty($post_thumbnail_id)) {
+			$post_thumbnail =  wp_get_attachment_url(get_post_thumbnail_id($post->ID));
+		} else {
 			$post_thumbnail = 'null';
 		}
 		if ($post_thumbnail === false) {
@@ -2378,16 +2382,16 @@ function custom_api_get_all_posts_callback( $request ) {
 		/**Get posts content & clean up unwanted characters in post-content [Start] */
 		$post_content = $post->post_content;
 		// Use DOMDocument to parse the post content
-		 $dom = new DOMDocument('1.0', 'UTF-8'); // Specify UTF-8 encoding
-	     $dom->loadHTML(mb_convert_encoding($post_content, 'HTML-ENTITIES', 'UTF-8')); // Convert encoding
+		$dom = new DOMDocument('1.0', 'UTF-8'); // Specify UTF-8 encoding
+		$dom->loadHTML(mb_convert_encoding($post_content, 'HTML-ENTITIES', 'UTF-8')); // Convert encoding
 		// // Find all anchor tags in the post content
 		// $anchorsToRemove = [];
 		// foreach ($dom->getElementsByTagName('a') as $anchor) {
-    	// 	$anchorsToRemove[] = $anchor;
+		// 	$anchorsToRemove[] = $anchor;
 		// }
 		// // Remove the anchor tags from the DOM
 		// foreach ($anchorsToRemove as $anchor) {
-    	// 	$anchor->parentNode->removeChild($anchor);
+		// 	$anchor->parentNode->removeChild($anchor);
 		// }
 		// // Get the modified post content after removing anchor tags
 		// $modified_content = $dom->saveHTML();
@@ -2395,46 +2399,46 @@ function custom_api_get_all_posts_callback( $request ) {
 		// $modified_content = str_replace(array("Â", "&nbsp;"), '', $modified_content);
 		/**Get posts content & clean up unwanted characters in post-content [End] */
 
-		 // Find all anchor tags in the post content
-		 $anchorsToRemove = [];
-		 foreach ($dom->getElementsByTagName('a') as $anchor) {
-			 $parentElement = $anchor->parentNode;
-			 if ($parentElement->tagName === 'figure') {
-				 // If the anchor tag is within a figure element, remove only the anchor tag itself
-				 $anchorsToRemove[] = $anchor;
-			 }else{
+		// Find all anchor tags in the post content
+		$anchorsToRemove = [];
+		foreach ($dom->getElementsByTagName('a') as $anchor) {
+			$parentElement = $anchor->parentNode;
+			if ($parentElement->tagName === 'figure') {
+				// If the anchor tag is within a figure element, remove only the anchor tag itself
 				$anchorsToRemove[] = $anchor;
-			 }
-		 }
-	 
-		 // Remove the anchor tags from the DOM
-		 foreach ($anchorsToRemove as $anchor) {
-			 $parentElement = $anchor->parentNode;
-			 $anchorChildren = [];
-			 foreach ($anchor->childNodes as $child) {
-				 $anchorChildren[] = $child;
-			 }
-			 // Remove the anchor tag
-			 $parentElement->removeChild($anchor);
-			 // Append the child nodes of the anchor tag back to the parent (figure) element
-			 foreach ($anchorChildren as $child) {
-				 $parentElement->appendChild($child);
-			 }
-		 }
-	 
-		 // Get the modified post content
-		 $post_content = $dom->saveHTML();
-	 
-		 // Clean up unwanted characters like Â and &nbsp;
-		 $post_content = str_replace(array("Â", "&nbsp;"), '', $post_content);
+			} else {
+				$anchorsToRemove[] = $anchor;
+			}
+		}
 
-        $posts_data[] = array( 
-            'post_id' => $id, 
-            'post_type' => $post->post_type,
-			'post_slug' => $post->post_name, 
-            'post_title' => $post->post_title,
+		// Remove the anchor tags from the DOM
+		foreach ($anchorsToRemove as $anchor) {
+			$parentElement = $anchor->parentNode;
+			$anchorChildren = [];
+			foreach ($anchor->childNodes as $child) {
+				$anchorChildren[] = $child;
+			}
+			// Remove the anchor tag
+			$parentElement->removeChild($anchor);
+			// Append the child nodes of the anchor tag back to the parent (figure) element
+			foreach ($anchorChildren as $child) {
+				$parentElement->appendChild($child);
+			}
+		}
+
+		// Get the modified post content
+		$post_content = $dom->saveHTML();
+
+		// Clean up unwanted characters like Â and &nbsp;
+		$post_content = str_replace(array("Â", "&nbsp;"), '', $post_content);
+
+		$posts_data[] = array(
+			'post_id' => $id,
+			'post_type' => $post->post_type,
+			'post_slug' => $post->post_name,
+			'post_title' => $post->post_title,
 			'post_content' => $post_content,
-            'post_featured_img_src' => $post_thumbnail,
+			'post_featured_img_src' => $post_thumbnail,
 			'post_status' => $post->post_status,
 			'post_author' => $author_name,
 			'post_category' => $categories_name,
@@ -2442,15 +2446,15 @@ function custom_api_get_all_posts_callback( $request ) {
 			'post_tag' => $tags_name,
 			'post_tag_slug' => $tags_slug,
 			'post_published_date' => $post->post_date,
-        );
-    }    
+		);
+	}
 	$response = array(
 		'statusCode' => 200,
 		'message' => 'Success',
 		'data' => $posts_data,
-	);       
-	return new WP_REST_Response($response, 200);            
-} 
+	);
+	return new WP_REST_Response($response, 200);
+}
 /**Get pots data API [End] */
 
 // function custom_500_error_handling() {
@@ -2519,12 +2523,13 @@ add_action('template_redirect', 'custom_500_error_handler'); */
 
 /**Store data in cache example[Start] */
 //Set a data in cache
-function store_data_in_cache() {
-    // Data you want to cache
-    $data_to_cache = 'This is some data to be cached.';
-	$cached_data_arr = array('first_cached','sec_cached','third_cache');
-    // Set a transient with an expiration time (in seconds)
-    set_transient('my_cached_data_key_one', $data_to_cache, 3600); // This caches data for 1 hour (3600 seconds)
+function store_data_in_cache()
+{
+	// Data you want to cache
+	$data_to_cache = 'This is some data to be cached.';
+	$cached_data_arr = array('first_cached', 'sec_cached', 'third_cache');
+	// Set a transient with an expiration time (in seconds)
+	set_transient('my_cached_data_key_one', $data_to_cache, 3600); // This caches data for 1 hour (3600 seconds)
 	set_transient('my_cached_data_key_two', $cached_data_arr, 3600);
 }
 add_action('after_setup_theme', 'store_data_in_cache'); // You can use an appropriate hook for your needs
@@ -2552,26 +2557,27 @@ add_action('init','get_data_from_cache'); */
 // Use this function wherever you need to retrieve the cached data
 
 /**Check for internet [Start] */
-function is_internet_available() {
-    $connection = @fsockopen("www.google.com", 80);
-    if ($connection) {
-        fclose($connection);
-        return true;
-    }
-    return false;
+function is_internet_available()
+{
+	$connection = @fsockopen("www.google.com", 80);
+	if ($connection) {
+		fclose($connection);
+		return true;
+	}
+	return false;
 }
 
 if (is_internet_available()) {
-    //echo "Internet is available.<br>";
+	//echo "Internet is available.<br>";
 	$cached_data = 'This is the default data when not found in the cache.';
-	$cached_data_arr = array('first','sec','third');
+	$cached_data_arr = array('first', 'sec', 'third');
 	// Store it in the cache
 	set_transient('my_cached_data_key', $cached_data, 3600);
 	set_transient('my_cached_data_key_two', $cached_data_arr, 3600);
 	//echo $cached_data.'<br>';
 	//print_r($cached_data_arr);
 } else {
-   // echo "Internet is not available.<br>";
+	// echo "Internet is not available.<br>";
 	$cached_data = get_transient('my_cached_data_key_one');
 	$cached_data_arr = get_transient('my_cached_data_key_two');
 	//echo $cached_data.'<br>';
@@ -2586,104 +2592,106 @@ add_action('wp_ajax_filter_posts', 'filter_posts');
 add_action('wp_ajax_nopriv_filter_posts', 'filter_posts');
 
 // Callback function to handle the AJAX request.
-function filter_posts() {
-    // Check if the "tag" and "page" parameters were sent via POST.
-    if (isset($_POST['tag']) && isset($_POST['page'])) {
-        $tag = sanitize_text_field($_POST['tag']);
-        $page = intval($_POST['page']);
+function filter_posts()
+{
+	// Check if the "tag" and "page" parameters were sent via POST.
+	if (isset($_POST['tag']) && isset($_POST['page'])) {
+		$tag = sanitize_text_field($_POST['tag']);
+		$page = intval($_POST['page']);
 
-        // Create a custom query to fetch posts based on the selected tag and page number.
-        $args = array(
-            'post_type' => 'post',
-            'posts_per_page' => 7, // Number of posts to display per page.
-            'paged' => $page,
-            'tag' => $tag,
-        );
+		// Create a custom query to fetch posts based on the selected tag and page number.
+		$args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 7, // Number of posts to display per page.
+			'paged' => $page,
+			'tag' => $tag,
+		);
 
-        $custom_query = new WP_Query($args);
+		$custom_query = new WP_Query($args);
 
-        if ($custom_query->have_posts()) :
-            while ($custom_query->have_posts()) : $custom_query->the_post();
-                // Display your post content here.
-                ?>
-                <div class="post">
-                    <h2><?php the_title(); ?></h2>
-                    <div class="post-content">
-                        <?php the_content(); ?>
-                    </div>
-                </div>
-                <?php
-            endwhile;
+		if ($custom_query->have_posts()) :
+			while ($custom_query->have_posts()) : $custom_query->the_post();
+				// Display your post content here.
+	?>
+				<div class="post">
+					<h2><?php the_title(); ?></h2>
+					<div class="post-content">
+						<?php the_content(); ?>
+					</div>
+				</div>
+			<?php
+			endwhile;
 
-            // Pagination for the custom query.
-            echo paginate_links(array(
-                'total' => $custom_query->max_num_pages,
-                'current' => $page,
-                'prev_text' => '&laquo; Previous',
-                'next_text' => 'Next &raquo;',
-            ));
-            wp_reset_postdata();
-        else:
-            echo 'No posts found.';
-        endif;
-    } else {
-        // Handle the case where the "tag" and "page" parameters are missing in the AJAX request.
-        echo 'Invalid request.';
-    }
+			// Pagination for the custom query.
+			echo paginate_links(array(
+				'total' => $custom_query->max_num_pages,
+				'current' => $page,
+				'prev_text' => '&laquo; Previous',
+				'next_text' => 'Next &raquo;',
+			));
+			wp_reset_postdata();
+		else :
+			echo 'No posts found.';
+		endif;
+	} else {
+		// Handle the case where the "tag" and "page" parameters are missing in the AJAX request.
+		echo 'Invalid request.';
+	}
 
-    wp_die(); // Always exit to avoid extra output.
+	wp_die(); // Always exit to avoid extra output.
 }
 
 add_action('wp_ajax_filter_page_posts', 'filter_page_posts');
 add_action('wp_ajax_nopriv_filter_page_posts', 'filter_page_posts');
 
 // Callback function to handle the AJAX request.
-function filter_page_posts() {
-    // Check if the "tag" and "page" parameters were sent via POST.
-    if (isset($_POST['page'])) {
-       // $tag = sanitize_text_field($_POST['tag']);
-        $page = intval($_POST['page']);
+function filter_page_posts()
+{
+	// Check if the "tag" and "page" parameters were sent via POST.
+	if (isset($_POST['page'])) {
+		// $tag = sanitize_text_field($_POST['tag']);
+		$page = intval($_POST['page']);
 
-        // Create a custom query to fetch posts based on the selected tag and page number.
-        $args = array(
-            'post_type' => 'post',
-            'posts_per_page' => 7, // Number of posts to display per page.
-            'paged' => $page,
-            //'tag' => $tag,
-        );
+		// Create a custom query to fetch posts based on the selected tag and page number.
+		$args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 7, // Number of posts to display per page.
+			'paged' => $page,
+			//'tag' => $tag,
+		);
 
-        $custom_query = new WP_Query($args);
+		$custom_query = new WP_Query($args);
 
-        if ($custom_query->have_posts()) :
-            while ($custom_query->have_posts()) : $custom_query->the_post();
-                // Display your post content here.
-                ?>
-                <div class="post">
-                    <h2><?php the_title(); ?></h2>
-                    <div class="post-content">
-                        <?php the_content(); ?>
-                    </div>
-                </div>
-                <?php
-            endwhile;
+		if ($custom_query->have_posts()) :
+			while ($custom_query->have_posts()) : $custom_query->the_post();
+				// Display your post content here.
+			?>
+				<div class="post">
+					<h2><?php the_title(); ?></h2>
+					<div class="post-content">
+						<?php the_content(); ?>
+					</div>
+				</div>
+<?php
+			endwhile;
 
-            // Pagination for the custom query.
-            echo paginate_links(array(
-                'total' => $custom_query->max_num_pages,
-                'current' => $page,
-                'prev_text' => '&laquo; Previous',
-                'next_text' => 'Next &raquo;',
-            ));
-            wp_reset_postdata();
-        else:
-            echo 'No posts found.';
-        endif;
-    } else {
-        // Handle the case where the "tag" and "page" parameters are missing in the AJAX request.
-        echo 'Invalid request.';
-    }
+			// Pagination for the custom query.
+			echo paginate_links(array(
+				'total' => $custom_query->max_num_pages,
+				'current' => $page,
+				'prev_text' => '&laquo; Previous',
+				'next_text' => 'Next &raquo;',
+			));
+			wp_reset_postdata();
+		else :
+			echo 'No posts found.';
+		endif;
+	} else {
+		// Handle the case where the "tag" and "page" parameters are missing in the AJAX request.
+		echo 'Invalid request.';
+	}
 
-    wp_die(); // Always exit to avoid extra output.
+	wp_die(); // Always exit to avoid extra output.
 }
 /**Post pagination without page load [End] */
 
@@ -2698,8 +2706,73 @@ function filter_page_posts() {
 //     $widgets_manager->register( new Webkul_Elementor_Widget() );
 //}
 
-function header_Code(){
- echo "google analytic script";
- echo "new feature branch code";
+
+/* .env file code [Start] */
+function header_Code()
+{
+	/* get .env file variable value [Start] */
+	// Include the Dotenv library
+	$envFilePath = ABSPATH . '.env';
+
+	if (file_exists($envFilePath)) {
+		$envFileContents = file_get_contents($envFilePath);
+		$envFileLines = explode("\n", $envFileContents);
+		// Parse and load the environment variables
+		foreach ($envFileLines as $line) {
+			$line = trim($line);
+			if (!empty($line) && strpos($line, '=') !== false) {
+				list($key, $value) = explode('=', $line, 2);
+				$_ENV[$key] = $value;
+				putenv("$key=$value");
+			}
+		}
+
+		// Access environment variables
+		$customVar = getenv('VARIABLE_NAME_SITE');
+		echo $customVar . "<br>";
+		echo getenv('VARIABLE_NAME')."<br>";
+		// Use the variables in your code
+		// ...
+	} else {
+		// Handle the case when the .env file doesn't exist
+		echo ".env file not found.";
+	}
+	/* get .env file variable value [End] */
+	echo "google analytic script<br>";
+	echo "new feature branch code<br>";
+	echo get_template_directory_uri();
 }
+
+add_action('init', 'header_Code');
+/**.env file code [End] */
+
+/* .env file code for js file [Start] */
+function enqueue_custom_js() {
+	$envFilePath = ABSPATH . '.env';
+
+	if (file_exists($envFilePath)) {
+		$envFileContents = file_get_contents($envFilePath);
+		$envFileLines = explode("\n", $envFileContents);
+		// Parse and load the environment variables
+		foreach ($envFileLines as $line) {
+			$line = trim($line);
+			if (!empty($line) && strpos($line, '=') !== false) {
+				list($key, $value) = explode('=', $line, 2);
+				$_ENV[$key] = $value;
+				putenv("$key=$value");
+			}
+		}
+    // Define your environment variables
+    $env_vars = array(
+        'MY_CUSTOM_VAR' => getenv('VARIABLE_NAME'),
+		'MY_CUSTOM_VAR_SITE_URL' => getenv('VARIABLE_NAME_SITE')
+    );
+    // Enqueue your JavaScript file and pass the environment variables
+    wp_enqueue_script('custom-script', get_stylesheet_directory_uri() . '/template/js/get-env-val-js.js', array(), '1.0', true);
+    // Localize the script with the environment variables
+    wp_localize_script('custom-script', 'myenvVars', $env_vars);
+}
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_js');
+/* .env file code for js file [End] */
 ?>
