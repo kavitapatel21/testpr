@@ -406,6 +406,27 @@ if (file_exists($envFilePath)) {
 global $wp;
 $base = home_url($wp->request);
 ?>
+
+<?php 
+/**Get tags of specific post type [Start] */
+// Replace 'custom_post_type' with the name of your post type
+$post_type = 'post';
+
+// Get the tags associated with the specified post type
+$tags = get_terms(array(
+    'taxonomy' => 'post_tag',
+    'object_ids' => $post_type,
+));
+
+if (!empty($tags) && !is_wp_error($tags)) {
+    foreach ($tags as $tag) {
+        echo '<a href="' . get_term_link($tag) . '">' . $tag->name . '</a><br>';
+    }
+} else {
+    echo 'No tags found for this post type.';
+}
+/**Get tags of specific potst type [End] */
+?>
 <input type="hidden" name="base" value="<?php echo $base; ?>" />
 <div class="container">
     <div class="buttons mt-5">
