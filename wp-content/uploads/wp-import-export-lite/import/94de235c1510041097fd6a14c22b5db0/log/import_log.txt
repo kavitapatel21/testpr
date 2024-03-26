@@ -1,0 +1,2 @@
+[10:10:53] <strong>Record</strong> #1
+[10:10:53] <strong>ERROR</strong> : Content, title, and excerpt are empty.

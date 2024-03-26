@@ -1,0 +1,6 @@
+[09:56:14] <strong>Record</strong> #1
+[09:56:14] <strong>ERROR</strong> : Content, title, and excerpt are empty.
+[09:56:14] <strong>Record</strong> #2
+[09:56:14] <strong>ERROR</strong> : Content, title, and excerpt are empty.
+[09:56:14] <strong>Record</strong> #3
+[09:56:14] <strong>ERROR</strong> : Content, title, and excerpt are empty.

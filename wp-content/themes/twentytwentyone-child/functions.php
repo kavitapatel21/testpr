@@ -2470,4 +2470,17 @@ function custom_api_get_all_posts_callback( $request ) {
 // add_action('wp', 'custom_500_error_handling');
 
 
+// Add custom meta box to post editor
+function custom_meta_box() {
+    add_meta_box(
+        'custom_meta_box',
+        'Custom Meta Box',
+        'render_custom_meta_box',
+        'post',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'custom_meta_box');
+
 ?>
