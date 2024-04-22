@@ -2483,4 +2483,58 @@ function custom_meta_box() {
 }
 add_action('add_meta_boxes', 'custom_meta_box');
 
+
+
+// validate form data
+function validate_contact_form($data){
+	$errors = [];
+	
+	if(empty($data['name'])){
+		$errors[] = 'Name is required';
+	}
+	
+	if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+		$errors[] = 'Invaliad email format';
+	}
+	
+	if(empty($data['message'])){
+		$errors[] = 'Message is required';
+	}
+	
+	return $errors;
+	
+	 }
+	
+	
+	//  create custom post type 
+	function create_contact_post_type(){
+		register_post_type('contact',
+		array(
+			'labels' => array(
+				'name' => __('Contacts'),
+				'singular_name' => __('contact'),
+			),
+			'public' => true,
+			'has_archive' => true,
+			'menu_icon' => 'dashicons-groups',
+			'supports' => array('title', 'editor'),
+		)
+		);
+	}
+	
+	add_action('init', 'create_contact_post_type');
+	
+	// admin view and delete record
+	function add_confirm_script(){
+		echo ' <script>
+		jQuery(document).ready(function($){
+			$(".delete").click(function(){
+				return confirm("are you sure you wanr to delete");
+			});
+		 } );
+		</script>';
+	}
+	add_action('admin_footer', 'add_confirm_script');
+	
+	
 ?>

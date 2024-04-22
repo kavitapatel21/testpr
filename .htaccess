@@ -18,5 +18,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /testpr/index.php [L]
 </IfModule>
 
-
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
 # END WordPress

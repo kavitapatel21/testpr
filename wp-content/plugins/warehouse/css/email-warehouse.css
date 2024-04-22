@@ -1,0 +1,19 @@
+.itemResponseModal span.label {
+  display: inline-block;
+  width: 120px;
+  margin-right: 10px;
+  font-weight: bold; }
+.itemResponseModal .item {
+  border: 1px solid #555;
+  padding: 5px 10px;
+  margin-bottom: 10px; }
+.itemResponseModal .quantities {
+  border-top: 1px solid #555;
+  margin-top: 5px;
+  padding-top: 5px; }
+  .itemResponseModal .quantities .qty-requested, .itemResponseModal .quantities .qty-fulfilled {
+    display: inline-block;
+    width: 49%;
+    text-align: center; }
+
+/*# sourceMappingURL=email-warehouse.css.map */
