@@ -7,6 +7,7 @@ if($flag){
 }else {
 	echo 'variable is false';
 } */
+<<<<<<< HEAD
 
 // Template Name: Contact Form Template
 // validate form data
@@ -91,3 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <?php get_footer(); ?>
+=======
+?>
+>>>>>>> 09609779f381e604f1cedaa9d24b924b6b49c98f

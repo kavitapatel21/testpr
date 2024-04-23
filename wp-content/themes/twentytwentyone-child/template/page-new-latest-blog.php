@@ -362,8 +362,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<<<<<<< HEAD
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri() ?>/template/js/get-env-val-js.js" type="text/javascript"></script>
+=======
+>>>>>>> 09609779f381e604f1cedaa9d24b924b6b49c98f
 
 <?php
 /*
@@ -376,6 +379,7 @@ get_header();
 ?>
 
 <?php
+<<<<<<< HEAD
 
 /* Get .env file varible value [Start] */
 $envFilePath = ABSPATH . '.env';
@@ -427,6 +431,11 @@ if (!empty($tags) && !is_wp_error($tags)) {
 }
 /**Get tags of specific potst type [End] */
 ?>
+=======
+global $wp;
+$base = home_url($wp->request);
+?>
+>>>>>>> 09609779f381e604f1cedaa9d24b924b6b49c98f
 <input type="hidden" name="base" value="<?php echo $base; ?>" />
 <div class="container">
     <div class="buttons mt-5">

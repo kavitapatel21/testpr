@@ -1,0 +1,19 @@
+/*!
+ * 
+ * Intro Tour Tutorial
+ * 
+ * @author [object Object]
+ * @version 5.4.1
+ * @link http://www.gnu.org/licenses/gpl-2.0.txt
+ * @license GPL-2.0+
+ * 
+ * Copyright (c) 2023 [object Object]
+ * 
+ * This plugin is released under GPL-2.0+ license to be included in wordpres.org plugin repository
+ * 
+ * Compiled with the help of https://wpack.io
+ * A zero setup Webpack Bundler Script for WordPress
+ */
+.dp-noscroll{overflow:hidden}.wpuxss-tpb a.wpuxss-tpb-button{transition:.3s color ease-in-out !important}.wpuxss-tpb .dpit-admin-btn__bullets{position:absolute !important;display:flex !important;transition:all .5s ease-in-out !important}.wpuxss-tpb .dpit-admin-btn__bullets ul{margin:13px auto 1px auto !important;padding:0 !important}.wpuxss-tpb .dpit-admin-btn__bullets ul li{list-style:none !important;margin:0 1px 5px 1px !important;width:5px !important;height:5px !important;background-color:rgba(var(--dpu-color-3-text), 0.336) !important;border-radius:50% !important;transition:background-color .2s,-webkit-transform .2s !important;transition:transform .2s,background-color .2s !important;transition:transform .2s,background-color .2s,-webkit-transform .2s !important}.wpuxss-tpb .dpit-admin-btn__bullets ul li.active{background-color:rgba(var(--dpu-color-3-text), 1) !important;-webkit-transform:translateY(-100%) !important;transform:translateY(-100%) !important}.wpuxss-tpb .dpit-admin-btn__bullets ul li.semi-active{-webkit-transform:translateY(-50%) !important;transform:translateY(-50%) !important}
+
+/*# sourceMappingURL=dpit-admin-publish-btn-style-ce280f06.css.map*/

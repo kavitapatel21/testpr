@@ -1,0 +1,19 @@
+/*!
+ * 
+ * Intro Tour Tutorial
+ * 
+ * @author [object Object]
+ * @version 5.4.1
+ * @link http://www.gnu.org/licenses/gpl-2.0.txt
+ * @license GPL-2.0+
+ * 
+ * Copyright (c) 2023 [object Object]
+ * 
+ * This plugin is released under GPL-2.0+ license to be included in wordpres.org plugin repository
+ * 
+ * Compiled with the help of https://wpack.io
+ * A zero setup Webpack Bundler Script for WordPress
+ */
+.dp-noscroll{overflow:hidden}.dpit-theme-minimal .dpit-button{padding:calc(var(--dp_unit)*5) calc(var(--dp_unit)*23);font-size:calc(var(--dp_unit)*38*var(--num-size-coef));color:rgba(var(--accent-contrast-inv-color), 0.85);font-weight:600;text-transform:uppercase}.dpit-theme-minimal .dpit-button:not(.dpit-disabled):focus{color:rgb(var(--accent-color), 0.85)}.dpit-theme-minimal .dpit-button:not(.dpit-disabled):active,.dpit-theme-minimal .dpit-button:not(.dpit-disabled):hover,.dpit-theme-minimal .dpit-button:not(.dpit-disabled).hovered{color:rgb(var(--accent-color), 0.85)}.dpit-theme-minimal .dpit-button:not(.dpit-disabled):active:focus,.dpit-theme-minimal .dpit-button:not(.dpit-disabled):hover:focus,.dpit-theme-minimal .dpit-button:not(.dpit-disabled).hovered:focus{color:rgb(var(--accent-color))}.dpit-theme-minimal .dpit-tooltip-buttons{padding-top:calc(var(--dp_unit)*10)}.dpit-theme-minimal .dpit-bullets ul.dpit-has-scrollbar{margin-bottom:calc(var(--dp_unit)*10)}@media(hover: hover){.dpit-theme-minimal .dpit-bullets ul::-webkit-scrollbar-track{background-color:rgba(var(--accent-color), 0.1)}.dpit-theme-minimal .dpit-bullets ul::-webkit-scrollbar-thumb{background-color:rgba(var(--accent-color), 0.6)}}.dpit-theme-minimal.dpit-light-accent .dpit-button{color:rgba(var(--accent-contrast-inv-color), 0.8)}
+
+/*# sourceMappingURL=dpit-minimal-theme-style-e5eb59a2.css.map*/

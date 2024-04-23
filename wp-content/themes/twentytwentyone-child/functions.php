@@ -2468,6 +2468,7 @@ function custom_api_get_all_posts_callback( $request ) {
 //     );
 // }
 // add_action('wp', 'custom_500_error_handling');
+<<<<<<< HEAD
 
 
 // Add custom meta box to post editor
@@ -2537,4 +2538,6 @@ function validate_contact_form($data){
 	add_action('admin_footer', 'add_confirm_script');
 	
 	
+=======
+>>>>>>> 09609779f381e604f1cedaa9d24b924b6b49c98f
 ?>

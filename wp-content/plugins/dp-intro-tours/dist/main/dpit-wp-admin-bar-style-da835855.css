@@ -1,0 +1,19 @@
+/*!
+ * 
+ * Intro Tour Tutorial
+ * 
+ * @author [object Object]
+ * @version 5.4.1
+ * @link http://www.gnu.org/licenses/gpl-2.0.txt
+ * @license GPL-2.0+
+ * 
+ * Copyright (c) 2023 [object Object]
+ * 
+ * This plugin is released under GPL-2.0+ license to be included in wordpres.org plugin repository
+ * 
+ * Compiled with the help of https://wpack.io
+ * A zero setup Webpack Bundler Script for WordPress
+ */
+.dp-noscroll{overflow:hidden}#wpadminbar .dp-wpadmin-bar-tour-status{color:rgb(var(--dpu-color-4));font-variant:small-caps;font-size:11px;font-weight:600}#wpadminbar #wp-admin-bar-intro-actions>li>a::before{float:none;top:5px}#wpadminbar li.dpit-ab-list-item:not(.dpit-ab-list-item--main){float:none !important}#wpadminbar li.dpit-ab-list-item>a.ab-item{height:26px !important;display:flex !important;line-height:2 !important;align-items:center;justify-content:space-between}#wpadminbar li.dpit-ab-list-item>a.ab-item>.dpit-ab-title{order:1;display:inline-flex;align-items:center}#wpadminbar li.dpit-ab-list-item>a.ab-item>.wp-admin-bar-arrow{display:block;order:2;line-height:1 !important;margin-left:10px}#wpadminbar li.dpit-ab-list-item>a.ab-item>.wp-admin-bar-arrow::before{position:static !important}#wpadminbar li.dpit-ab-list-item .dpit-ab-icon{line-height:1 !important}#wpadminbar li.dpit-ab-list-item .dpit-ab-icon svg{width:16px;height:16px}#wpadminbar li.dpit-ab-list-item .dpit-ab-icon.dashicons{font-family:dashicons !important;font-size:18px !important}#wpadminbar li.dpit-ab-list-item .dpit-ab-text{line-height:1.3 !important;max-width:200px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin:0 0 0 5px}@media(max-width: 782px){#wpadminbar li.dpit-ab-list-item .dpit-ab-text{max-width:150px}}@media(max-width: 600px){#wpadminbar li.dpit-ab-list-item .dpit-ab-text{max-width:unset}}#wpadminbar li.dpit-ab-list-item .ab-sub-wrapper{align-self:flex-start}#wpadminbar li.dpit-ab-list-item--main>a.ab-item{height:32px !important}#wpadminbar li.dpit-ab-list-item--main .dpit-ab-text{margin:0 0 0 3px}body:not(.wp-admin) li.dpit-ab-list-item:not(:hover):not(.hover) .dpit-ab-icon{color:rgba(var(--dpu-color-2-text), 0.9) !important}body:not(.wp-admin) li.dpit-ab-list-item:not(:hover):not(.hover) .dpit-ab-label{color:rgba(var(--dpu-color-2-text), 0.9) !important}body:not(.wp-admin) li.dpit-ab-list-item--global:not(:hover):not(.hover) .dpit-ab-icon{color:rgb(var(--dpu-color-3)) !important}body:not(.wp-admin) li.dpit-ab-list-item--not-active:not(:hover):not(.hover) .dpit-ab-icon{color:rgba(var(--dpu-color-2-text), 0.6) !important}body:not(.wp-admin) li.dpit-ab-list-item--not-active:not(:hover):not(.hover) .dpit-ab-label{color:rgba(var(--dpu-color-2-text), 0.6) !important}
+
+/*# sourceMappingURL=dpit-wp-admin-bar-style-da835855.css.map*/

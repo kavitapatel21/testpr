@@ -81,6 +81,7 @@ $table_prefix = 'wp_';
  * @link https://wordpress.org/documentation/article/debugging-in-wordpress/
  */
 
+<<<<<<< HEAD
  define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
@@ -88,6 +89,12 @@ define( 'WP_DEBUG_DISPLAY', false );
 //  define( 'WP_DEBUG', true );
 //  define('WP_DEBUG_DISPLAY', false);
 //  ini_set('display_errors','Off');
+=======
+
+ define( 'WP_DEBUG', true );
+ define('WP_DEBUG_DISPLAY', false);
+ ini_set('display_errors','Off');
+>>>>>>> 09609779f381e604f1cedaa9d24b924b6b49c98f
  //define( 'WP_DEBUG_LOG', true );
  //define( 'WP_DEBUG_DISPLAY', false );
  
@@ -114,3 +121,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
+<<<<<<< HEAD
+=======
+
+
+/**.env file code [Start] */
+require_once ABSPATH . '/dotenv.php';
+define('custom_var', 'hello you got the value');
+/**.env file code [End] */
+>>>>>>> 09609779f381e604f1cedaa9d24b924b6b49c98f
